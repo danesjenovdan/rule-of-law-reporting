@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rule-of-law-reporting
+  labels:
+    app: rule-of-law-reporting
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rule-of-law-reporting
+  template:
+    metadata:
+      labels:
+        app: rule-of-law-reporting
+    spec:
+      containers:
+        - name: rule-of-law-reporting
+          image: rule-of-law-reporting
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              memory: 100Mi
+              cpu: 100m
+            limits:
+              memory: 100Mi
+              cpu: 100m
