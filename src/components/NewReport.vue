@@ -1,0 +1,94 @@
+<template>
+  <div>
+    <h2>Nov prispevek</h2>
+    <FormKit v-model="formData" type="form" @submit="submit">
+      <FormKit
+        type="select"
+        name="nc_0zwf__področja_id"
+        label="Področje"
+        :options="areas"
+        :help="selectedArea?.help"
+        validation="required|not:0"
+      />
+      <template v-if="formData.nc_0zwf__področja_id === '4'">
+        <FormKit
+          type="select"
+          name="Če ste izbrali druga, na katerem področju"
+          label="Če ste izbrali druga, na katerem področju"
+          :options="otherAreas"
+        />
+      </template>
+      <FormKit
+        type="text"
+        name="Ime prispevka"
+        label="Ime prispevka"
+        validation="required"
+      />
+      <FormKit
+        type="textarea"
+        name="O področju prispevka"
+        label="O področju prispevka"
+        validation="required"
+      />
+    </FormKit>
+  </div>
+</template>
+
+<script>
+import { getAreas, postReport } from '../helpers/api.js';
+
+export default {
+  data() {
+    return {
+      areas: [],
+      otherAreas: [
+        'azil in migracije',
+        'sistemske kršitve človekovih pravic',
+        'prostor civilne družbe',
+        'lgbtqi+',
+        'manjšine',
+        'Drugo.',
+      ],
+      formData: {
+        nc_0zwf__področja_id: '0',
+        'Če ste izbrali druga, na katerem področju': '',
+        'Ime prispevka': '',
+        'O področju prispevka ': '',
+      },
+    };
+  },
+  computed: {
+    selectedArea() {
+      const selectedId = this.formData.nc_0zwf__področja_id;
+      return this.areas.find((e) => String(e.value) === selectedId);
+    },
+  },
+  async mounted() {
+    const response = await getAreas();
+    const entries = response.data.map((item) => ({
+      value: item.id,
+      label: item['Ime področja'],
+      help: item['Opis področja'],
+    }));
+    this.areas = [
+      {
+        value: '0',
+        label: '---',
+        attrs: { disabled: true },
+      },
+      ...entries,
+    ];
+  },
+  methods: {
+    async submit(data, node) {
+      try {
+        await postReport(data);
+        node.reset();
+      } catch (error) {
+        const errorMessage = error.response?.data?.msg || error.message;
+        node.setErrors([errorMessage]);
+      }
+    },
+  },
+};
+</script>

@@ -20,9 +20,15 @@ onMounted(async () => {
 <template>
   <div>
     <div>
-      <button>dodaj prispevek</button>
-      <button>dodaj dogodek</button>
-      <button>dodaj vir</button>
+      <a href="/dashboard/new-report">dodaj prispevek</a>
+      <br />
+      <a href="/dashboard/new-event">dodaj dogodek</a>
+      <br />
+      <a href="/dashboard/new-source">dodaj vir</a>
+      <br />
+    </div>
+    <div>
+      <router-view />
     </div>
   </div>
 </template>

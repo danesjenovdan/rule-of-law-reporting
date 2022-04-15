@@ -43,3 +43,61 @@ export async function login(email, password) {
 export async function me() {
   return authedApi.get('/user/me');
 }
+
+export async function uploadFile(file) {
+  const formData = new FormData();
+  formData.append('file', file);
+  formData.append(
+    'json',
+    JSON.stringify({
+      api: 'xcAttachmentUpload',
+      project_id: 'rol_app_try_2_0zwf',
+      dbAlias: 'db',
+      args: {},
+    })
+  );
+  return authedApi.post('/dashboard?project_id=rol_app_try_2_0zwf', formData);
+}
+
+export async function getAreas() {
+  return authedApi.get('/nc/rol_app_try_2_0zwf/api/v1/Področja');
+}
+
+export async function getReports() {
+  return authedApi.get('/nc/rol_app_try_2_0zwf/api/v1/Prispevek');
+}
+
+export async function postReport(data) {
+  return authedApi.post(`/nc/rol_app_try_2_0zwf/api/v1/Prispevek`, data);
+}
+
+export async function getEvents(filter = {}) {
+  const where = Object.entries(filter)
+    .map(([key, value]) => `(${key},eq,${value})`)
+    .join('~and');
+  return authedApi.get(`/nc/rol_app_try_2_0zwf/api/v1/Dogodek?where=${where}`);
+}
+
+export async function postEvent(data) {
+  const postData = { ...data };
+  if (
+    Number.isNaN(Number(postData.nc_0zwf__dogodek_id)) ||
+    postData.nc_0zwf__dogodek_id <= 0
+  ) {
+    postData.nc_0zwf__dogodek_id = undefined;
+  }
+  return authedApi.post(`/nc/rol_app_try_2_0zwf/api/v1/Dogodek`, postData);
+}
+
+export async function postSource(data) {
+  const { 'Dokumenti povezani z virom': files, ...postData } = data;
+
+  const fileResponses = await Promise.all(
+    files.map((file) => uploadFile(file.file))
+  );
+  const uploadedFiles = fileResponses.map((r) => r.data);
+
+  postData['Dokumenti povezani z virom'] = JSON.stringify(uploadedFiles);
+
+  return authedApi.post(`/nc/rol_app_try_2_0zwf/api/v1/Vir`, postData);
+}
