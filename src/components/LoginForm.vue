@@ -1,32 +1,50 @@
 <template>
   <div>
-    <form @submit.prevent="onSubmit">
-      <div class="form-group">
-        <input v-model="email" type="text" placeholder="email" />
-      </div>
-      <div class="form-group">
-        <input v-model="password" type="password" placeholder="password" />
-      </div>
-      <div class="form-error">{{ errorMessage }}</div>
-      <button type="submit">Login</button>
-    </form>
+    <FormKit
+      v-model="formData"
+      type="form"
+      submit-label="Prijavi se"
+      @submit="submit"
+    >
+      <FormKit
+        type="email"
+        name="email"
+        label="E-pošta"
+        validation="required"
+      />
+      <FormKit
+        type="password"
+        name="password"
+        label="Geslo"
+        validation="required"
+      />
+    </FormKit>
   </div>
 </template>
 
-<script setup>
-import { ref } from 'vue';
+<script>
 import { login } from '../helpers/api.js';
 
-const email = ref('');
-const password = ref('');
-const errorMessage = ref('');
-
-async function onSubmit() {
-  try {
-    const response = await login(email.value, password.value);
-    localStorage.setItem('token', response.data.token);
-  } catch (error) {
-    errorMessage.value = error.response?.data?.msg || error.message;
-  }
-}
+export default {
+  data() {
+    return {
+      formData: {
+        email: '',
+        password: '',
+      },
+    };
+  },
+  methods: {
+    async submit(data, node) {
+      try {
+        const response = await login(data.email, data.password);
+        localStorage.setItem('token', response.data.token);
+        this.$router.push('/dashboard');
+      } catch (error) {
+        const errorMessage = error.response?.data?.msg || error.message;
+        node.setErrors([errorMessage]);
+      }
+    },
+  },
+};
 </script>

@@ -4,7 +4,7 @@
       <h1>ROLR</h1>
     </header>
     <div class="content">
-      <router-view />
+      <RouterView />
     </div>
   </div>
 </template>

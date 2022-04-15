@@ -1,4 +1,3 @@
-import HomePage from './pages/HomePage.vue';
 import LoginPage from './pages/LoginPage.vue';
 import DashboardPage from './pages/DashboardPage.vue';
 import NewReport from './components/NewReport.vue';
@@ -6,7 +5,7 @@ import NewEvent from './components/NewEvent.vue';
 import NewSource from './components/NewSource.vue';
 
 export const routes = [
-  { path: '/', component: HomePage },
+  { path: '/', redirect: '/login' },
   { path: '/login', component: LoginPage },
   {
     path: '/dashboard',
