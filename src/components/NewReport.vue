@@ -1,36 +1,48 @@
 <template>
   <div>
     <h2>Nov prispevek</h2>
-    <FormKit v-model="formData" type="form" @submit="submit">
-      <FormKit
-        type="select"
-        name="nc_0zwf__področja_id"
-        label="Področje"
-        :options="areas"
-        :help="selectedArea?.help"
-        validation="required|not:0"
-      />
-      <template v-if="formData.nc_0zwf__področja_id === '4'">
+    <template v-if="!submitted">
+      <FormKit v-model="formData" type="form" @submit="submit">
         <FormKit
           type="select"
-          name="Če ste izbrali druga, na katerem področju"
-          label="Če ste izbrali druga, na katerem področju"
-          :options="otherAreas"
+          name="nc_0zwf__področja_id"
+          label="Področje"
+          :options="areas"
+          :help="selectedArea?.help"
+          validation="required|not:0"
         />
-      </template>
+        <template v-if="formData.nc_0zwf__področja_id === '4'">
+          <FormKit
+            type="select"
+            name="Če ste izbrali druga, na katerem področju"
+            label="Če ste izbrali druga, na katerem področju"
+            :options="otherAreas"
+          />
+        </template>
+        <FormKit
+          type="text"
+          name="Ime prispevka"
+          label="Ime prispevka"
+          validation="required"
+        />
+        <FormKit
+          type="textarea"
+          name="O področju prispevka"
+          label="O področju prispevka"
+          validation="required"
+        />
+      </FormKit>
+    </template>
+    <template v-else>
+      <div>Prispevek oddan</div>
+      <FormKit type="button" @click="reset">dodaj še enega</FormKit>
       <FormKit
-        type="text"
-        name="Ime prispevka"
-        label="Ime prispevka"
-        validation="required"
-      />
-      <FormKit
-        type="textarea"
-        name="O področju prispevka"
-        label="O področju prispevka"
-        validation="required"
-      />
-    </FormKit>
+        type="button"
+        @click="$router.push(`/dashboard/new-event?report=${lastSubmittedId}`)"
+      >
+        dodaj povezan dogodek
+      </FormKit>
+    </template>
   </div>
 </template>
 
@@ -55,6 +67,8 @@ export default {
         'Ime prispevka': '',
         'O področju prispevka ': '',
       },
+      submitted: false,
+      lastSubmittedId: 0,
     };
   },
   computed: {
@@ -82,12 +96,18 @@ export default {
   methods: {
     async submit(data, node) {
       try {
-        await postReport(data);
+        const response = await postReport(data);
         node.reset();
+        this.lastSubmittedId = response.data.id;
+        this.submitted = true;
       } catch (error) {
         const errorMessage = error.response?.data?.msg || error.message;
         node.setErrors([errorMessage]);
       }
+    },
+    reset() {
+      this.submitted = false;
+      this.lastSubmittedId = 0;
     },
   },
 };

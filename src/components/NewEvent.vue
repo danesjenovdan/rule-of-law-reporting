@@ -1,34 +1,46 @@
 <template>
   <div>
     <h2>Nov dogodek</h2>
-    <FormKit v-model="formData" type="form" @submit="submit">
+    <template v-if="!submitted">
+      <FormKit v-model="formData" type="form" @submit="submit">
+        <FormKit
+          type="select"
+          name="nc_0zwf__prispevek_id"
+          label="Prispevek"
+          :options="reports"
+          validation="required|not:0"
+        />
+        <FormKit
+          type="text"
+          name="Naslov dogodka"
+          label="Naslov dogodka"
+          validation="required"
+        />
+        <FormKit
+          type="textarea"
+          name="Kaj se je zgodilo in kako vpliva na vladavino prava"
+          label="Kaj se je zgodilo in kako vpliva na vladavino prava"
+          validation="required"
+        />
+        <FormKit
+          type="select"
+          name="nc_0zwf__dogodek_id"
+          label="Dogodek"
+          :options="events"
+          help="Izberite če ta dogodek posodobi drug dogodek."
+        />
+      </FormKit>
+    </template>
+    <template v-else>
+      <div>Dogodek oddan</div>
+      <FormKit type="button" @click="reset">dodaj še enega</FormKit>
       <FormKit
-        type="select"
-        name="nc_0zwf__prispevek_id"
-        label="Prispevek"
-        :options="reports"
-        validation="required|not:0"
-      />
-      <FormKit
-        type="text"
-        name="Naslov dogodka"
-        label="Naslov dogodka"
-        validation="required"
-      />
-      <FormKit
-        type="textarea"
-        name="Kaj se je zgodilo in kako vpliva na vladavino prava"
-        label="Kaj se je zgodilo in kako vpliva na vladavino prava"
-        validation="required"
-      />
-      <FormKit
-        type="select"
-        name="nc_0zwf__dogodek_id"
-        label="Dogodek"
-        :options="events"
-        help="Izberite če ta dogodek posodobi drug dogodek."
-      />
-    </FormKit>
+        type="button"
+        @click="$router.push(`/dashboard/new-source?event=${lastSubmittedId}`)"
+      >
+        dodaj povezan vir
+      </FormKit>
+    </template>
   </div>
 </template>
 
@@ -46,6 +58,8 @@ export default {
         'Kaj se je zgodilo in kako vpliva na vladavino prava': '',
         nc_0zwf__dogodek_id: '0',
       },
+      submitted: false,
+      lastSubmittedId: 0,
     };
   },
   watch: {
@@ -56,11 +70,12 @@ export default {
     },
   },
   mounted() {
-    this.fetchReports();
+    const selectedReportId = Number(this.$route.query.report) || undefined;
+    this.fetchReports(selectedReportId);
     this.fetchEvents();
   },
   methods: {
-    async fetchReports() {
+    async fetchReports(selectedReportId) {
       const response = await getReports();
       const entries = response.data.map((item) => ({
         value: item.id,
@@ -74,6 +89,9 @@ export default {
         },
         ...entries,
       ];
+      if (selectedReportId) {
+        this.formData.nc_0zwf__prispevek_id = selectedReportId;
+      }
     },
     async fetchEvents() {
       const response = await getEvents({
@@ -93,11 +111,22 @@ export default {
     },
     async submit(data, node) {
       try {
-        await postEvent(data);
+        const response = await postEvent(data);
         node.reset();
+        this.lastSubmittedId = response.data.id;
+        this.submitted = true;
       } catch (error) {
         const errorMessage = error.response?.data?.msg || error.message;
         node.setErrors([errorMessage]);
+      }
+    },
+    reset() {
+      this.submitted = false;
+      this.lastSubmittedId = 0;
+
+      const selectedReportId = Number(this.$route.query.report) || undefined;
+      if (selectedReportId) {
+        this.formData.nc_0zwf__prispevek_id = selectedReportId;
       }
     },
   },

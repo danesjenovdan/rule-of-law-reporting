@@ -59,6 +59,13 @@ export async function uploadFile(file) {
   return authedApi.post('/dashboard?project_id=rol_app_try_2_0zwf', formData);
 }
 
+export async function postConnectDogodekVir(dogodekId, virId) {
+  return authedApi.post('/nc/rol_app_try_2_0zwf/api/v1/m2mDogodek_Vir', {
+    table1_id: dogodekId,
+    table2_id: virId,
+  });
+}
+
 export async function getAreas() {
   return authedApi.get('/nc/rol_app_try_2_0zwf/api/v1/Področja');
 }
@@ -90,7 +97,11 @@ export async function postEvent(data) {
 }
 
 export async function postSource(data) {
-  const { 'Dokumenti povezani z virom': files, ...postData } = data;
+  const {
+    'Dokumenti povezani z virom': files,
+    related_dogodek_id: dogodekId,
+    ...postData
+  } = data;
 
   const fileResponses = await Promise.all(
     files.map((file) => uploadFile(file.file))
@@ -99,5 +110,14 @@ export async function postSource(data) {
 
   postData['Dokumenti povezani z virom'] = JSON.stringify(uploadedFiles);
 
-  return authedApi.post(`/nc/rol_app_try_2_0zwf/api/v1/Vir`, postData);
+  const response = await authedApi.post(
+    `/nc/rol_app_try_2_0zwf/api/v1/Vir`,
+    postData
+  );
+
+  if (dogodekId) {
+    await postConnectDogodekVir(dogodekId, response.data.id);
+  }
+
+  return response;
 }
