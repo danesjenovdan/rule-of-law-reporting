@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div class="dashboard-page">
+    <SmallHeader />
     <div class="buttons">
       <a href="/dashboard/new-report">dodaj prispevek</a>
       <a href="/dashboard/new-event">dodaj dogodek</a>
@@ -12,9 +13,13 @@
 </template>
 
 <script>
+import SmallHeader from '../components/Header/SmallHeader.vue';
 import { me } from '../helpers/api.js';
 
 export default {
+  components: {
+    SmallHeader,
+  },
   mounted() {
     this.checkLogin();
   },

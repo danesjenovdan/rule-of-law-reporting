@@ -37,7 +37,7 @@
     "@formkit/core" "1.0.0-beta.6"
     "@formkit/utils" "1.0.0-beta.6"
 
-"@formkit/i18n@1.0.0-beta.6":
+"@formkit/i18n@1.0.0-beta.6", "@formkit/i18n@^1.0.0-beta.6":
   version "1.0.0-beta.6"
   resolved "https://registry.yarnpkg.com/@formkit/i18n/-/i18n-1.0.0-beta.6.tgz#2593522a113ab282855617267438689dd4f28b29"
   integrity sha512-6SyKLBd/HWkpRZF9DHb8HndOYy7GNohD8ee57pDqwQhFx5MQ6YPD1RcsU1MWjYcRG/ZbRqt+iQuVnLDiIGDfmQ==

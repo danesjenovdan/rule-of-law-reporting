@@ -1,15 +1,22 @@
 <template>
-  <div>
-    <LoginForm />
+  <div class="login-page">
+    <div class="logo">
+      <CircleLogo />
+    </div>
+    <div>
+      <LoginForm />
+    </div>
   </div>
 </template>
 
 <script>
+import CircleLogo from '../components/Header/CircleLogo.vue';
 import LoginForm from '../components/LoginForm.vue';
 import { me } from '../helpers/api.js';
 
 export default {
   components: {
+    CircleLogo,
     LoginForm,
   },
   mounted() {
@@ -28,3 +35,11 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.logo {
+  display: flex;
+  justify-content: center;
+  margin: 5rem 0;
+}
+</style>

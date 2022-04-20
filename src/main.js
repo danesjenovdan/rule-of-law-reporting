@@ -1,6 +1,7 @@
 import { createApp } from 'vue';
 import { createRouter, createWebHistory } from 'vue-router';
 import { plugin as formkit, defaultConfig } from '@formkit/vue';
+import * as sl from './helpers/formkit-locale-sl.js';
 import { routes } from './routes.js';
 import App from './App.vue';
 
@@ -17,6 +18,12 @@ const router = createRouter({
 const app = createApp(App);
 
 app.use(router);
-app.use(formkit, defaultConfig);
+app.use(
+  formkit,
+  defaultConfig({
+    locales: { sl },
+    locale: 'sl',
+  })
+);
 
 app.mount('#app');
