@@ -1,4 +1,4 @@
-import { sentence as s, list, date, order } from '@formkit/i18n';
+import { sentence as s } from '@formkit/i18n';
 
 export const ui = {
   remove: 'Odstrani',
@@ -94,9 +94,9 @@ export const validation = {
   //     }
   //     return `${s(name)} must be at least ${args[0]}.`;
   //   },
-  //   not({ name, node: { value } }) {
-  //     return `“${value}” is not an allowed ${name}.`;
-  //   },
+  not({ name, node: { value } }) {
+    return `${s(name)} ne sprejme vrednosti "${value}".`;
+  },
   //   number({ name }) {
   //     return `${s(name)} must be a number.`;
   //   },

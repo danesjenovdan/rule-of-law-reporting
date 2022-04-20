@@ -1,8 +1,20 @@
 <template>
   <div>
-    <h2>Nov prispevek</h2>
+    <div class="lead-in-text">
+      <div class="lead">Nov prispevek</div>
+      <div>
+        Pred oddajo novega prispevka na seznamu vseh prispevkov preveri, če ta
+        prispevek res še ne obstaja.
+      </div>
+    </div>
+    <hr />
     <template v-if="!submitted">
-      <FormKit v-model="formData" type="form" @submit="submit">
+      <FormKit
+        v-model="formData"
+        type="form"
+        submit-label="Oddaj prispevek"
+        @submit="submit"
+      >
         <FormKit
           type="select"
           name="nc_0zwf__področja_id"
@@ -19,18 +31,21 @@
             :options="otherAreas"
           />
         </template>
+        <hr />
         <FormKit
           type="text"
           name="Ime prispevka"
           label="Ime prispevka"
           validation="required"
         />
+        <hr />
         <FormKit
           type="textarea"
           name="O področju prispevka"
           label="O področju prispevka"
           validation="required"
         />
+        <hr />
       </FormKit>
     </template>
     <template v-else>

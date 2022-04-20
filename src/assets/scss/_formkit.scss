@@ -29,6 +29,13 @@
   margin-top: 3rem;
 }
 
+.formkit-input:not(textarea) {
+  padding-top: 0;
+  padding-bottom: 0;
+  height: 2.75em;
+  line-height: 2.75em;
+}
+
 [data-type='submit'] {
   .formkit-input {
     width: 100%;
@@ -57,4 +64,14 @@
 .formkit-inner:focus-within {
   border-color: $color-accent;
   box-shadow: 0 0 0 2px $color-accent;
+}
+
+[data-type='select']:not([data-multiple]) .formkit-inner::after {
+  height: 16px;
+  width: 16px;
+  right: 8px;
+}
+
+select.formkit-input {
+  padding-right: 28px;
 }

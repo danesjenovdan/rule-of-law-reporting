@@ -1,8 +1,20 @@
 <template>
   <div>
-    <h2>Nov vir</h2>
+    <div class="lead-in-text">
+      <div class="lead">Nov vir</div>
+      <div>
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Asperiores
+        beatae expedita nostrum cumque quos!
+      </div>
+    </div>
+    <hr />
     <template v-if="!submitted">
-      <FormKit v-model="formData" type="form" @submit="submit">
+      <FormKit
+        v-model="formData"
+        type="form"
+        submit-label="Oddaj vir"
+        @submit="submit"
+      >
         <FormKit
           type="select"
           name="related_dogodek_id"
@@ -10,6 +22,7 @@
           :options="events"
           validation="required|not:0"
         />
+        <hr />
         <FormKit
           type="select"
           name="Tip vira"
@@ -17,43 +30,51 @@
           :options="type"
           validation="required"
         />
+        <hr />
         <FormKit
           type="text"
           name="Avtor vira (oseba, organizacija, medij)"
           label="Avtor vira (oseba, organizacija, medij)"
           validation="required"
         />
+        <hr />
         <FormKit
           type="date"
           name="Datum objave vira"
           label="Datum objave vira"
           validation="required"
         />
+        <hr />
         <FormKit
           type="date"
           name="Datum začetka obdobja"
           label="Datum začetka obdobja"
           validation="required"
         />
+        <hr />
         <FormKit
           type="date"
           name="Datum konca obdobja"
           label="Datum konca obdobja"
           validation="required"
         />
+        <hr />
         <FormKit
           type="url"
           name="Povezava do vira"
           label="Povezava do vira"
           validation="required"
         />
+        <hr />
         <FormKit
           type="file"
           name="Dokumenti povezani z virom"
           label="Dokumenti povezani z virom"
           multiple
-        /> </FormKit
-    ></template>
+        />
+        <hr />
+      </FormKit>
+    </template>
     <template v-else>
       <div>Vir oddan</div>
       <FormKit type="button" @click="reset">dodaj še enega</FormKit>

@@ -1,6 +1,6 @@
 <template>
   <section class="login-form">
-    <header>
+    <header class="lead-in-text">
       <div class="lead">Pozdravljen_a v aplikaciji!</div>
       <div>Za uporabo se vpiši.</div>
     </header>
@@ -24,7 +24,7 @@
         validation="required"
       />
     </FormKit>
-    <footer>
+    <footer class="lead-in-text">
       <div class="lead">Še nisi registriran_a?</div>
       <div>
         Za dostop nam piši na
@@ -65,14 +65,6 @@ export default {
 @import '../assets/scss/variables';
 
 .login-form {
-  header,
-  footer {
-    .lead {
-      font-size: 1.333334rem;
-      font-weight: 600;
-    }
-  }
-
   header {
     margin-bottom: 2.5rem;
   }
