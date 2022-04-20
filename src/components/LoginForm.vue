@@ -15,6 +15,7 @@
         name="email"
         label="E-pošta"
         validation="required|email"
+        autofocus
       />
       <FormKit
         type="password"

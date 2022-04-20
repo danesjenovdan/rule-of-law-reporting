@@ -20,7 +20,13 @@ export default {
     LoginForm,
   },
   mounted() {
-    this.checkLogin();
+    const { logout } = this.$route.query;
+    if (logout) {
+      localStorage.removeItem('token');
+      this.$router.replace('/login');
+    } else {
+      this.checkLogin();
+    }
   },
   methods: {
     async checkLogin() {
