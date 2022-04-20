@@ -47,11 +47,11 @@ export default {
   height: 100%;
 
   section.header {
-    flex: 0 0 auto;
+    flex: 0 0 0%;
   }
 
   section.main-content {
-    flex: 1 0 auto;
+    flex: 1 0 0%;
     margin-left: -$gutter;
     margin-right: -$gutter;
     padding-left: $gutter;
