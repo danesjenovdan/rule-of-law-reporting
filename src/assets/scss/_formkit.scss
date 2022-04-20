@@ -1,0 +1,77 @@
+.formkit-wrapper,
+.formkit-fieldset {
+  max-width: 100%;
+}
+
+.formkit-label {
+  font-family: $base-font;
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.formkit-inner {
+  position: relative;
+  border-color: $color-accent-light;
+  box-shadow: 0 0 0 1px $color-accent-light;
+  background: $color-white;
+}
+
+[data-invalid] .formkit-inner {
+  border-color: $color-error;
+  box-shadow: 0 0 0 1px $color-error;
+}
+
+.formkit-message {
+  color: $color-error;
+}
+
+.formkit-actions {
+  margin-top: 3rem;
+}
+
+.formkit-input:not(textarea) {
+  padding-top: 0;
+  padding-bottom: 0;
+  height: 2.75em;
+  line-height: 2.75em;
+}
+
+[data-type='submit'] {
+  .formkit-input {
+    width: 100%;
+    background: $color-accent-light;
+    color: $color-black;
+    font-family: $base-font;
+    font-size: 1.333334rem;
+    font-weight: 600;
+
+    &:hover {
+      background: $color-accent;
+      color: $color-white;
+    }
+  }
+}
+
+[data-type='button'],
+[data-type='submit'] {
+  .formkit-input:focus-visible,
+  .formkit-input:focus-within {
+    border-color: $color-accent;
+    box-shadow: 0 0 0 1px $color-accent;
+  }
+}
+
+.formkit-inner:focus-within {
+  border-color: $color-accent;
+  box-shadow: 0 0 0 2px $color-accent;
+}
+
+[data-type='select']:not([data-multiple]) .formkit-inner::after {
+  height: 16px;
+  width: 16px;
+  right: 8px;
+}
+
+select.formkit-input {
+  padding-right: 28px;
+}

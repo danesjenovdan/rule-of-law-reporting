@@ -1,20 +1,25 @@
 <template>
-  <div>
-    <div class="buttons">
-      <a href="/dashboard/new-report">dodaj prispevek</a>
-      <a href="/dashboard/new-event">dodaj dogodek</a>
-      <a href="/dashboard/new-source">dodaj vir</a>
-    </div>
-    <div>
+  <div class="dashboard-page">
+    <section class="header">
+      <SmallHeader />
+      <PillButtonNav />
+    </section>
+    <section class="main-content">
       <RouterView />
-    </div>
+    </section>
   </div>
 </template>
 
 <script>
+import SmallHeader from '../components/Header/SmallHeader.vue';
+import PillButtonNav from '../components/PillButtonNav.vue';
 import { me } from '../helpers/api.js';
 
 export default {
+  components: {
+    SmallHeader,
+    PillButtonNav,
+  },
   mounted() {
     this.checkLogin();
   },
@@ -34,8 +39,25 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.buttons {
+@import '../assets/scss/variables';
+
+.dashboard-page {
   display: flex;
-  justify-content: space-evenly;
+  flex-direction: column;
+  height: 100%;
+
+  section.header {
+    flex: 0 0 auto;
+  }
+
+  section.main-content {
+    flex: 1 0 auto;
+    margin-left: -$gutter;
+    margin-right: -$gutter;
+    padding-left: $gutter;
+    padding-right: $gutter;
+    background: $color-white;
+    overflow-y: scroll;
+  }
 }
 </style>

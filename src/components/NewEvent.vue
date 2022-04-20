@@ -1,8 +1,20 @@
 <template>
   <div>
-    <h2>Nov dogodek</h2>
+    <div class="lead-in-text">
+      <div class="lead">Nov dogodek</div>
+      <div>
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Asperiores
+        beatae expedita nostrum cumque quos!
+      </div>
+    </div>
+    <hr />
     <template v-if="!submitted">
-      <FormKit v-model="formData" type="form" @submit="submit">
+      <FormKit
+        v-model="formData"
+        type="form"
+        submit-label="Oddaj dogodek"
+        @submit="submit"
+      >
         <FormKit
           type="select"
           name="nc_0zwf__prispevek_id"
@@ -10,18 +22,21 @@
           :options="reports"
           validation="required|not:0"
         />
+        <hr />
         <FormKit
           type="text"
           name="Naslov dogodka"
           label="Naslov dogodka"
           validation="required"
         />
+        <hr />
         <FormKit
           type="textarea"
           name="Kaj se je zgodilo in kako vpliva na vladavino prava"
           label="Kaj se je zgodilo in kako vpliva na vladavino prava"
           validation="required"
         />
+        <hr />
         <FormKit
           type="select"
           name="nc_0zwf__dogodek_id"
@@ -29,6 +44,7 @@
           :options="events"
           help="Izberite če ta dogodek posodobi drug dogodek."
         />
+        <hr />
       </FormKit>
     </template>
     <template v-else>

@@ -1,5 +1,9 @@
 <template>
-  <div>
+  <section class="login-form">
+    <header class="lead-in-text">
+      <div class="lead">Pozdravljen_a v aplikaciji!</div>
+      <div>Za uporabo se vpiši.</div>
+    </header>
     <FormKit
       v-model="formData"
       type="form"
@@ -10,7 +14,8 @@
         type="email"
         name="email"
         label="E-pošta"
-        validation="required"
+        validation="required|email"
+        autofocus
       />
       <FormKit
         type="password"
@@ -19,7 +24,14 @@
         validation="required"
       />
     </FormKit>
-  </div>
+    <footer class="lead-in-text">
+      <div class="lead">Še nisi registriran_a?</div>
+      <div>
+        Za dostop nam piši na
+        <a href="mailto:todo-email@example.com">todo-email@example.com</a>.
+      </div>
+    </footer>
+  </section>
 </template>
 
 <script>
@@ -48,3 +60,20 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+@import '../assets/scss/variables';
+
+.login-form {
+  header {
+    margin-bottom: 2.5rem;
+  }
+
+  footer {
+    border-top: 1px solid $color-accent-light;
+    margin-top: 3rem;
+    margin-bottom: 2rem;
+    padding-top: 3rem;
+  }
+}
+</style>
