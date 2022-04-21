@@ -93,7 +93,7 @@ export default {
   methods: {
     async fetchReports(selectedReportId) {
       const response = await getReports();
-      const entries = response.data.map((item) => ({
+      const entries = response.data.list.map((item) => ({
         value: item.id,
         label: item['Ime prispevka'],
       }));
@@ -113,7 +113,7 @@ export default {
       const response = await getEvents({
         nc_0zwf__prispevek_id: this.formData.nc_0zwf__prispevek_id,
       });
-      const entries = response.data.map((item) => ({
+      const entries = response.data.list.map((item) => ({
         value: item.id,
         label: item['Naslov dogodka'],
       }));

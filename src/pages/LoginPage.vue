@@ -32,9 +32,13 @@ export default {
     async checkLogin() {
       const token = localStorage.getItem('token');
       if (token) {
-        const response = await me();
-        if (response?.data?.isAuthorized) {
-          this.$router.push('/dashboard');
+        try {
+          const response = await me();
+          if (response?.data?.isAuthorized) {
+            this.$router.push('/dashboard');
+          }
+        } catch (error) {
+          // not logged in, do nothing
         }
       }
     },
