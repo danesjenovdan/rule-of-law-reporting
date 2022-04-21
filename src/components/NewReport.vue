@@ -94,7 +94,7 @@ export default {
   },
   async mounted() {
     const response = await getAreas();
-    const entries = response.data.map((item) => ({
+    const entries = response.data.list.map((item) => ({
       value: item.id,
       label: item['Ime področja'],
       help: item['Opis področja'],
