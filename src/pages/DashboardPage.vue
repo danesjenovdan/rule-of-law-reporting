@@ -27,9 +27,13 @@ export default {
     async checkLogin() {
       const token = localStorage.getItem('token');
       if (token) {
-        const response = await me();
-        if (response?.data?.isAuthorized) {
-          return;
+        try {
+          const response = await me();
+          if (response?.data?.isAuthorized) {
+            return;
+          }
+        } catch (error) {
+          // fall through to redirect
         }
       }
       this.$router.push('/login');
