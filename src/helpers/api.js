@@ -67,11 +67,11 @@ export async function getAreas() {
   return authedApi.get(`data/noco/${projectName}/Področja`);
 }
 
-export async function getReports() {
+export async function getContributions() {
   return authedApi.get(`data/noco/${projectName}/Prispevek`);
 }
 
-export async function postReport(data) {
+export async function postContribution(data) {
   return authedApi.post(`data/noco/${projectName}/Prispevek`, data);
 }
 

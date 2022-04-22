@@ -1,8 +1,8 @@
 <template>
   <div class="pill-button-nav">
-    <PillButton to="/dashboard/new-report">Dodaj prispevek</PillButton>
-    <PillButton to="/dashboard/new-event">Dodaj dogodek</PillButton>
-    <PillButton to="/dashboard/new-source">Dodaj vir</PillButton>
+    <PillButton :to="{ name: 'contributions' }">Prispevki</PillButton>
+    <PillButton :to="{ name: 'reports' }">Poročila</PillButton>
+    <PillButton :to="{ name: 'about-reporting' }">O poročanju</PillButton>
   </div>
 </template>
 

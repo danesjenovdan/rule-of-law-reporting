@@ -53,7 +53,12 @@
       <FormKit type="button" @click="reset">dodaj še enega</FormKit>
       <FormKit
         type="button"
-        @click="$router.push(`/dashboard/new-event?report=${lastSubmittedId}`)"
+        @click="
+          $router.push({
+            name: 'new-event',
+            query: { contribution: lastSubmittedId },
+          })
+        "
       >
         dodaj povezan dogodek
       </FormKit>
@@ -62,7 +67,7 @@
 </template>
 
 <script>
-import { getAreas, postReport } from '../helpers/api.js';
+import { getAreas, postContribution } from '../helpers/api.js';
 
 export default {
   data() {
@@ -111,7 +116,7 @@ export default {
   methods: {
     async submit(data, node) {
       try {
-        const response = await postReport(data);
+        const response = await postContribution(data);
         node.reset();
         this.lastSubmittedId = response.data.id;
         this.submitted = true;

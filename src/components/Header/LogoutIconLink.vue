@@ -1,5 +1,8 @@
 <template>
-  <RouterLink to="/login?logout=true" class="logout-icon-link">
+  <RouterLink
+    :to="{ name: 'login', query: { logout: true } }"
+    class="logout-icon-link"
+  >
     Odjavi se
   </RouterLink>
 </template>

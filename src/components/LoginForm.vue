@@ -51,7 +51,7 @@ export default {
       try {
         const response = await login(data.email, data.password);
         localStorage.setItem('token', response.data.token);
-        this.$router.push('/dashboard');
+        this.$router.push({ name: 'dashboard' });
       } catch (error) {
         const errorMessage = error.response?.data?.msg || error.message;
         node.setErrors([errorMessage]);

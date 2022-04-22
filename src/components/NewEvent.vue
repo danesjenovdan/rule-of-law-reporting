@@ -19,7 +19,7 @@
           type="select"
           name="nc_0zwf__prispevek_id"
           label="Prispevek"
-          :options="reports"
+          :options="contributions"
           validation="required|not:0"
         />
         <hr />
@@ -52,7 +52,12 @@
       <FormKit type="button" @click="reset">dodaj še enega</FormKit>
       <FormKit
         type="button"
-        @click="$router.push(`/dashboard/new-source?event=${lastSubmittedId}`)"
+        @click="
+          $router.push({
+            name: 'new-source',
+            query: { event: lastSubmittedId },
+          })
+        "
       >
         dodaj povezan vir
       </FormKit>
@@ -61,12 +66,12 @@
 </template>
 
 <script>
-import { getEvents, getReports, postEvent } from '../helpers/api.js';
+import { getContributions, getEvents, postEvent } from '../helpers/api.js';
 
 export default {
   data() {
     return {
-      reports: [],
+      contributions: [],
       events: [],
       formData: {
         nc_0zwf__prispevek_id: '0',
@@ -86,18 +91,18 @@ export default {
     },
   },
   mounted() {
-    const selectedReportId = Number(this.$route.query.report) || undefined;
-    this.fetchReports(selectedReportId);
+    const selectedContributionId = Number(this.$route.query.contribution);
+    this.fetchContributions(selectedContributionId);
     this.fetchEvents();
   },
   methods: {
-    async fetchReports(selectedReportId) {
-      const response = await getReports();
+    async fetchContributions(selectedContributionId) {
+      const response = await getContributions();
       const entries = response.data.list.map((item) => ({
         value: item.id,
         label: item['Ime prispevka'],
       }));
-      this.reports = [
+      this.contributions = [
         {
           value: '0',
           label: '---',
@@ -105,8 +110,8 @@ export default {
         },
         ...entries,
       ];
-      if (selectedReportId) {
-        this.formData.nc_0zwf__prispevek_id = selectedReportId;
+      if (selectedContributionId) {
+        this.formData.nc_0zwf__prispevek_id = selectedContributionId;
       }
     },
     async fetchEvents() {
@@ -140,9 +145,9 @@ export default {
       this.submitted = false;
       this.lastSubmittedId = 0;
 
-      const selectedReportId = Number(this.$route.query.report) || undefined;
-      if (selectedReportId) {
-        this.formData.nc_0zwf__prispevek_id = selectedReportId;
+      const selectedContributionId = Number(this.$route.query.contribution);
+      if (selectedContributionId) {
+        this.formData.nc_0zwf__prispevek_id = selectedContributionId;
       }
     },
   },

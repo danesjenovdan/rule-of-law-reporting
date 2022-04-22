@@ -36,7 +36,7 @@ export default {
           // fall through to redirect
         }
       }
-      this.$router.push('/login');
+      this.$router.push({ name: 'login' });
     },
   },
 };

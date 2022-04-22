@@ -1,19 +1,40 @@
 import LoginPage from './pages/LoginPage.vue';
 import DashboardPage from './pages/DashboardPage.vue';
-import NewReport from './components/NewReport.vue';
+import NewContribution from './components/NewContribution.vue';
 import NewEvent from './components/NewEvent.vue';
 import NewSource from './components/NewSource.vue';
 
 export const routes = [
-  { path: '/', redirect: '/login' },
-  { path: '/login', component: LoginPage },
   {
+    name: 'root',
+    path: '/',
+    redirect: { name: 'login' },
+  },
+  {
+    name: 'login',
+    path: '/login',
+    component: LoginPage,
+  },
+  {
+    name: 'dashboard',
     path: '/dashboard',
     component: DashboardPage,
     children: [
-      { path: 'new-report', component: NewReport },
-      { path: 'new-event', component: NewEvent },
-      { path: 'new-source', component: NewSource },
+      {
+        name: 'new-contribution',
+        path: 'new-contribution',
+        component: NewContribution,
+      },
+      {
+        name: 'new-event',
+        path: 'new-event',
+        component: NewEvent,
+      },
+      {
+        name: 'new-source',
+        path: 'new-source',
+        component: NewSource,
+      },
     ],
   },
 ];
