@@ -20,17 +20,8 @@ export default {
 @import '../assets/scss/variables';
 
 .pill-button-nav {
-  // nicer overscroll
-  margin-left: -$gutter;
-  margin-right: -$gutter;
-  padding-left: $gutter;
-  padding-right: $gutter;
-  // scrollbar spacing
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-
+  margin: 1.5rem 0;
   display: flex;
   gap: 0.5rem;
-  overflow-x: scroll;
 }
 </style>

@@ -1,8 +1,8 @@
 <template>
-  <header class="small-header">
+  <div class="small-header">
     <DashboardLogoLink />
     <LogoutIconLink />
-  </header>
+  </div>
 </template>
 
 <script>

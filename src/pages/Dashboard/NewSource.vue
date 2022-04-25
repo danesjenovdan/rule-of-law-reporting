@@ -83,7 +83,7 @@
 </template>
 
 <script>
-import { getEvents, postSource } from '../helpers/api.js';
+import { getEvents, postSource } from '../../helpers/api.js';
 
 export default {
   data() {

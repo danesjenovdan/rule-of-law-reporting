@@ -67,7 +67,7 @@
 </template>
 
 <script>
-import { getAreas, postContribution } from '../helpers/api.js';
+import { getAreas, postContribution } from '../../helpers/api.js';
 
 export default {
   data() {

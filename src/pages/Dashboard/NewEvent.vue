@@ -66,7 +66,7 @@
 </template>
 
 <script>
-import { getContributions, getEvents, postEvent } from '../helpers/api.js';
+import { getContributions, getEvents, postEvent } from '../../helpers/api.js';
 
 export default {
   data() {
