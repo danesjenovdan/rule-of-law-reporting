@@ -1,75 +1,90 @@
 <template>
-  <div>
-    <div class="lead-in-text">
-      <div class="lead">Nov prispevek</div>
-      <div>
-        Pred oddajo novega prispevka na seznamu vseh prispevkov preveri, če ta
-        prispevek res še ne obstaja.
+  <header>
+    <SmallHeader />
+    <BackArrow
+      text="Nazaj na seznam prispevkov"
+      :to="{ name: 'contributions' }"
+    />
+  </header>
+  <main>
+    <div>
+      <div class="lead-in-text">
+        <div class="lead">Nov prispevek</div>
+        <div>
+          Pred oddajo novega prispevka na seznamu vseh prispevkov preveri, če ta
+          prispevek res še ne obstaja.
+        </div>
       </div>
-    </div>
-    <hr />
-    <template v-if="!submitted">
-      <FormKit
-        v-model="formData"
-        type="form"
-        submit-label="Oddaj prispevek"
-        @submit="submit"
-      >
+      <hr />
+      <template v-if="!submitted">
         <FormKit
-          type="select"
-          name="nc_0zwf__področja_id"
-          label="Področje"
-          :options="areas"
-          :help="selectedArea?.help"
-          validation="required|not:0"
-        />
-        <template v-if="formData.nc_0zwf__področja_id === '4'">
+          v-model="formData"
+          type="form"
+          submit-label="Oddaj prispevek"
+          @submit="submit"
+        >
           <FormKit
             type="select"
-            name="Če ste izbrali druga, na katerem področju"
-            label="Če ste izbrali druga, na katerem področju"
-            :options="otherAreas"
+            name="nc_0zwf__področja_id"
+            label="Področje"
+            :options="areas"
+            :help="selectedArea?.help"
+            validation="required|not:0"
           />
-        </template>
-        <hr />
+          <template v-if="formData.nc_0zwf__področja_id === '4'">
+            <FormKit
+              type="select"
+              name="Če ste izbrali druga, na katerem področju"
+              label="Če ste izbrali druga, na katerem področju"
+              :options="otherAreas"
+            />
+          </template>
+          <hr />
+          <FormKit
+            type="text"
+            name="Ime prispevka"
+            label="Ime prispevka"
+            validation="required"
+          />
+          <hr />
+          <FormKit
+            type="textarea"
+            name="O področju prispevka"
+            label="O področju prispevka"
+            validation="required"
+          />
+          <hr />
+        </FormKit>
+      </template>
+      <template v-else>
+        <div>Prispevek oddan</div>
+        <FormKit type="button" @click="reset">dodaj še enega</FormKit>
         <FormKit
-          type="text"
-          name="Ime prispevka"
-          label="Ime prispevka"
-          validation="required"
-        />
-        <hr />
-        <FormKit
-          type="textarea"
-          name="O področju prispevka"
-          label="O področju prispevka"
-          validation="required"
-        />
-        <hr />
-      </FormKit>
-    </template>
-    <template v-else>
-      <div>Prispevek oddan</div>
-      <FormKit type="button" @click="reset">dodaj še enega</FormKit>
-      <FormKit
-        type="button"
-        @click="
-          $router.push({
-            name: 'new-event',
-            query: { contribution: lastSubmittedId },
-          })
-        "
-      >
-        dodaj povezan dogodek
-      </FormKit>
-    </template>
-  </div>
+          type="button"
+          @click="
+            $router.push({
+              name: 'new-event',
+              query: { contribution: lastSubmittedId },
+            })
+          "
+        >
+          dodaj povezan dogodek
+        </FormKit>
+      </template>
+    </div>
+  </main>
 </template>
 
 <script>
+import SmallHeader from '../../components/Header/SmallHeader.vue';
+import BackArrow from '../../components/Header/BackArrow.vue';
 import { getAreas, postContribution } from '../../helpers/api.js';
 
 export default {
+  components: {
+    SmallHeader,
+    BackArrow,
+  },
   data() {
     return {
       areas: [],

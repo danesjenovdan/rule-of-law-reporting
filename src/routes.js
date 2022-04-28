@@ -1,15 +1,11 @@
 import LoginPage from './pages/LoginPage.vue';
 import DashboardPage from './pages/DashboardPage.vue';
 import ContributionsList from './pages/Dashboard/ContributionsList.vue';
+import ReportsList from './pages/Dashboard/ReportsList.vue';
+import AboutReporting from './pages/Dashboard/AboutReporting.vue';
 import NewContribution from './pages/Dashboard/NewContribution.vue';
 import NewEvent from './pages/Dashboard/NewEvent.vue';
 import NewSource from './pages/Dashboard/NewSource.vue';
-
-const Empty = {
-  render() {
-    return '';
-  },
-};
 
 export const routes = [
   {
@@ -36,12 +32,12 @@ export const routes = [
       {
         name: 'reports',
         path: 'porocila',
-        component: Empty,
+        component: ReportsList,
       },
       {
         name: 'about-reporting',
         path: 'o-porocanju',
-        component: Empty,
+        component: AboutReporting,
       },
       {
         name: 'new-contribution',
