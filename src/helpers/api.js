@@ -75,6 +75,23 @@ export async function postContribution(data) {
   return authedApi.post(`data/noco/${projectName}/Prispevek`, data);
 }
 
+export async function filterContributions(filter = {}) {
+  // create 'where' query
+  const where = Object.entries(filter)
+    .map(([key, value]) => {
+      // if value is array use 'in' query
+      if (Array.isArray(value)) {
+        return `(${key},in,${value})`;
+      }
+      return `(${key},${value})`; // for created_at fields the operator is in the input field name, so we skip it here
+      // TODO: query for 'created_at' does not work (date format is wrong)
+    })
+    .join('~and'); // TODO: this is wrong - there should be 'or' between areas field, 'and' between date range field, ...
+
+  // console.log(where)
+  return authedApi.get(`data/noco/${projectName}/Prispevek?where=${where}`);
+}
+
 export async function getEvents(filter = {}) {
   const where = Object.entries(filter)
     .map(([key, value]) => `(${key},eq,${value})`)
