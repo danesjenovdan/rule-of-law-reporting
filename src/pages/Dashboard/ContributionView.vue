@@ -162,6 +162,10 @@ p {
   font-size: 12px;
 }
 
+main {
+  padding-bottom: 2rem;
+}
+
 .events {
   padding-top: 2rem;
   background-color: $bg-color;

@@ -62,6 +62,11 @@
   }
 }
 
+[data-type="checkbox"] fieldset.formkit-fieldset {
+  border: none;
+  padding: 0;
+}
+
 .formkit-inner:focus-within {
   border-color: $color-accent;
   box-shadow: 0 0 0 2px $color-accent;
@@ -82,4 +87,20 @@ select.formkit-input {
   height: unset;
   padding: 5px 8px;
   font-size: 10px;
+}
+
+.contribution.formkit-wrapper {
+  padding: 20px 0;
+  border-bottom: 1px solid $color-accent-light;
+  display: flex;
+  span {
+    font-size: 12px;
+    font-weight: 700;
+    display: block;
+  }
+  .contribution-inner {
+    flex-grow: 1;
+    display: flex;
+    justify-content: space-between;
+  }
 }
