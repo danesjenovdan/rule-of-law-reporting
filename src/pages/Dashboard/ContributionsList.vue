@@ -17,12 +17,16 @@
   </header>
   <main>
     <div>
-      <!-- TODO: redirect to single contribution view on click -->
       <div
         v-for="contribution in contributions"
         :key="contribution.id"
         class="contribution"
-        @click="$router.push({ name: 'new-contribution' })"
+        @click="
+          $router.push({
+            name: 'contribution',
+            params: { id: contribution.id },
+          })
+        "
       >
         <span>{{ contribution['Ime prispevka'] }}</span>
         <span class="arrow-right-icon"></span>

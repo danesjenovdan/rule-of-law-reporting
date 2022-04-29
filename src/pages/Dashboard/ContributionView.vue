@@ -8,6 +8,11 @@
       <div
         v-if="contribution['Področja <= Prispevek']"
         class="contribution-area"
+        :style="{
+          backgroundColor:
+            colors[contribution['Področja <= Prispevek']['Ime področja']] ||
+            '#dadada',
+        }"
       >
         {{ contribution['Področja <= Prispevek']['Ime področja'] }}
       </div>
@@ -17,18 +22,15 @@
       </div>
       <hr class="short-hr" />
       <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-        commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-        velit esse cillum dolore eu nulla pariatur. Excepteur sint occaecat
-        cupidatat non proident, sunt in culpa qui officia deserunt mollit anim
-        id est laborum.
+        {{ contribution['O področju prispevka'] }}
       </p>
       <FormKit
+        v-if="events?.length > 0"
         type="button"
         @click="$router.push({ name: 'new-event' })"
-        v-if="events?.length > 0"
+        :classes="{
+          outer: 'small',
+        }"
       >
         Dodaj dogodek na ta prispevek
       </FormKit>
@@ -49,7 +51,13 @@
           <p>
             {{ event['Kaj se je zgodilo in kako vpliva na vladavino prava'] }}
           </p>
-          <FormKit type="button" @click="$router.push({ name: 'new-source' })">
+          <FormKit
+            type="button"
+            @click="$router.push({ name: 'new-source' })"
+            :classes="{
+              outer: 'small',
+            }"
+          >
             Dodaj vir za ta dogodek
           </FormKit>
         </div>
@@ -73,6 +81,7 @@
 import SmallHeader from '../../components/Header/SmallHeader.vue';
 import SourceListElement from '../../components/SourceListElement.vue';
 import { getContribution } from '../../helpers/api.js';
+import { colors } from '../../helpers/area-colors.js';
 
 export default {
   components: {
@@ -83,16 +92,17 @@ export default {
     return {
       contribution: {},
       pageInfo: {},
+      colors,
     };
-  },
-  mounted() {
-    const { id } = this.$route.params;
-    this.fetchContribution(id);
   },
   computed: {
     events() {
       return this.contribution['Prispevek => Dogodek'];
     },
+  },
+  mounted() {
+    const { id } = this.$route.params;
+    this.fetchContribution(id);
   },
   methods: {
     async fetchContribution(id) {

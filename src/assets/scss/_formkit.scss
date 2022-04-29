@@ -76,3 +76,10 @@
 select.formkit-input {
   padding-right: 28px;
 }
+
+.small .formkit-input {
+  width: unset;
+  height: unset;
+  padding: 5px 8px;
+  font-size: 10px;
+}
