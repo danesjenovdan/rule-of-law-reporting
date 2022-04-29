@@ -1,6 +1,7 @@
 import LoginPage from './pages/LoginPage.vue';
 import DashboardPage from './pages/DashboardPage.vue';
 import ContributionsList from './pages/Dashboard/ContributionsList.vue';
+import ContributionView from './pages/Dashboard/ContributionView.vue';
 import ReportsList from './pages/Dashboard/ReportsList.vue';
 import AboutReporting from './pages/Dashboard/AboutReporting.vue';
 import NewContribution from './pages/Dashboard/NewContribution.vue';
@@ -24,6 +25,11 @@ export const routes = [
     component: DashboardPage,
     redirect: { name: 'contributions' },
     children: [
+      {
+        name: 'contribution',
+        path: 'prispevki/:id',
+        component: ContributionView,
+      },
       {
         name: 'contributions',
         path: 'prispevki',

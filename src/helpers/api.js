@@ -71,6 +71,10 @@ export async function getContributions() {
   return authedApi.get(`data/noco/${projectName}/Prispevek`);
 }
 
+export async function getContribution(id) {
+  return authedApi.get(`data/noco/${projectName}/Prispevek/${id}`);
+}
+
 export async function postContribution(data) {
   return authedApi.post(`data/noco/${projectName}/Prispevek`, data);
 }
