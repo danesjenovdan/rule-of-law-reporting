@@ -1,66 +1,58 @@
 <template>
   <header>
     <SmallHeader />
-    <PillButtonNav />
     <div class="tools">
       <span>{{ pageInfo.totalRows }} prispevkov</span>
-      <div class="filters">
-        <div class="filter" @click="showFiltersModal = true">
-          <div class="filter-icon"></div>
-          Filtiraj prikaz
-        </div>
-        <div class="search">
-          <div class="search-icon"></div>
-        </div>
-      </div>
+      <span>Število izbranih: {{ formData.contributions?.length }}</span>
     </div>
   </header>
-  <main>
-    <div>
-      <div
-        v-for="contribution in contributions"
-        :key="contribution.id"
-        class="contribution"
-        @click="
-          $router.push({
-            name: 'contribution',
-            params: { id: contribution.id },
-          })
-        "
+  <main v-if="contributions.length > 0">
+    <FormKit v-model="formData" type="form" :actions="false">
+      <FormKit
+        type="checkbox"
+        name="contributions"
+        :options="contributions"
+        :wrapper-class="'contribution'"
       >
-        <span>{{ contribution['Ime prispevka'] }}</span>
-        <span class="arrow-right-icon"></span>
-      </div>
-    </div>
+        <template #label="context">
+          <div class="contribution-inner">
+            <span>{{ context.option.label }}</span>
+            <!-- TODO: for some reason ne dobi .value ven?? -->
+            <span
+              v-if="context.option?.value"
+              class="arrow-right-icon"
+              @click.stop="
+                $router.push({
+                  name: 'contribution',
+                  params: { id: String(context.option.value) },
+                })
+              "
+            ></span>
+          </div>
+        </template>
+      </FormKit>
+    </FormKit>
+    {{ formData }}
   </main>
   <footer>
     <div class="buttons">
-      <FormKit
-        type="button"
-        @click="$router.push({ name: 'new-contribution' })"
-      >
-        Želim dodati nov prispevek
-      </FormKit>
+      <FormKit type="button"> Izvozi prispevke </FormKit>
     </div>
   </footer>
-  <FiltersModal v-if="showFiltersModal" @close="showFiltersModal = false" />
 </template>
 
 <script>
 import SmallHeader from '../../components/Header/SmallHeader.vue';
-import PillButtonNav from '../../components/PillButtonNav.vue';
-import FiltersModal from '../../components/FiltersModal.vue';
 import { getContributions } from '../../helpers/api.js';
 
 export default {
   components: {
     SmallHeader,
-    PillButtonNav,
-    FiltersModal,
   },
   data() {
     return {
       contributions: [],
+      formData: {},
       pageInfo: {},
       showFiltersModal: false,
     };
@@ -71,7 +63,10 @@ export default {
   methods: {
     async fetchContributions() {
       const response = await getContributions();
-      this.contributions = response.data.list;
+      this.contributions = response.data.list.map((item) => ({
+        value: item.id,
+        label: item['Ime prispevka'],
+      }));
       this.pageInfo = response.data.pageInfo;
     },
   },

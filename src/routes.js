@@ -1,11 +1,13 @@
 import LoginPage from './pages/LoginPage.vue';
 import DashboardPage from './pages/DashboardPage.vue';
 import ContributionsList from './pages/Dashboard/ContributionsList.vue';
+import ContributionView from './pages/Dashboard/ContributionView.vue';
 import ReportsList from './pages/Dashboard/ReportsList.vue';
 import AboutReporting from './pages/Dashboard/AboutReporting.vue';
 import NewContribution from './pages/Dashboard/NewContribution.vue';
 import NewEvent from './pages/Dashboard/NewEvent.vue';
 import NewSource from './pages/Dashboard/NewSource.vue';
+import ExportContributions from './pages/Dashboard/ExportContributions.vue';
 
 export const routes = [
   {
@@ -24,6 +26,11 @@ export const routes = [
     component: DashboardPage,
     redirect: { name: 'contributions' },
     children: [
+      {
+        name: 'contribution',
+        path: 'prispevki/:id',
+        component: ContributionView,
+      },
       {
         name: 'contributions',
         path: 'prispevki',
@@ -53,6 +60,11 @@ export const routes = [
         name: 'new-source',
         path: 'nov-vir',
         component: NewSource,
+      },
+      {
+        name: 'export-contributions',
+        path: 'izvozi-prispevke',
+        component: ExportContributions,
       },
     ],
   },

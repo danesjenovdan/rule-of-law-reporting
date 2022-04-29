@@ -1,6 +1,9 @@
 <template>
   <div class="small-header">
     <DashboardLogoLink />
+    <router-link :to="{ name: 'export-contributions' }"
+      >Izvozi podatke</router-link
+    >
     <LogoutIconLink />
   </div>
 </template>
