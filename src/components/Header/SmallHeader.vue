@@ -1,8 +1,11 @@
 <template>
-  <header class="small-header">
+  <div class="small-header">
     <DashboardLogoLink />
+    <router-link :to="{ name: 'export-contributions' }"
+      >Izvozi podatke</router-link
+    >
     <LogoutIconLink />
-  </header>
+  </div>
 </template>
 
 <script>

@@ -1,8 +1,8 @@
 <template>
   <div class="pill-button-nav">
-    <PillButton to="/dashboard/new-report">Dodaj prispevek</PillButton>
-    <PillButton to="/dashboard/new-event">Dodaj dogodek</PillButton>
-    <PillButton to="/dashboard/new-source">Dodaj vir</PillButton>
+    <PillButton :to="{ name: 'contributions' }">Prispevki</PillButton>
+    <PillButton :to="{ name: 'reports' }">Poročila</PillButton>
+    <PillButton :to="{ name: 'about-reporting' }">O poročanju</PillButton>
   </div>
 </template>
 
@@ -20,17 +20,8 @@ export default {
 @import '../assets/scss/variables';
 
 .pill-button-nav {
-  // nicer overscroll
-  margin-left: -$gutter;
-  margin-right: -$gutter;
-  padding-left: $gutter;
-  padding-right: $gutter;
-  // scrollbar spacing
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-
+  margin: 1.5rem 0;
   display: flex;
   gap: 0.5rem;
-  overflow-x: scroll;
 }
 </style>

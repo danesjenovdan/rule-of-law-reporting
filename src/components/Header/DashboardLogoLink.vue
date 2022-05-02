@@ -1,5 +1,5 @@
 <template>
-  <RouterLink to="/dashboard" class="dashboard-link">
+  <RouterLink :to="{ name: 'dashboard' }" class="dashboard-link">
     <CircleLogo size="small" />
   </RouterLink>
 </template>

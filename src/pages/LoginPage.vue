@@ -23,7 +23,7 @@ export default {
     const { logout } = this.$route.query;
     if (logout) {
       localStorage.removeItem('token');
-      this.$router.replace('/login');
+      this.$router.replace({ name: 'login' });
     } else {
       this.checkLogin();
     }
@@ -35,7 +35,7 @@ export default {
         try {
           const response = await me();
           if (response?.data?.isAuthorized) {
-            this.$router.push('/dashboard');
+            this.$router.push({ name: 'dashboard' });
           }
         } catch (error) {
           // not logged in, do nothing
