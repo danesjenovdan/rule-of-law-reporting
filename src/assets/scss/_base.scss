@@ -104,3 +104,33 @@ hr {
   background-size: 100% 100%;
   background-repeat: no-repeat;
 }
+
+.submitted-container {
+  text-align: center;
+
+  // TODO: add icon
+  .submitted-icon {
+    margin: 4rem auto 1rem;
+    width: 80px;
+    height: 80px;
+    outline: 1px solid black;
+  }
+
+  .lead-in-text {
+    max-width: 250px;
+    margin-left: auto;
+    margin-right: auto;
+
+    .lead {
+      margin-bottom: 1rem;
+    }
+  }
+
+  .strong-text {
+    max-width: 250px;
+    margin-left: auto;
+    margin-right: auto;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+  }
+}

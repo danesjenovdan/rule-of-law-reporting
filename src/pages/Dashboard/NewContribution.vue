@@ -8,15 +8,15 @@
   </header>
   <main>
     <div>
-      <div class="lead-in-text">
-        <div class="lead">Nov prispevek</div>
-        <div>
-          Pred oddajo novega prispevka na seznamu vseh prispevkov preveri, če ta
-          prispevek res še ne obstaja.
-        </div>
-      </div>
-      <hr />
       <template v-if="!submitted">
+        <div class="lead-in-text">
+          <div class="lead">Nov prispevek</div>
+          <div>
+            Pred oddajo novega prispevka na seznamu vseh prispevkov preveri, če
+            ta prispevek res še ne obstaja.
+          </div>
+        </div>
+        <hr />
         <FormKit
           v-model="formData"
           type="form"
@@ -24,52 +24,65 @@
           @submit="submit"
         >
           <FormKit
-            type="select"
+            type="radio"
             name="nc_0zwf__področja_id"
-            label="Področje"
+            label="Izberi področje, na katerega se navezuje prispevek."
             :options="areas"
-            :help="selectedArea?.help"
-            validation="required|not:0"
+            validation="required"
           />
-          <template v-if="formData.nc_0zwf__področja_id === '4'">
-            <FormKit
-              type="select"
-              name="Če ste izbrali druga, na katerem področju"
-              label="Če ste izbrali druga, na katerem področju"
-              :options="otherAreas"
-            />
-          </template>
-          <hr />
+          <FormKit
+            type="radio"
+            name="Če ste izbrali druga, na katerem področju"
+            label="Če ste izbrali druga, na katerem področju"
+            :options="otherAreas"
+            validation="required"
+          />
           <FormKit
             type="text"
             name="Ime prispevka"
             label="Ime prispevka"
             validation="required"
           />
-          <hr />
           <FormKit
             type="textarea"
             name="O področju prispevka"
             label="O področju prispevka"
             validation="required"
           />
-          <hr />
         </FormKit>
       </template>
       <template v-else>
-        <div>Prispevek oddan</div>
-        <FormKit type="button" @click="reset">dodaj še enega</FormKit>
-        <FormKit
-          type="button"
-          @click="
-            $router.push({
-              name: 'new-event',
-              query: { contribution: lastSubmittedId },
-            })
-          "
-        >
-          dodaj povezan dogodek
-        </FormKit>
+        <div class="submitted-container">
+          <div class="submitted-icon"></div>
+          <div class="lead-in-text">
+            <div class="lead">Hvala za oddajo!</div>
+            <div>
+              Tvoj prispevek bo viden takoj, ko bo odobren s strani
+              administratorjev.
+            </div>
+          </div>
+          <hr />
+          <div class="strong-text">
+            Se na ravno oddani prispevek navezuje kakšen dogodek, ki ga želiš
+            dodati?
+          </div>
+          <FormKit
+            type="button"
+            @click="
+              $router.push({
+                name: 'new-event',
+                query: { contribution: lastSubmittedId },
+              })
+            "
+          >
+            Dodaj povezan dogodek
+          </FormKit>
+          <hr />
+          <div class="strong-text">Želiš dodati nov prispevek?</div>
+          <FormKit type="button" outer-class="small-button" @click="reset">
+            Dodaj prispevek
+          </FormKit>
+        </div>
       </template>
     </div>
   </main>
@@ -97,7 +110,7 @@ export default {
         'Drugo.',
       ],
       formData: {
-        nc_0zwf__področja_id: '0',
+        nc_0zwf__področja_id: '',
         'Če ste izbrali druga, na katerem področju': '',
         'Ime prispevka': '',
         'O področju prispevka ': '',
@@ -106,27 +119,13 @@ export default {
       lastSubmittedId: 0,
     };
   },
-  computed: {
-    selectedArea() {
-      const selectedId = this.formData.nc_0zwf__področja_id;
-      return this.areas.find((e) => String(e.value) === selectedId);
-    },
-  },
   async mounted() {
     const response = await getAreas();
-    const entries = response.data.list.map((item) => ({
+    this.areas = response.data.list.map((item) => ({
       value: item.id,
       label: item['Ime področja'],
       help: item['Opis področja'],
     }));
-    this.areas = [
-      {
-        value: '0',
-        label: '---',
-        attrs: { disabled: true },
-      },
-      ...entries,
-    ];
   },
   methods: {
     async submit(data, node) {

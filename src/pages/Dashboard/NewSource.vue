@@ -1,91 +1,110 @@
 <template>
-  <div>
-    <div class="lead-in-text">
-      <div class="lead">Nov vir</div>
-      <div>
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Asperiores
-        beatae expedita nostrum cumque quos!
-      </div>
+  <header>
+    <SmallHeader />
+    <BackArrow
+      text="Nazaj na seznam prispevkov"
+      :to="{ name: 'contributions' }"
+    />
+  </header>
+  <main>
+    <div>
+      <template v-if="!submitted">
+        <div class="lead-in-text">
+          <div class="lead">Nov vir</div>
+          <div>
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Asperiores
+            beatae expedita nostrum cumque quos!
+          </div>
+        </div>
+        <hr />
+        <FormKit
+          v-model="formData"
+          type="form"
+          submit-label="Oddaj vir"
+          @submit="submit"
+        >
+          <FormKit
+            type="select"
+            name="related_dogodek_id"
+            label="Dogodek"
+            :options="events"
+            validation="required|not:0"
+          />
+          <FormKit
+            type="select"
+            name="Tip vira"
+            label="Tip vira"
+            :options="type"
+            validation="required"
+          />
+          <FormKit
+            type="text"
+            name="Avtor vira (oseba, organizacija, medij)"
+            label="Avtor vira (oseba, organizacija, medij)"
+            validation="required"
+          />
+          <FormKit
+            type="date"
+            name="Datum objave vira"
+            label="Datum objave vira"
+            validation="required"
+          />
+          <FormKit
+            type="date"
+            name="Datum začetka obdobja"
+            label="Datum začetka obdobja"
+            validation="required"
+          />
+          <FormKit
+            type="date"
+            name="Datum konca obdobja"
+            label="Datum konca obdobja"
+            validation="required"
+          />
+          <FormKit
+            type="url"
+            name="Povezava do vira"
+            label="Povezava do vira"
+            validation="required"
+          />
+          <FormKit
+            type="file"
+            name="Dokumenti povezani z virom"
+            label="Dokumenti povezani z virom"
+            multiple
+          />
+        </FormKit>
+      </template>
+      <template v-else>
+        <div class="submitted-container">
+          <div class="submitted-icon"></div>
+          <div class="lead-in-text">
+            <div class="lead">Hvala za oddajo!</div>
+            <div>
+              Tvoj vir bo viden takoj, ko bo odobren s strani administratorjev.
+            </div>
+          </div>
+          <hr />
+          <div class="strong-text">Želiš dodati še en vir?</div>
+          <FormKit type="button" outer-class="small-button" @click="reset">
+            Dodaj povezan vir
+          </FormKit>
+        </div>
+      </template>
     </div>
-    <hr />
-    <template v-if="!submitted">
-      <FormKit
-        v-model="formData"
-        type="form"
-        submit-label="Oddaj vir"
-        @submit="submit"
-      >
-        <FormKit
-          type="select"
-          name="related_dogodek_id"
-          label="Dogodek"
-          :options="events"
-          validation="required|not:0"
-        />
-        <hr />
-        <FormKit
-          type="select"
-          name="Tip vira"
-          label="Tip vira"
-          :options="type"
-          validation="required"
-        />
-        <hr />
-        <FormKit
-          type="text"
-          name="Avtor vira (oseba, organizacija, medij)"
-          label="Avtor vira (oseba, organizacija, medij)"
-          validation="required"
-        />
-        <hr />
-        <FormKit
-          type="date"
-          name="Datum objave vira"
-          label="Datum objave vira"
-          validation="required"
-        />
-        <hr />
-        <FormKit
-          type="date"
-          name="Datum začetka obdobja"
-          label="Datum začetka obdobja"
-          validation="required"
-        />
-        <hr />
-        <FormKit
-          type="date"
-          name="Datum konca obdobja"
-          label="Datum konca obdobja"
-          validation="required"
-        />
-        <hr />
-        <FormKit
-          type="url"
-          name="Povezava do vira"
-          label="Povezava do vira"
-          validation="required"
-        />
-        <hr />
-        <FormKit
-          type="file"
-          name="Dokumenti povezani z virom"
-          label="Dokumenti povezani z virom"
-          multiple
-        />
-        <hr />
-      </FormKit>
-    </template>
-    <template v-else>
-      <div>Vir oddan</div>
-      <FormKit type="button" @click="reset">dodaj še enega</FormKit>
-    </template>
-  </div>
+  </main>
 </template>
 
 <script>
+import SmallHeader from '../../components/Header/SmallHeader.vue';
+import BackArrow from '../../components/Header/BackArrow.vue';
 import { getEvents, postSource } from '../../helpers/api.js';
 
 export default {
+  components: {
+    SmallHeader,
+    BackArrow,
+  },
   data() {
     return {
       events: [],

@@ -1,74 +1,102 @@
 <template>
-  <div>
-    <div class="lead-in-text">
-      <div class="lead">Nov dogodek</div>
-      <div>
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Asperiores
-        beatae expedita nostrum cumque quos!
-      </div>
+  <header>
+    <SmallHeader />
+    <BackArrow
+      text="Nazaj na seznam prispevkov"
+      :to="{ name: 'contributions' }"
+    />
+  </header>
+  <main>
+    <div>
+      <template v-if="!submitted">
+        <div class="lead-in-text">
+          <div class="lead">Povezan dogodek</div>
+          <div>
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Asperiores
+            beatae expedita nostrum cumque quos!
+          </div>
+        </div>
+        <hr />
+        <FormKit
+          v-model="formData"
+          type="form"
+          submit-label="Oddaj dogodek"
+          @submit="submit"
+        >
+          <FormKit
+            type="select"
+            name="nc_0zwf__prispevek_id"
+            label="Prispevek"
+            :options="contributions"
+            validation="required|not:0"
+          />
+          <FormKit
+            type="text"
+            name="Naslov dogodka"
+            label="Naslov dogodka"
+            validation="required"
+          />
+          <FormKit
+            type="textarea"
+            name="Kaj se je zgodilo in kako vpliva na vladavino prava"
+            label="Kaj se je zgodilo in kako vpliva na vladavino prava"
+            validation="required"
+          />
+          <FormKit
+            type="select"
+            name="nc_0zwf__dogodek_id"
+            label="Dogodek"
+            :options="events"
+            help="Izberite če ta dogodek posodobi drug dogodek."
+          />
+        </FormKit>
+      </template>
+      <template v-else>
+        <div class="submitted-container">
+          <div class="submitted-icon"></div>
+          <div class="lead-in-text">
+            <div class="lead">Hvala za oddajo!</div>
+            <div>
+              Tvoj dogodek bo viden takoj, ko bo odobren s strani
+              administratorjev.
+            </div>
+          </div>
+          <hr />
+          <div class="strong-text">
+            Se na ravno oddani dogodek navezuje kakšen vir, ki ga želiš dodati?
+          </div>
+          <FormKit
+            type="button"
+            @click="
+              $router.push({
+                name: 'new-source',
+                query: { event: lastSubmittedId },
+              })
+            "
+          >
+            Dodaj povezan vir
+          </FormKit>
+          <hr />
+          <div class="strong-text">Želiš dodati nov dogodek?</div>
+          <FormKit type="button" outer-class="small-button" @click="reset">
+            Dodaj povezan dogodek
+          </FormKit>
+        </div>
+      </template>
     </div>
-    <hr />
-    <template v-if="!submitted">
-      <FormKit
-        v-model="formData"
-        type="form"
-        submit-label="Oddaj dogodek"
-        @submit="submit"
-      >
-        <FormKit
-          type="select"
-          name="nc_0zwf__prispevek_id"
-          label="Prispevek"
-          :options="contributions"
-          validation="required|not:0"
-        />
-        <hr />
-        <FormKit
-          type="text"
-          name="Naslov dogodka"
-          label="Naslov dogodka"
-          validation="required"
-        />
-        <hr />
-        <FormKit
-          type="textarea"
-          name="Kaj se je zgodilo in kako vpliva na vladavino prava"
-          label="Kaj se je zgodilo in kako vpliva na vladavino prava"
-          validation="required"
-        />
-        <hr />
-        <FormKit
-          type="select"
-          name="nc_0zwf__dogodek_id"
-          label="Dogodek"
-          :options="events"
-          help="Izberite če ta dogodek posodobi drug dogodek."
-        />
-        <hr />
-      </FormKit>
-    </template>
-    <template v-else>
-      <div>Dogodek oddan</div>
-      <FormKit type="button" @click="reset">dodaj še enega</FormKit>
-      <FormKit
-        type="button"
-        @click="
-          $router.push({
-            name: 'new-source',
-            query: { event: lastSubmittedId },
-          })
-        "
-      >
-        dodaj povezan vir
-      </FormKit>
-    </template>
-  </div>
+  </main>
 </template>
 
 <script>
+import SmallHeader from '../../components/Header/SmallHeader.vue';
+import BackArrow from '../../components/Header/BackArrow.vue';
 import { getContributions, getEvents, postEvent } from '../../helpers/api.js';
 
 export default {
+  components: {
+    SmallHeader,
+    BackArrow,
+  },
   data() {
     return {
       contributions: [],
