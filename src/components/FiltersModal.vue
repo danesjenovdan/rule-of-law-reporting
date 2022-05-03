@@ -53,6 +53,7 @@
 import { getAreas, filterContributions } from '../helpers/api.js';
 
 export default {
+  emits: ['close'],
   data() {
     return {
       formData: {},
