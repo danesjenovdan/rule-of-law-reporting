@@ -27,10 +27,10 @@
       <FormKit
         v-if="events?.length > 0"
         type="button"
-        @click="$router.push({ name: 'new-event' })"
         :classes="{
           outer: 'small',
         }"
+        @click="$router.push({ name: 'new-event' })"
       >
         Dodaj dogodek na ta prispevek
       </FormKit>
@@ -53,10 +53,10 @@
           </p>
           <FormKit
             type="button"
-            @click="$router.push({ name: 'new-source' })"
             :classes="{
               outer: 'small',
             }"
+            @click="$router.push({ name: 'new-source' })"
           >
             Dodaj vir za ta dogodek
           </FormKit>
