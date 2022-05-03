@@ -3,10 +3,11 @@
     <SmallHeader />
     <div class="tools">
       <span>{{ pageInfo.totalRows }} prispevkov</span>
-      <span>Število izbranih: {{ formData.contributions?.length }}</span>
+      <span>Število izbranih: {{ checkboxData.length }}</span>
     </div>
   </header>
   <main v-if="contributions.length > 0">
+    <!-- TODO: remove formData, as it is not working properly -->
     <FormKit v-model="formData" type="form" :actions="false">
       <FormKit
         type="checkbox"
@@ -14,25 +15,38 @@
         :options="contributions"
         :wrapper-class="'contribution'"
       >
-        <template #label="context">
-          <div class="contribution-inner">
-            <span>{{ context.option.label }}</span>
-            <!-- TODO: for some reason ne dobi .value ven?? -->
-            <span
-              v-if="context.option?.value"
-              class="arrow-right-icon"
-              @click.stop="
-                $router.push({
+        <template #wrapper="context">
+          <div class="formkit-wrapper contribution">
+            <label
+              ><div class="formkit-inner">
+                <input
+                  v-model="checkboxData"
+                  :id="context.option.attrs['id']"
+                  type="checkbox"
+                  class="formkit-input"
+                  name="contributions"
+                  :value="context.option.value"
+                />
+                <span class="formkit-decorator" aria-hidden="true"></span>
+                <span>{{ context.option.label }}</span>
+              </div>
+            </label>
+            <div class="contribution-inner">
+              <router-link
+                :to="{
                   name: 'contribution',
-                  params: { id: String(context.option.value) },
-                })
-              "
-            ></span>
+                  params: { id: context.option.value },
+                }"
+              >
+                <span class="arrow-right-icon"></span>
+              </router-link>
+            </div>
           </div>
         </template>
       </FormKit>
     </FormKit>
-    {{ formData }}
+    <!-- HOLDS ids {{ checkboxData }} -->
+    <!-- DOESNT WORK {{ formData }} -->
   </main>
   <footer>
     <div class="buttons">
@@ -53,6 +67,7 @@ export default {
     return {
       contributions: [],
       formData: {},
+      checkboxData: [],
       pageInfo: {},
       showFiltersModal: false,
     };

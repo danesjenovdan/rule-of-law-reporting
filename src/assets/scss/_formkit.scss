@@ -5,6 +5,7 @@
 
 .formkit-form {
   .formkit-outer {
+    font-family: $base-font;
     margin-bottom: 4rem;
   }
 }
@@ -31,6 +32,15 @@
 
 .formkit-message {
   color: $color-error;
+}
+
+[data-type='multifile'] {
+  .formkit-inner {
+    border: none !important;
+    box-shadow: none !important;
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
 
 [data-type='checkbox'],
@@ -145,10 +155,8 @@ select.formkit-input {
     font-weight: 700;
     display: block;
   }
-  .contribution-inner {
-    flex-grow: 1;
+  .formkit-inner {
     display: flex;
-    justify-content: space-between;
   }
 }
 

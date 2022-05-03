@@ -68,10 +68,9 @@
             validation="required"
           />
           <FormKit
-            type="file"
+            type="multifile"
             name="Dokumenti povezani z virom"
             label="Dokumenti povezani z virom"
-            multiple
           />
         </FormKit>
       </template>
