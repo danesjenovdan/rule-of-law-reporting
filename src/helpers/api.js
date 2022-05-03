@@ -141,5 +141,7 @@ export async function postSource(data) {
 }
 
 export async function getSourcesFromEvent(dogodekId) {
-  return authedApi.get(`data/noco/${projectName}/m2mDogodek_Vir?where=(table1_id,eq,${dogodekId})`);
+  return authedApi.get(
+    `data/noco/${projectName}/m2mDogodek_Vir?where=(table1_id,eq,${dogodekId})`
+  );
 }

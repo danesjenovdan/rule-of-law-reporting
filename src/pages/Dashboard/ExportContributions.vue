@@ -20,8 +20,8 @@
             <label
               ><div class="formkit-inner">
                 <input
-                  v-model="checkboxData"
                   :id="context.option.attrs['id']"
+                  v-model="checkboxData"
                   type="checkbox"
                   class="formkit-input"
                   name="contributions"

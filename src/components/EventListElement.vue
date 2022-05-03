@@ -20,7 +20,7 @@
         Dodaj vir za ta dogodek
       </FormKit>
     </div>
-    <div class="event-sources" v-if="sources.length > 0">
+    <div v-if="sources.length > 0" class="event-sources">
       <h3>Viri</h3>
       <SourceListElement
         v-for="source in sources"

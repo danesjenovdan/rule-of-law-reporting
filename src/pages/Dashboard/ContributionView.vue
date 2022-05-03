@@ -77,9 +77,9 @@ export default {
   },
   computed: {
     events() {
-      return this.contribution['Prispevek => Dogodek']?.sort(
-        (a, b) => new Date(b.created_at) - new Date(a.created_at)
-      );
+      return this.contribution['Prispevek => Dogodek']
+        ?.slice()
+        ?.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
     },
   },
   mounted() {
