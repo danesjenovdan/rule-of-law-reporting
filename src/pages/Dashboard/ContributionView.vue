@@ -40,32 +40,11 @@
         <h3>Povezani dogodki</h3>
         <hr />
       </div>
-      <div v-for="event in events" :key="event['Naslov dogodka']" class="event">
-        <div class="event-header">
-          <h4>{{ event['Naslov dogodka'] }}</h4>
-          <div>
-            <span class="author">Maja, Danes je nov dan</span
-            ><span class="separator">|</span
-            ><span class="date">{{ formatDate(event['created_at']) }}</span>
-          </div>
-          <p>
-            {{ event['Kaj se je zgodilo in kako vpliva na vladavino prava'] }}
-          </p>
-          <FormKit
-            type="button"
-            :classes="{
-              outer: 'small',
-            }"
-            @click="$router.push({ name: 'new-source' })"
-          >
-            Dodaj vir za ta dogodek
-          </FormKit>
-        </div>
-        <div class="event-sources">
-          <h3>Viri</h3>
-          <SourceListElement v-for="i in 3" :key="i" />
-        </div>
-      </div>
+      <EventListElement
+        v-for="event in events"
+        :key="event['Naslov dogodka']"
+        :event="event"
+      />
     </section>
   </section>
   <footer v-if="events?.length === 0">
@@ -79,14 +58,15 @@
 
 <script>
 import SmallHeader from '../../components/Header/SmallHeader.vue';
-import SourceListElement from '../../components/SourceListElement.vue';
+import EventListElement from '../../components/EventListElement.vue';
 import { getContribution } from '../../helpers/api.js';
 import { colors } from '../../helpers/area-colors.js';
+import { formatDate } from '../../helpers/format-time.js';
 
 export default {
   components: {
     SmallHeader,
-    SourceListElement,
+    EventListElement,
   },
   data() {
     return {
@@ -108,14 +88,8 @@ export default {
     async fetchContribution(id) {
       const response = await getContribution(id);
       this.contribution = response.data;
-      // console.log(response);
-      // this.contribution = response.data.list;
-      // this.pageInfo = response.data.pageInfo;
     },
-    formatDate(dateString) {
-      const d = new Date(dateString);
-      return `${d.getDate()}. ${d.getMonth() + 1}. ${d.getFullYear()}`;
-    },
+    formatDate,
   },
 };
 </script>
@@ -188,38 +162,6 @@ main {
     height: 2px;
     margin: 0;
     opacity: 1;
-  }
-}
-
-.event {
-  border: 1px solid $color-medium-grey;
-  border-radius: 3px;
-  margin-bottom: 1rem;
-  .event-header {
-    padding: 1.5rem;
-  }
-  h4 {
-    font-size: 14px;
-    font-weight: 900;
-    color: $color-black;
-  }
-  .date {
-    color: $color-black;
-  }
-  .separator {
-    padding-left: 5px;
-    padding-right: 5px;
-    color: $color-medium-grey;
-    font-size: 9px;
-  }
-  .event-sources {
-    h3 {
-      font-size: 10px;
-      font-weight: 600;
-      color: $color-accent;
-      margin-bottom: 0.5rem;
-      padding: 0 1.5rem;
-    }
   }
 }
 </style>
