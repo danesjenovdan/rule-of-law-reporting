@@ -146,10 +146,14 @@ select.formkit-input {
   font-size: 10px;
 }
 
+// export list of contributions
 .contribution.formkit-wrapper {
   padding: 20px 0;
   border-bottom: 1px solid $color-accent-light;
   display: flex;
+  label {
+    flex-grow: 1;
+  }
   span {
     font-size: 12px;
     font-weight: 700;
@@ -220,5 +224,12 @@ select.formkit-input {
   .formkit-input:focus-within {
     border-color: $color-accent;
     box-shadow: 0 0 0 1px $color-accent;
+  }
+}
+
+// search
+.search {
+  .formkit-outer {
+    margin-bottom: 0;
   }
 }

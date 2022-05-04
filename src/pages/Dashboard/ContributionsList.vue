@@ -2,23 +2,15 @@
   <header>
     <SmallHeader />
     <PillButtonNav />
-    <div class="tools">
-      <span>{{ pageInfo.totalRows }} prispevkov</span>
-      <div class="filters">
-        <div class="filter" @click="showFiltersModal = true">
-          <div class="filter-icon"></div>
-          Filtiraj prikaz
-        </div>
-        <div class="search">
-          <div class="search-icon"></div>
-        </div>
-      </div>
-    </div>
+    <ToolsBar
+      :contributionsNo="pageInfo.totalRows"
+      @close="showFiltersModal = true"
+    />
   </header>
   <main>
     <div>
       <div
-        v-for="contribution in contributions"
+        v-for="contribution in sortedContributions"
         :key="contribution.id"
         class="contribution"
         @click="
@@ -50,6 +42,7 @@
 import SmallHeader from '../../components/Header/SmallHeader.vue';
 import PillButtonNav from '../../components/PillButtonNav.vue';
 import FiltersModal from '../../components/FiltersModal.vue';
+import ToolsBar from '../../components/Header/ToolsBar.vue';
 import { getContributions } from '../../helpers/api.js';
 
 export default {
@@ -57,6 +50,7 @@ export default {
     SmallHeader,
     PillButtonNav,
     FiltersModal,
+    ToolsBar,
   },
   data() {
     return {
@@ -64,6 +58,13 @@ export default {
       pageInfo: {},
       showFiltersModal: false,
     };
+  },
+  computed: {
+    sortedContributions() {
+      return [...this.contributions]?.sort(
+        (a, b) => new Date(b.created_at) - new Date(a.created_at)
+      );
+    },
   },
   mounted() {
     this.fetchContributions();
@@ -80,46 +81,6 @@ export default {
 
 <style lang="scss" scoped>
 @import '../../assets/scss/variables';
-
-.tools {
-  display: flex;
-  justify-content: space-between;
-  align-items: end;
-  margin: 1rem 0 0.75rem 0;
-  span {
-    font-size: 10px;
-    font-style: italic;
-    padding-bottom: 4px;
-  }
-}
-
-.filters {
-  display: flex;
-  align-items: center;
-  .filter {
-    display: flex;
-    align-items: center;
-    margin-right: 10px;
-    border-radius: 3px;
-    background-color: $color-orange;
-    padding: 4px 6px;
-    font-size: 10px;
-    .filter-icon {
-      width: 11px;
-      height: 13px;
-      margin-right: 5px;
-    }
-  }
-  .search {
-    border-radius: 3px;
-    background-color: $color-orange;
-    padding: 5px;
-    .search-icon {
-      width: 11px;
-      height: 13px;
-    }
-  }
-}
 
 .contribution {
   font-size: 12px;
