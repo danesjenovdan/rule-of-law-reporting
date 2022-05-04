@@ -18,7 +18,7 @@
   <main>
     <div>
       <div
-        v-for="contribution in contributions"
+        v-for="contribution in sortedContributions"
         :key="contribution.id"
         class="contribution"
         @click="
@@ -64,6 +64,13 @@ export default {
       pageInfo: {},
       showFiltersModal: false,
     };
+  },
+  computed: {
+    sortedContributions() {
+      return [...this.contributions]?.sort(
+        (a, b) => new Date(b.created_at) - new Date(a.created_at)
+      );
+    },
   },
   mounted() {
     this.fetchContributions();

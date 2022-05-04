@@ -12,7 +12,7 @@
       <FormKit
         type="checkbox"
         name="contributions"
-        :options="contributions"
+        :options="sortedContributions"
         :wrapper-class="'contribution'"
       >
         <template #wrapper="context">
@@ -73,6 +73,13 @@ export default {
       showFiltersModal: false,
     };
   },
+  computed: {
+    sortedContributions() {
+      return [...this.contributions]?.sort(
+        (a, b) => new Date(b.created_at) - new Date(a.created_at)
+      );
+    },
+  },
   mounted() {
     this.fetchContributions();
   },
@@ -82,6 +89,7 @@ export default {
       this.contributions = response.data.list.map((item) => ({
         value: item.id,
         label: item['Ime prispevka'],
+        created_at: item.created_at,
       }));
       this.pageInfo = response.data.pageInfo;
     },
