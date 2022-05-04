@@ -31,7 +31,8 @@
                 <span>{{ context.option.label }}</span>
               </div>
             </label>
-            <div class="contribution-inner">
+            <!-- arrows to the right -->
+            <!-- <div class="contribution-inner">
               <router-link
                 :to="{
                   name: 'contribution',
@@ -40,7 +41,7 @@
               >
                 <span class="arrow-right-icon"></span>
               </router-link>
-            </div>
+            </div> -->
           </div>
         </template>
       </FormKit>
