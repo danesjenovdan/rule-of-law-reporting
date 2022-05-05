@@ -113,7 +113,7 @@ ul {
 
 li {
   padding-left: 22px;
-  background-image: url(/src/assets/icons/puscica-dol.svg);
+  background-image: url('../../assets/icons/puscica-dol.svg');
   background-position: 4px 2px;
   background-size: 12px 12px;
   background-repeat: no-repeat;
