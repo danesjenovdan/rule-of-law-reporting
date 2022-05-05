@@ -8,7 +8,7 @@
             <i>{{ source['Tip vira'] }}</i>
           </p>
         </div>
-        <span>i</span>
+        <span class="arrow-icon"></span>
       </div>
     </div>
     <div v-if="!collapsed" class="collapsed">
@@ -79,23 +79,38 @@ export default {
 
 .source {
   margin: 0.5rem 0;
+
   .source-header {
     padding: 0 1.5rem;
+
     .source-header-wrapper {
       display: flex;
       justify-content: space-between;
       align-items: center;
       border-top: 1px solid $color-medium-grey;
+
+      .arrow-icon {
+        width: 9px;
+        height: 6px;
+        transform: rotate(90deg);
+      }
     }
   }
+
   &.expanded {
     background-color: $color-white;
     padding-bottom: 1.5rem;
+
     .source-header-wrapper {
       border-color: $color-white;
+
+      .arrow-icon {
+        transform: rotate(-90deg);
+      }
     }
   }
 }
+
 h4 {
   font-size: 12px;
   margin-top: 0.5rem;
@@ -103,21 +118,26 @@ h4 {
   font-weight: 900;
   color: $color-black;
 }
+
 p {
   font-size: 8px;
   margin-bottom: 0;
+
   i {
     font-style: italic;
   }
 }
+
 .collapsed {
   padding: 0 1.5rem;
 }
+
 .date {
   p:last-child {
     font-size: 10px;
   }
 }
+
 .documents a {
   display: block;
   font-size: 10px;
