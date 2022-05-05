@@ -2,8 +2,8 @@
   <header>
     <SmallHeader />
     <ToolsBar
-      :contributionsNo="pageInfo.totalRows"
-      :chosenNo="checkboxData.length"
+      :contributions-no="pageInfo.totalRows"
+      :chosen-no="checkboxData.length"
       @close="showFiltersModal = true"
     />
   </header>

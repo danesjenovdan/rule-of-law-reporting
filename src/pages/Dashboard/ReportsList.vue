@@ -54,9 +54,8 @@
             }}</span>
           </div>
         </div>
-        <!-- TODO: add download icon -->
         <a :href="report['Link do poročila ali odziva']" target="_blank">
-          <span class="download-icon">ikona</span>
+          <div class="open-new-page-icon"></div>
         </a>
       </div>
     </div>

@@ -3,7 +3,7 @@
     <SmallHeader />
     <PillButtonNav />
     <ToolsBar
-      :contributionsNo="pageInfo.totalRows"
+      :contributions-no="pageInfo.totalRows"
       @close="showFiltersModal = true"
     />
   </header>
