@@ -145,3 +145,12 @@ export async function getSourcesFromEvent(dogodekId) {
     `data/noco/${projectName}/m2mDogodek_Vir?where=(table1_id,eq,${dogodekId})`
   );
 }
+
+export async function getReports() {
+  // return authedApi.get(
+  //   `data/noco/${projectName}/m2mDogodek_Vir?where=(table1_id,eq,${dogodekId})`
+  // );
+  return authedApi.get(
+    `data/noco/${projectName}/Poročilo`
+  );
+}
