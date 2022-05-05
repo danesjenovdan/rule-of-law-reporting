@@ -115,7 +115,6 @@ export default {
     formatDate,
     async fetchReports() {
       const response = await getReports();
-      console.log(response);
       this.reports = response.data.list;
       // this.pageInfo = response.data.pageInfo;
       // const entries = response.data.list.map((item) => ({
