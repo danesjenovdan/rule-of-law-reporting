@@ -36,8 +36,8 @@ export default {
   }
 
   &.circle-logo--small {
-    width: 3.33334rem;
-    height: 3.33334rem;
+    width: 2.5rem;
+    height: 2.5rem;
 
     .text {
       padding: 0.5rem;

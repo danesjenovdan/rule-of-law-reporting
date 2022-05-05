@@ -12,13 +12,13 @@
 
 .logout-icon-link {
   position: relative;
-  width: 3.33334rem;
-  height: 3.33334rem;
+  width: 2.0833334rem;
+  height: 2.0833334rem;
   border-radius: 50%;
-  background-color: $color-accent-light;
+  background-color: $color-white;
   background-image: url('../../assets/icons/logout.svg');
   background-position: center;
-  background-size: 50% 50%;
+  background-size: 60% 60%;
   background-repeat: no-repeat;
   text-indent: -999999px;
   overflow: hidden;

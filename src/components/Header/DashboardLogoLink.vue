@@ -19,8 +19,8 @@ export default {
 
 .dashboard-link {
   position: relative;
-  width: 3.33334rem;
-  height: 3.33334rem;
+  width: 2.5rem;
+  height: 2.5rem;
   border-radius: 50%;
   overflow: hidden;
 }

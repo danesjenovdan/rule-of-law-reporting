@@ -1,20 +1,24 @@
 <template>
   <div class="small-header">
-    <DashboardLogoLink />
-    <router-link :to="{ name: 'export-contributions' }"
-      >Izvozi podatke</router-link
-    >
-    <LogoutIconLink />
+    <div class="small-header-left">
+      <DashboardLogoLink />
+    </div>
+    <div class="small-header-right">
+      <ExportContributionsLink />
+      <LogoutIconLink />
+    </div>
   </div>
 </template>
 
 <script>
 import DashboardLogoLink from './DashboardLogoLink.vue';
+import ExportContributionsLink from './ExportContributionsLink.vue';
 import LogoutIconLink from './LogoutIconLink.vue';
 
 export default {
   components: {
     DashboardLogoLink,
+    ExportContributionsLink,
     LogoutIconLink,
   },
 };
@@ -25,5 +29,16 @@ export default {
   margin: 1rem 0;
   display: flex;
   justify-content: space-between;
+
+  .small-header-left,
+  .small-header-right {
+    display: flex;
+    align-items: center;
+  }
+
+  .small-header-right {
+    justify-content: flex-end;
+    gap: 1rem;
+  }
 }
 </style>
