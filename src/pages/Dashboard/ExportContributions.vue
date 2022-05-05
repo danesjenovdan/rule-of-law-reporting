@@ -2,53 +2,20 @@
   <header>
     <SmallHeader />
     <ToolsBar
-      :contributionsNo="pageInfo.totalRows"
-      :chosenNo="checkboxData.length"
+      :contributions-no="pageInfo.totalRows"
+      :chosen-no="selectedContributionsCount"
       @close="showFiltersModal = true"
     />
   </header>
-  <main v-if="contributions.length > 0">
-    <!-- TODO: remove formData, as it is not working properly -->
+  <main v-if="contributions.length > 0" class="contributions-list">
     <FormKit v-model="formData" type="form" :actions="false">
       <FormKit
         type="checkbox"
         name="contributions"
         :options="sortedContributions"
         :wrapper-class="'contribution'"
-      >
-        <template #wrapper="context">
-          <div class="formkit-wrapper contribution">
-            <label
-              ><div class="formkit-inner">
-                <input
-                  :id="context.option.attrs['id']"
-                  v-model="checkboxData"
-                  type="checkbox"
-                  class="formkit-input"
-                  name="contributions"
-                  :value="context.option.value"
-                />
-                <span class="formkit-decorator" aria-hidden="true"></span>
-                <span>{{ context.option.label }}</span>
-              </div>
-            </label>
-            <!-- arrows to the right -->
-            <!-- <div class="contribution-inner">
-              <router-link
-                :to="{
-                  name: 'contribution',
-                  params: { id: context.option.value },
-                }"
-              >
-                <span class="arrow-right-icon"></span>
-              </router-link>
-            </div> -->
-          </div>
-        </template>
-      </FormKit>
+      />
     </FormKit>
-    <!-- HOLDS ids {{ checkboxData }} -->
-    <!-- DOESNT WORK {{ formData }} -->
   </main>
   <footer>
     <div class="buttons">
@@ -74,12 +41,14 @@ export default {
     return {
       contributions: [],
       formData: {},
-      checkboxData: [],
       pageInfo: {},
       showFiltersModal: false,
     };
   },
   computed: {
+    selectedContributionsCount() {
+      return this.formData?.contributions?.length || 0;
+    },
     sortedContributions() {
       return [...this.contributions]?.sort(
         (a, b) => new Date(b.created_at) - new Date(a.created_at)
@@ -105,6 +74,12 @@ export default {
 
 <style lang="scss" scoped>
 @import '../../assets/scss/variables';
+
+.contributions-list {
+  :deep(.formkit-option) {
+    margin-bottom: 0;
+  }
+}
 
 .arrow-right-icon {
   width: 8px;

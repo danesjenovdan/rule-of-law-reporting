@@ -20,7 +20,6 @@
 
 <script>
 export default {
-  emits: ['close'],
   props: {
     contributionsNo: {
       type: Number,
@@ -31,6 +30,7 @@ export default {
       default: null,
     },
   },
+  emits: ['close'],
 };
 </script>
 

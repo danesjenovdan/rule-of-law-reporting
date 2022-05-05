@@ -7,6 +7,7 @@ import AboutReporting from './pages/Dashboard/AboutReporting.vue';
 import NewContribution from './pages/Dashboard/NewContribution.vue';
 import NewEvent from './pages/Dashboard/NewEvent.vue';
 import NewSource from './pages/Dashboard/NewSource.vue';
+import NewReport from './pages/Dashboard/NewReport.vue';
 import ExportContributions from './pages/Dashboard/ExportContributions.vue';
 
 export const routes = [
@@ -60,6 +61,11 @@ export const routes = [
         name: 'new-source',
         path: 'nov-vir',
         component: NewSource,
+      },
+      {
+        name: 'new-report',
+        path: 'novo-porocilo',
+        component: NewReport,
       },
       {
         name: 'export-contributions',

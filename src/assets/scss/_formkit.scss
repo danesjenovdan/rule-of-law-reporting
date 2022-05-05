@@ -66,10 +66,6 @@
         margin-left: 0.15rem;
         margin-right: 0.75rem;
       }
-
-      .formkit-input:checked ~ .formkit-decorator::before {
-        background: $color-accent;
-      }
     }
 
     .formkit-label {
@@ -85,6 +81,18 @@
 
   .formkit-messages {
     margin-top: 0.5rem;
+  }
+}
+
+[data-type='radio'] {
+  input[type='radio'].formkit-input:checked ~ .formkit-decorator::before {
+    background: $color-accent;
+  }
+}
+
+[data-type='checkbox'] {
+  input[type='checkbox'].formkit-input:checked ~ .formkit-decorator::before {
+    border-color: $color-accent;
   }
 }
 
@@ -158,9 +166,6 @@ select.formkit-input {
     font-size: 12px;
     font-weight: 700;
     display: block;
-  }
-  .formkit-inner {
-    display: flex;
   }
 }
 

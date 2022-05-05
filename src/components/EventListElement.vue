@@ -24,8 +24,8 @@
       <h3>Viri</h3>
       <SourceListElement
         v-for="source in sources"
-        :key="source"
-        :source="source['Vir <= m2mDogodek_Vir']"
+        :key="source.id"
+        :source="source"
       />
     </div>
   </div>

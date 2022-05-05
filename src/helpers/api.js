@@ -7,6 +7,8 @@ const authedApi = axios.create({
   baseURL: 'https://nocodb.lb.djnd.si/api/v1/db/',
 });
 
+// window.api = authedApi;
+
 const projectName = 'ROL App Try 2';
 
 // automatically add auth header to all api requests
@@ -72,7 +74,10 @@ export async function getContributions() {
 }
 
 export async function getContribution(id) {
-  return authedApi.get(`data/noco/${projectName}/Prispevek/${id}`);
+  // TODO: change to fields=* when it will work: https://github.com/nocodb/nocodb/issues/1981
+  return authedApi.get(
+    `data/noco/${projectName}/Prispevek/${id}?nested[Prispevek => Dogodek][fields]=Kaj se je zgodilo in kako vpliva na vladavino prava,Naslov dogodka,Objavljeno,created_at,id,updated_at`
+  );
 }
 
 export async function postContribution(data) {
@@ -142,6 +147,10 @@ export async function postSource(data) {
 
 export async function getSourcesFromEvent(dogodekId) {
   return authedApi.get(
-    `data/noco/${projectName}/m2mDogodek_Vir?where=(table1_id,eq,${dogodekId})`
+    `data/noco/${projectName}/Dogodek/${dogodekId}/mm/Dogodek <=> Vir`
   );
+}
+
+export async function getReports() {
+  return authedApi.get(`data/noco/${projectName}/Poročilo`);
 }

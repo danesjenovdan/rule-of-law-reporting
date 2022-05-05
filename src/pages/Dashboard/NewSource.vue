@@ -31,6 +31,12 @@
             validation="required|not:0"
           />
           <FormKit
+            type="text"
+            name="Naslov vira"
+            label="Naslov vira"
+            validation="required"
+          />
+          <FormKit
             type="select"
             name="Tip vira"
             label="Tip vira"
@@ -118,6 +124,7 @@ export default {
       ],
       formData: {
         related_dogodek_id: '0',
+        'Naslov vira': '',
         'Tip vira': 'Sodna praksa',
         'Avtor vira (oseba, organizacija, medij)': '',
         'Datum objave vira': '',
