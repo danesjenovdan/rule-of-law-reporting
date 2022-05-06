@@ -1,6 +1,10 @@
 <template>
   <header>
     <SmallHeader />
+    <BackArrow
+      text="Nazaj na seznam prispevkov"
+      :to="{ name: 'contributions' }"
+    />
   </header>
   <section>
     <main>
@@ -58,6 +62,7 @@
 
 <script>
 import SmallHeader from '../../components/Header/SmallHeader.vue';
+import BackArrow from '../../components/Header/BackArrow.vue';
 import EventListElement from '../../components/EventListElement.vue';
 import { getContribution } from '../../helpers/api.js';
 import { colors } from '../../helpers/area-colors.js';
@@ -67,6 +72,7 @@ export default {
   components: {
     SmallHeader,
     EventListElement,
+    BackArrow,
   },
   data() {
     return {
@@ -90,6 +96,7 @@ export default {
     async fetchContribution(id) {
       const response = await getContribution(id);
       this.contribution = response.data;
+      // nc_0zwf__dogodek_id je polje, ki ti pove, na kater dogodek je povezan ta dogodek
     },
     formatDate,
   },

@@ -12,7 +12,7 @@
     </div>
   </div>
   <div class="info">
-    <span>{{ contributionsNo }} prispevkov</span>
+    <span>Število prispevkov: {{ contributionsNo }}</span>
     <span v-if="chosenNo != null">Število izbranih: {{ chosenNo }}</span>
   </div>
   <hr />

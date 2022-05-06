@@ -38,7 +38,7 @@
       </FormKit>
     </div>
     <div class="info">
-      <span>{{ reports?.length }} prispevkov</span>
+      <span>Število prispevkov: {{ reports?.length }}</span>
       <hr />
     </div>
     <div>
