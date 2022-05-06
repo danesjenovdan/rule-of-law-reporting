@@ -6,10 +6,10 @@
         <div class="search-icon"></div>
       </div>
     </div>
-    <div class="filter" @click="$emit('close')">
+    <button class="filter" @click="$emit('close')">
       <div class="filter-icon"></div>
       Filtiraj
-    </div>
+    </button>
   </div>
   <div class="info">
     <span>Število prispevkov: {{ contributionsNo }}</span>
@@ -69,6 +69,7 @@ hr {
   .filter {
     display: flex;
     align-items: center;
+    border: none;
     border-radius: 3px;
     background-color: $color-orange;
     padding: 4px 6px;

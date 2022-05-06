@@ -159,6 +159,7 @@ select.formkit-input {
   padding: 20px 0;
   border-bottom: 1px solid $color-accent-light;
   display: flex;
+  cursor: pointer;
   label {
     flex-grow: 1;
   }

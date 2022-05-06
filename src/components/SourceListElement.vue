@@ -91,6 +91,7 @@ export default {
 
   .source-header {
     padding: 0 1.5rem;
+    cursor: pointer;
 
     .source-header-wrapper {
       display: flex;

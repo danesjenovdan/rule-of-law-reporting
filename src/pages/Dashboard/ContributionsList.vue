@@ -9,20 +9,15 @@
   </header>
   <main>
     <div>
-      <div
+      <router-link
         v-for="contribution in sortedContributions"
         :key="contribution.id"
         class="contribution"
-        @click="
-          $router.push({
-            name: 'contribution',
-            params: { id: contribution.id },
-          })
-        "
+        :to="{ name: 'contribution', params: { id: contribution.id } }"
       >
         <span>{{ contribution['Ime prispevka'] }}</span>
         <span class="arrow-right-icon"></span>
-      </div>
+      </router-link>
     </div>
   </main>
   <footer>
@@ -86,10 +81,12 @@ export default {
   font-size: 12px;
   font-weight: 600;
   padding: 20px 0;
-  border-bottom: 1px solid $color-accent-light;
+  border-bottom: 2px solid $color-accent-light;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  color: $color-black;
+  text-decoration: none;
 }
 
 .arrow-right-icon {

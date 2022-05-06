@@ -54,7 +54,11 @@
             }}</span>
           </div>
         </div>
-        <a :href="report['Link do poročila ali odziva']" target="_blank">
+        <a
+          v-if="report['Link do poročila ali odziva']"
+          :href="report['Link do poročila ali odziva']"
+          target="_blank"
+        >
           <div class="open-new-page-icon"></div>
         </a>
       </div>
@@ -157,6 +161,7 @@ export default {
     color: $color-grey;
     font-size: 10px;
     font-weight: 900;
+    cursor: pointer;
   }
   .active {
     border-bottom: 4px solid $color-accent;
