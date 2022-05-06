@@ -151,6 +151,9 @@ export async function getSourcesFromEvent(dogodekId) {
   );
 }
 
-export async function getReports() {
-  return authedApi.get(`data/noco/${projectName}/Poročilo`);
+export async function getReports(filter = {}) {
+  const where = Object.entries(filter)
+    .map(([key, value]) => `(${key},eq,${value})`)
+    .join('~and');
+  return authedApi.get(`data/noco/${projectName}/Poročilo?where=${where}`);
 }

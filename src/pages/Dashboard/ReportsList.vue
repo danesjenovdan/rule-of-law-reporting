@@ -6,14 +6,14 @@
   <main>
     <div class="tabs">
       <div
-        :class="{ active: filterReportType == 'ec' }"
-        @click="filterReportType = 'ec'"
+        :class="{ active: filterInstitution == 'ec' }"
+        @click="filterInstitution = 'ec'"
       >
         Evropska komisija
       </div>
       <div
-        :class="{ active: filterReportType == 'other' }"
-        @click="filterReportType = 'other'"
+        :class="{ active: filterInstitution == 'other' }"
+        @click="filterInstitution = 'other'"
       >
         Drugo
       </div>
@@ -21,7 +21,7 @@
     <div class="filters">
       <!-- TODO: style forms -->
       <FormKit
-        v-model="filterAuthors"
+        v-model="filterAuthor"
         type="select"
         placeholder="Vsi avtorji poročil / odzivov"
         :options="[]"
@@ -47,7 +47,7 @@
           <div class="title">{{ report['Ime poročila ali odziva'] }}</div>
           <div class="subtitle">
             <!-- TODO: zamenjaj za avtor polje, ko bo dodano v nocodb -->
-            <span class="author">{{ report['Tip poročila'] }}</span
+            <span class="author">Avtor Lala / {{ report['Tip poročila'] }}</span
             ><span class="separator">|</span
             ><span class="date">{{
               formatDate(report['Datum oddaje ali objave poročila ali odziva'])
@@ -84,50 +84,56 @@ export default {
   data() {
     return {
       reports: [],
-      filterReportType: 'ec',
-      filterAuthors: null,
+      filterInstitution: 'ec',
+      filterAuthor: null,
       filterYear: null,
     };
   },
   computed: {
     authors() {
-      // s = Set();
-      // for (let r of this.reports) {
+      // TODO: authors list when they will be added to the database
+      // const s = new Set();
+      // this.reports.forEach((r) => {
       //   s.add(r.author);
-      // }
+      // });
       // return Array.from(s);
       return [];
     },
     years() {
-      const s = new Set();
-      this.reports.forEach((r) => {
-        s.add(r.Leto);
-      });
-      return Array.from(s);
+      return Array.from(new Array(10), (x, i) => new Date().getFullYear() - i);
+    },
+    filters() {
+      const filters = {};
+      if (this.filterYear) {
+        filters.Leto = this.filterYear;
+      }
+      if (this.filterInstitution) {
+        filters['Institucija, kateri se poroča'] =
+          this.filterInstitution === 'ec' ? 'evropska komisija' : 'drugo';
+      }
+      return filters;
+    }, // author: filterAuthor
+  },
+  watch: {
+    filterInstitution() {
+      this.fetchReports();
+    },
+    filterAuthor() {
+      this.fetchReports();
+    },
+    filterYear() {
+      this.fetchReports();
     },
   },
   mounted() {
     this.fetchReports();
-    // TODO: fetch authors and years for filters ?
+    // TODO: fetch authors
   },
   methods: {
     formatDate,
     async fetchReports() {
-      const response = await getReports();
+      const response = await getReports(this.filters);
       this.reports = response.data.list;
-      // this.pageInfo = response.data.pageInfo;
-      // const entries = response.data.list.map((item) => ({
-      //   value: item.id,
-      //   label: item['Ime prispevka'],
-      // }));
-      // this.contributions = [
-      //   {
-      //     value: '0',
-      //     label: '---',
-      //     attrs: { disabled: true },
-      //   },
-      //   ...entries,
-      // ];
     },
   },
 };
