@@ -17,14 +17,23 @@
         <p>
           <i>{{ source['Avtor vira (oseba, organizacija, medij)'] }}</i>
         </p>
-        <p>{{ formatDate(source['Datum objave vira']) }}</p>
+        <p v-if="source['Datum objave vira']">
+          {{ formatDate(source['Datum objave vira']) }}
+        </p>
       </div>
       <br />
       <div class="date">
         <p>Obdobje, na katerega se navezuje vir</p>
         <p>
-          {{ formatDate(source['Datum začetka obdobja']) }} –
-          {{ formatDate(source['Datum konca obdobja']) }}
+          <span v-if="source['Datum začetka obdobja']">{{
+            formatDate(source['Datum začetka obdobja'])
+          }}</span
+          ><span v-else>?</span>
+          <span> - </span>
+          <span v-if="source['Datum konca obdobja']">
+            {{ formatDate(source['Datum konca obdobja']) }}</span
+          >
+          <span v-else>?</span>
         </p>
       </div>
       <br />
