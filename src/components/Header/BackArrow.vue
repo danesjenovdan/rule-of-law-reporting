@@ -1,8 +1,10 @@
 <template>
-  <RouterLink :to="to" class="back-arrow">
-    <i class="icon" />
-    <span class="text">{{ text }} </span>
-  </RouterLink>
+  <div class="container">
+    <RouterLink :to="to" class="back-arrow">
+      <i class="icon" />
+      <span class="text">{{ text }} </span>
+    </RouterLink>
+  </div>
 </template>
 
 <script>
@@ -44,6 +46,12 @@ export default {
 
   .text {
     font-size: 0.833334em;
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    margin-top: 2rem;
   }
 }
 </style>

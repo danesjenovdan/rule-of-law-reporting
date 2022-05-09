@@ -1,54 +1,60 @@
 <template>
   <header>
-    <SmallHeader />
+    <DesktopHeader v-if="isDesktop.value" />
+    <SmallHeader v-if="!isDesktop.value" />
     <BackArrow
       text="Nazaj na seznam prispevkov"
       :to="{ name: 'contributions' }"
     />
   </header>
+
   <section>
-    <main>
-      <h2>{{ contribution['Ime prispevka'] }}</h2>
-      <div
-        v-if="contribution['Področja <= Prispevek']"
-        class="contribution-area"
-        :style="{
-          backgroundColor:
-            colors[contribution['Področja <= Prispevek']['Ime področja']] ||
-            '#dadada',
-        }"
-      >
-        {{ contribution['Področja <= Prispevek']['Ime področja'] }}
-      </div>
-      <div class="author">Maja, Danes je nov dan</div>
-      <div class="date">
-        {{ formatDate(contribution['created_at']) }}
-      </div>
-      <hr class="short-hr" />
-      <p>
-        {{ contribution['O področju prispevka'] }}
-      </p>
-      <FormKit
-        v-if="events?.length > 0"
-        type="button"
-        :classes="{
-          outer: 'small',
-        }"
-        @click="$router.push({ name: 'new-event' })"
-      >
-        Dodaj dogodek na ta prispevek
-      </FormKit>
-    </main>
+    <div class="container">
+      <main>
+        <h2>{{ contribution['Ime prispevka'] }}</h2>
+        <div
+          v-if="contribution['Področja <= Prispevek']"
+          class="contribution-area"
+          :style="{
+            backgroundColor:
+              colors[contribution['Področja <= Prispevek']['Ime področja']] ||
+              '#dadada',
+          }"
+        >
+          {{ contribution['Področja <= Prispevek']['Ime področja'] }}
+        </div>
+        <div class="author">Maja, Danes je nov dan</div>
+        <div class="date">
+          {{ formatDate(contribution['created_at']) }}
+        </div>
+        <hr class="short-hr" />
+        <p>
+          {{ contribution['O področju prispevka'] }}
+        </p>
+        <FormKit
+          v-if="events?.length > 0"
+          type="button"
+          :classes="{
+            outer: 'small',
+          }"
+          @click="$router.push({ name: 'new-event' })"
+        >
+          Dodaj dogodek na ta prispevek
+        </FormKit>
+      </main>
+    </div>
     <section v-if="events?.length > 0" class="events">
-      <div class="events-header">
-        <h3>Povezani dogodki</h3>
-        <hr />
+      <div class="container">
+        <div class="events-header">
+          <h3>Povezani dogodki</h3>
+          <hr />
+        </div>
+        <EventListElement
+          v-for="event in events"
+          :key="event['Naslov dogodka']"
+          :event="event"
+        />
       </div>
-      <EventListElement
-        v-for="event in events"
-        :key="event['Naslov dogodka']"
-        :event="event"
-      />
     </section>
   </section>
   <footer v-if="events?.length === 0">
@@ -64,6 +70,8 @@
 import SmallHeader from '../../components/Header/SmallHeader.vue';
 import BackArrow from '../../components/Header/BackArrow.vue';
 import EventListElement from '../../components/EventListElement.vue';
+import DesktopHeader from '../../components/Header/DesktopHeader.vue';
+
 import { getContribution } from '../../helpers/api.js';
 import { colors } from '../../helpers/area-colors.js';
 import { formatDate } from '../../helpers/format-time.js';
@@ -73,6 +81,12 @@ export default {
     SmallHeader,
     EventListElement,
     BackArrow,
+    DesktopHeader,
+  },
+  inject: {
+    isDesktop: {
+      default: false,
+    },
   },
   data() {
     return {
@@ -151,6 +165,7 @@ main {
 
 .events {
   padding-top: 2rem;
+  padding-bottom: 2rem;
   background-color: $bg-color;
 }
 

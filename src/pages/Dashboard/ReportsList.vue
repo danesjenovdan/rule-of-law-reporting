@@ -1,81 +1,88 @@
 <template>
   <header>
-    <SmallHeader />
-    <PillButtonNav />
+    <DesktopHeader v-if="isDesktop.value" />
+    <SmallHeader v-if="!isDesktop.value" />
+    <PillButtonNav v-if="!isDesktop.value" />
   </header>
-  <main>
-    <div class="tabs">
-      <div
-        :class="{ active: filterInstitution == 'ec' }"
-        @click="filterInstitution = 'ec'"
-      >
-        Evropska komisija
-      </div>
-      <div
-        :class="{ active: filterInstitution == 'other' }"
-        @click="filterInstitution = 'other'"
-      >
-        Drugo
-      </div>
-    </div>
-    <div class="filters">
-      <!-- TODO: style forms -->
-      <FormKit
-        v-model="filterAuthor"
-        type="select"
-        placeholder="Vsi avtorji poročil / odzivov"
-        :options="[]"
-        @click.stop=""
-      >
-      </FormKit>
-      <FormKit
-        v-model="filterYear"
-        type="select"
-        placeholder="Vsa leta"
-        :options="years"
-        @click.stop=""
-      >
-      </FormKit>
-    </div>
-    <div class="info">
-      <span>Število prispevkov: {{ reports?.length }}</span>
-      <hr />
-    </div>
-    <div>
-      <div v-for="report in reports" :key="report.id" class="report">
-        <div>
-          <div class="title">{{ report['Ime poročila ali odziva'] }}</div>
-          <div class="subtitle">
-            <!-- TODO: zamenjaj za avtor polje, ko bo dodano v nocodb -->
-            <span class="author">Avtor Lala / {{ report['Tip poročila'] }}</span
-            ><span class="separator">|</span
-            ><span class="date">{{
-              formatDate(report['Datum oddaje ali objave poročila ali odziva'])
-            }}</span>
-          </div>
-        </div>
-        <a
-          v-if="report['Link do poročila ali odziva']"
-          :href="report['Link do poročila ali odziva']"
-          target="_blank"
+  <div class="container">
+    <main>
+      <div class="tabs">
+        <div
+          :class="{ active: filterInstitution == 'ec' }"
+          @click="filterInstitution = 'ec'"
         >
-          <div class="open-new-page-icon"></div>
-        </a>
+          Evropska komisija
+        </div>
+        <div
+          :class="{ active: filterInstitution == 'other' }"
+          @click="filterInstitution = 'other'"
+        >
+          Drugo
+        </div>
       </div>
-    </div>
-  </main>
-  <footer>
-    <div class="buttons">
-      <FormKit type="button" @click="$router.push({ name: 'new-report' })">
-        Želim dodati poročilo / odziv
-      </FormKit>
-    </div>
-  </footer>
+      <div class="filters">
+        <!-- TODO: style forms -->
+        <FormKit
+          v-model="filterAuthor"
+          type="select"
+          placeholder="Vsi avtorji poročil / odzivov"
+          :options="[]"
+          @click.stop=""
+        >
+        </FormKit>
+        <FormKit
+          v-model="filterYear"
+          type="select"
+          placeholder="Vsa leta"
+          :options="years"
+          @click.stop=""
+        >
+        </FormKit>
+      </div>
+      <div class="info">
+        <span>Število prispevkov: {{ reports?.length }}</span>
+        <hr />
+      </div>
+      <div>
+        <div v-for="report in reports" :key="report.id" class="report">
+          <div>
+            <div class="title">{{ report['Ime poročila ali odziva'] }}</div>
+            <div class="subtitle">
+              <!-- TODO: zamenjaj za avtor polje, ko bo dodano v nocodb -->
+              <span class="author"
+                >Avtor Lala / {{ report['Tip poročila'] }}</span
+              ><span class="separator">|</span
+              ><span class="date">{{
+                formatDate(
+                  report['Datum oddaje ali objave poročila ali odziva']
+                )
+              }}</span>
+            </div>
+          </div>
+          <a
+            v-if="report['Link do poročila ali odziva']"
+            :href="report['Link do poročila ali odziva']"
+            target="_blank"
+          >
+            <div class="open-new-page-icon"></div>
+          </a>
+        </div>
+      </div>
+    </main>
+    <footer>
+      <div class="buttons">
+        <FormKit type="button" @click="$router.push({ name: 'new-report' })">
+          Želim dodati poročilo / odziv
+        </FormKit>
+      </div>
+    </footer>
+  </div>
 </template>
 
 <script>
 import SmallHeader from '../../components/Header/SmallHeader.vue';
 import PillButtonNav from '../../components/PillButtonNav.vue';
+import DesktopHeader from '../../components/Header/DesktopHeader.vue';
 
 import { getReports } from '../../helpers/api.js';
 import { formatDate } from '../../helpers/format-time.js';
@@ -84,6 +91,7 @@ export default {
   components: {
     SmallHeader,
     PillButtonNav,
+    DesktopHeader,
   },
   data() {
     return {
@@ -112,8 +120,9 @@ export default {
         filters.Leto = this.filterYear;
       }
       if (this.filterInstitution) {
-        filters['Institucija, kateri se poroča'] =
-          this.filterInstitution === 'ec' ? 'evropska komisija' : 'drugo';
+        filters[
+          'Na kateri poročevalski mehanizem se nanaša poročilo ali odziv'
+        ] = this.filterInstitution === 'ec' ? 'evropska komisija' : 'drugo';
       }
       return filters;
     }, // author: filterAuthor
@@ -138,6 +147,11 @@ export default {
     async fetchReports() {
       const response = await getReports(this.filters);
       this.reports = response.data.list;
+    },
+  },
+  inject: {
+    isDesktop: {
+      default: false,
     },
   },
 };
@@ -219,6 +233,15 @@ export default {
     padding-right: 5px;
     color: $color-medium-grey;
     font-size: 9px;
+  }
+}
+
+@media (min-width: 992px) {
+  footer {
+    padding-bottom: 20px;
+  }
+  footer .buttons {
+    display: none;
   }
 }
 </style>

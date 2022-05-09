@@ -239,3 +239,19 @@ select.formkit-input {
     margin-bottom: 0;
   }
 }
+
+// desktop
+@media (min-width: 992px) {
+  .tools-right {
+    .formkit-outer {
+      margin-bottom: 0;
+    }
+    [data-type='button'] {
+      .formkit-input {
+        font-size: 14px;
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+      }
+    }
+  }
+}

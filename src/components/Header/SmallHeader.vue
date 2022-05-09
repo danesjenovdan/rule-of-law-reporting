@@ -1,11 +1,13 @@
 <template>
-  <div class="small-header">
-    <div class="small-header-left">
-      <DashboardLogoLink />
-    </div>
-    <div class="small-header-right">
-      <ExportContributionsLink />
-      <LogoutIconLink />
+  <div class="container">
+    <div class="small-header">
+      <div class="small-header-left">
+        <DashboardLogoLink />
+      </div>
+      <div class="small-header-right">
+        <ExportContributionsLink />
+        <LogoutIconLink />
+      </div>
     </div>
   </div>
 </template>

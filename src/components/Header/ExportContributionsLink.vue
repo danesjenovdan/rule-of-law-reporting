@@ -25,5 +25,13 @@
   background-repeat: no-repeat;
   background-position: left 0.7em top 0.7em;
   background-size: 1.25em 1.25em;
+
+  @media (min-width: 992px) {
+    font-size: 14px;
+    border: 2px solid #d2c8ee;
+    border-radius: 5px;
+    height: unset;
+    margin-right: 1rem;
+  }
 }
 </style>

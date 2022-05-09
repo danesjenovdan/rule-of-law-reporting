@@ -1,102 +1,112 @@
 <template>
   <header>
-    <SmallHeader />
+    <DesktopHeader v-if="isDesktop.value" />
+    <SmallHeader v-if="!isDesktop.value" />
     <BackArrow
       text="Nazaj na seznam prispevkov"
       :to="{ name: 'contributions' }"
     />
   </header>
-  <main>
-    <div>
-      <template v-if="!submitted">
-        <div class="lead-in-text">
-          <div class="lead">Nov prispevek</div>
-          <div>
-            Pred oddajo novega prispevka na seznamu vseh prispevkov preveri, če
-            ta prispevek res še ne obstaja.
-          </div>
-        </div>
-        <hr />
-        <FormKit
-          v-model="formData"
-          type="form"
-          submit-label="Oddaj prispevek"
-          @submit="submit"
-        >
-          <FormKit
-            type="radio"
-            name="nc_0zwf__področja_id"
-            label="Izberi področje, na katerega se navezuje prispevek."
-            :options="areas"
-            validation="required"
-          />
-          <FormKit
-            type="radio"
-            name="Če ste izbrali druga, na katerem področju"
-            label="Če ste izbrali druga, na katerem področju"
-            :options="otherAreas"
-            validation="required"
-          />
-          <FormKit
-            type="text"
-            name="Ime prispevka"
-            label="Ime prispevka"
-            validation="required"
-          />
-          <FormKit
-            type="textarea"
-            name="O področju prispevka"
-            label="O področju prispevka"
-            validation="required"
-          />
-        </FormKit>
-      </template>
-      <template v-else>
-        <div class="submitted-container">
-          <div class="submitted-icon"></div>
+  <div class="container">
+    <main>
+      <div>
+        <template v-if="!submitted">
           <div class="lead-in-text">
-            <div class="lead">Hvala za oddajo!</div>
+            <div class="lead">Nov prispevek</div>
             <div>
-              Tvoj prispevek bo viden takoj, ko bo odobren s strani
-              administratorjev.
+              Pred oddajo novega prispevka na seznamu vseh prispevkov preveri,
+              če ta prispevek res še ne obstaja.
             </div>
           </div>
           <hr />
-          <div class="strong-text">
-            Se na ravno oddani prispevek navezuje kakšen dogodek, ki ga želiš
-            dodati?
-          </div>
           <FormKit
-            type="button"
-            @click="
-              $router.push({
-                name: 'new-event',
-                query: { contribution: lastSubmittedId },
-              })
-            "
+            v-model="formData"
+            type="form"
+            submit-label="Oddaj prispevek"
+            @submit="submit"
           >
-            Dodaj povezan dogodek
+            <FormKit
+              type="radio"
+              name="nc_0zwf__področja_id"
+              label="Izberi področje, na katerega se navezuje prispevek."
+              :options="areas"
+              validation="required"
+            />
+            <FormKit
+              type="radio"
+              name="Če ste izbrali druga, na katerem področju"
+              label="Če ste izbrali druga, na katerem področju"
+              :options="otherAreas"
+              validation="required"
+            />
+            <FormKit
+              type="text"
+              name="Ime prispevka"
+              label="Ime prispevka"
+              validation="required"
+            />
+            <FormKit
+              type="textarea"
+              name="O področju prispevka"
+              label="O področju prispevka"
+              validation="required"
+            />
           </FormKit>
-          <hr />
-          <div class="strong-text">Želiš dodati nov prispevek?</div>
-          <FormKit type="button" outer-class="small-button" @click="reset">
-            Dodaj prispevek
-          </FormKit>
-        </div>
-      </template>
-    </div>
-  </main>
+        </template>
+        <template v-else>
+          <div class="submitted-container">
+            <div class="submitted-icon"></div>
+            <div class="lead-in-text">
+              <div class="lead">Hvala za oddajo!</div>
+              <div>
+                Tvoj prispevek bo viden takoj, ko bo odobren s strani
+                administratorjev.
+              </div>
+            </div>
+            <hr />
+            <div class="strong-text">
+              Se na ravno oddani prispevek navezuje kakšen dogodek, ki ga želiš
+              dodati?
+            </div>
+            <FormKit
+              type="button"
+              @click="
+                $router.push({
+                  name: 'new-event',
+                  query: { contribution: lastSubmittedId },
+                })
+              "
+            >
+              Dodaj povezan dogodek
+            </FormKit>
+            <hr />
+            <div class="strong-text">Želiš dodati nov prispevek?</div>
+            <FormKit type="button" outer-class="small-button" @click="reset">
+              Dodaj prispevek
+            </FormKit>
+          </div>
+        </template>
+      </div>
+    </main>
+  </div>
 </template>
 
 <script>
 import SmallHeader from '../../components/Header/SmallHeader.vue';
+import DesktopHeader from '../../components/Header/DesktopHeader.vue';
 import BackArrow from '../../components/Header/BackArrow.vue';
 import { getAreas, postContribution } from '../../helpers/api.js';
 
 export default {
   components: {
     SmallHeader,
+    DesktopHeader,
     BackArrow,
+  },
+  inject: {
+    isDesktop: {
+      default: false,
+    },
   },
   data() {
     return {
