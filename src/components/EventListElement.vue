@@ -28,7 +28,7 @@
         :source="source"
       />
     </div>
-    <div v-if="eventConnected" class="connection-dots">
+    <div class="connection-dots">
       <div class="dot"></div>
       <div class="line"></div>
       <div class="dot"></div>
@@ -55,7 +55,6 @@ export default {
   data() {
     return {
       sources: [],
-      eventConnected: false,
     };
   },
   async mounted() {
@@ -130,6 +129,11 @@ export default {
       width: 3px;
       background-color: $color-accent;
       margin: 1px;
+    }
+  }
+  &:first-of-type {
+    .connection-dots {
+      display: none;
     }
   }
 }

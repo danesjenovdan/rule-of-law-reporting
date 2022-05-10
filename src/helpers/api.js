@@ -76,7 +76,7 @@ export async function getContributions() {
 export async function getContribution(id) {
   // TODO: change to fields=* when it will work: https://github.com/nocodb/nocodb/issues/1981
   return authedApi.get(
-    `data/noco/${projectName}/Prispevek/${id}?nested[Prispevek => Dogodek][fields]=Kaj se je zgodilo in kako vpliva na vladavino prava,Naslov dogodka,Objavljeno,created_at,id,updated_at`
+    `data/noco/${projectName}/Prispevek/${id}?nested[Prispevek => Dogodek][fields]=Kaj se je zgodilo in kako vpliva na vladavino prava,Naslov dogodka,Objavljeno,created_at,id,updated_at,nc_0zwf__dogodek_id`
   );
 }
 

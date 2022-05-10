@@ -49,19 +49,23 @@
           <h3>Povezani dogodki</h3>
           <hr />
         </div>
-        <EventListElement
-          v-for="event in events"
-          :key="event['Naslov dogodka']"
-          :event="event"
-        />
+        <div v-for="(chain, key) in eventChains" :key="key">
+          <EventListElement
+            v-for="event in chain"
+            :key="event['Naslov dogodka']"
+            :event="event"
+          />
+        </div>
       </div>
     </section>
   </section>
   <footer v-if="events?.length === 0">
-    <div class="buttons">
-      <FormKit type="button" @click="$router.push({ name: 'new-event' })">
-        Želim dodati povezani dogodek
-      </FormKit>
+    <div class="container">
+      <div class="buttons">
+        <FormKit type="button" @click="$router.push({ name: 'new-event' })">
+          Želim dodati povezani dogodek
+        </FormKit>
+      </div>
     </div>
   </footer>
 </template>
@@ -96,10 +100,50 @@ export default {
     };
   },
   computed: {
-    events() {
-      return this.contribution['Prispevek => Dogodek']
-        ?.slice()
-        ?.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+    // events() {
+    //   return this.contribution['Prispevek => Dogodek']
+    //     ?.slice()
+    //     ?.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+    // },
+    eventChains() {
+      // chains - keys are ids of the last element of the chain
+      const chains = {};
+      // all events that we are going to sort into chains
+      const eventsPool = [...this.contribution['Prispevek => Dogodek']];
+      let previousLength = 0; // for safety check that we dont loop forever (if length is the same twice, break loop!)
+      while (eventsPool.length > 0 && previousLength !== eventsPool.length) {
+        // console.log(eventsPool);
+        previousLength = eventsPool.length;
+        for (let i = eventsPool.length - 1; i >= 0; i -= 1) {
+          // starting nodes of the chain are not connected to any other event
+          if (eventsPool[i].nc_0zwf__dogodek_id == null) {
+            // console.log('v eventsPool dodajam ', eventsPool[i]['id']);
+            // add to chains
+            chains[eventsPool[i].id] = [eventsPool[i]];
+            // remove from events pool
+            eventsPool.splice(i, 1);
+          }
+          // add children to nodes
+          else if (eventsPool[i].nc_0zwf__dogodek_id in chains) {
+            // console.log(
+            //   'v eventsPool na ',
+            //   eventsPool[i]['nc_0zwf__dogodek_id'],
+            //   ' dodajam ',
+            //   eventsPool[i]['id']
+            // );
+            // save the chain under new key, which is the id of the last element of the chain
+            chains[eventsPool[i].id] = [
+              ...chains[eventsPool[i].nc_0zwf__dogodek_id],
+              eventsPool[i],
+            ];
+            // remove old chain
+            delete chains[eventsPool[i].nc_0zwf__dogodek_id];
+            // remove from events pool
+            eventsPool.splice(i, 1);
+          }
+        }
+      }
+      return chains;
     },
   },
   mounted() {
