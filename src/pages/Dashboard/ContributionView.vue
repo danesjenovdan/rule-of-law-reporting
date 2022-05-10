@@ -100,11 +100,11 @@ export default {
     };
   },
   computed: {
-    // events() {
-    //   return this.contribution['Prispevek => Dogodek']
-    //     ?.slice()
-    //     ?.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-    // },
+    events() {
+      return this.contribution['Prispevek => Dogodek'];
+      // ?.slice()
+      // ?.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+    },
     eventChains() {
       // chains - keys are ids of the last element of the chain
       const chains = {};
