@@ -1,6 +1,6 @@
 <template>
   <div class="desktop-toolbar container">
-    <ToolsBar @close="showFiltersModal = true" />
+    <ToolsBar @close="$emit('close')" />
   </div>
 </template>
 
@@ -8,6 +8,7 @@
 import ToolsBar from './ToolsBar.vue';
 
 export default {
+  emits: ['close'],
   components: {
     ToolsBar,
   },

@@ -1,7 +1,7 @@
 <template>
   <header>
     <DesktopHeader v-if="isDesktop.value" />
-    <DesktopToolsList v-if="isDesktop.value" />
+    <DesktopToolsList v-if="isDesktop.value" @close="showFiltersModal = true" />
     <SmallHeader v-if="!isDesktop.value" />
     <PillButtonNav v-if="!isDesktop.value" />
     <ToolsBar v-if="!isDesktop.value" @close="showFiltersModal = true" />

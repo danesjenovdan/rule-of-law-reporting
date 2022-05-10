@@ -1,7 +1,10 @@
 <template>
   <header>
     <DesktopHeader v-if="isDesktop.value" />
-    <DesktopToolsExport v-if="isDesktop.value" />
+    <DesktopToolsExport
+      v-if="isDesktop.value"
+      @close="showFiltersModal = true"
+    />
     <SmallHeader v-if="!isDesktop.value" />
     <ToolsBar v-if="!isDesktop.value" @close="showFiltersModal = true" />
     <HeaderLine

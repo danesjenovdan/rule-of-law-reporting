@@ -1,6 +1,6 @@
 <template>
   <div class="desktop-toolbar container">
-    <ToolsBar @close="showFiltersModal = true" />
+    <ToolsBar @close="$emit('close')" />
     <div class="tools-right">
       <ExportContributionsLink />
       <FormKit
@@ -18,6 +18,7 @@ import ToolsBar from './ToolsBar.vue';
 import ExportContributionsLink from './ExportContributionsLink.vue';
 
 export default {
+  emits: ['close'],
   components: {
     ToolsBar,
     ExportContributionsLink,
