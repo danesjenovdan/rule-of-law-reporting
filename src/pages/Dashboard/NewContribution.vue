@@ -25,6 +25,12 @@
             submit-label="Oddaj prispevek"
             @submit="submit"
           >
+            <!-- TODO: move in to radio component -->
+            <div>
+              <button @click.prevent="showInfoModal = true">
+                Več o izbiri področja
+              </button>
+            </div>
             <FormKit
               type="radio"
               name="nc_0zwf__področja_id"
@@ -89,12 +95,14 @@
       </div>
     </main>
   </div>
+  <InfoModal v-if="showInfoModal" @close="showInfoModal = false" />
 </template>
 
 <script>
 import SmallHeader from '../../components/Header/SmallHeader.vue';
 import DesktopHeader from '../../components/Header/DesktopHeader.vue';
 import BackArrow from '../../components/Header/BackArrow.vue';
+import InfoModal from '../../components/InfoModal.vue';
 import { getAreas, postContribution } from '../../helpers/api.js';
 
 export default {
@@ -102,6 +110,7 @@ export default {
     SmallHeader,
     DesktopHeader,
     BackArrow,
+    InfoModal,
   },
   inject: {
     isDesktop: {
@@ -127,6 +136,7 @@ export default {
       },
       submitted: false,
       lastSubmittedId: 0,
+      showInfoModal: false,
     };
   },
   async mounted() {
