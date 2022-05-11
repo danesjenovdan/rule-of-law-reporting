@@ -17,6 +17,7 @@ const router = createRouter({
 });
 
 const app = createApp(App);
+app.config.unwrapInjectedRef = true; // TODO: remove when this is default in next vue release
 
 app.use(router);
 app.use(

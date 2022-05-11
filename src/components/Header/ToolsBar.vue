@@ -1,5 +1,5 @@
 <template>
-  <div :class="{ container: !isDesktop.value }">
+  <div :class="{ container: !isDesktop }">
     <div class="tools">
       <div class="search">
         <FormKit type="text" name="" label="" />

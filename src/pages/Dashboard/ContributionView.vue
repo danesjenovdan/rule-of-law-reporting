@@ -1,7 +1,7 @@
 <template>
   <header>
-    <DesktopHeader v-if="isDesktop.value" />
-    <SmallHeader v-if="!isDesktop.value" />
+    <DesktopHeader v-if="isDesktop" />
+    <SmallHeader v-if="!isDesktop" />
     <BackArrow
       text="Nazaj na seznam prispevkov"
       :to="{ name: 'contributions' }"
