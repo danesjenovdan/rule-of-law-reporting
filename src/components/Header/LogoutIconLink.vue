@@ -22,5 +22,12 @@
   background-repeat: no-repeat;
   text-indent: -999999px;
   overflow: hidden;
+
+  @media (min-width: 992px) {
+    width: 3.33334rem;
+    height: 3.33334rem;
+    background-size: 50% 50%;
+    background-color: $color-accent-light;
+  }
 }
 </style>

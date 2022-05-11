@@ -23,5 +23,10 @@ export default {
   height: 2.5rem;
   border-radius: 50%;
   overflow: hidden;
+
+  @media (min-width: 992px) {
+    width: 4.166667rem;
+    height: 4.166667rem;
+  }
 }
 </style>
