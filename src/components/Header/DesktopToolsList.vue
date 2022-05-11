@@ -18,11 +18,11 @@ import ToolsBar from './ToolsBar.vue';
 import ExportContributionsLink from './ExportContributionsLink.vue';
 
 export default {
-  emits: ['close'],
   components: {
     ToolsBar,
     ExportContributionsLink,
   },
+  emits: ['close'],
 };
 </script>
 
@@ -39,6 +39,7 @@ export default {
     align-items: center;
   }
 }
+
 .desktop-toolbar:deep(.tools) {
   width: 500px;
 }

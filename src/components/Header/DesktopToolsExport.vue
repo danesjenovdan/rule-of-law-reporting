@@ -8,10 +8,10 @@
 import ToolsBar from './ToolsBar.vue';
 
 export default {
-  emits: ['close'],
   components: {
     ToolsBar,
   },
+  emits: ['close'],
 };
 </script>
 
@@ -28,6 +28,7 @@ export default {
     align-items: center;
   }
 }
+
 .desktop-toolbar:deep(.tools) {
   width: 500px;
 }

@@ -17,12 +17,12 @@
 
 <script>
 export default {
-  emits: ['close'],
   inject: {
     isDesktop: {
       default: false,
     },
   },
+  emits: ['close'],
 };
 </script>
 
@@ -36,15 +36,18 @@ export default {
   border: 1px solid #ffffff;
   background-color: #ffffff;
   padding: 7px;
+
   @media (min-width: 992px) {
     box-shadow: none;
     padding: 0;
   }
+
   span {
     font-size: 10px;
     font-style: italic;
     padding-bottom: 4px;
   }
+
   .filter {
     display: flex;
     align-items: center;
@@ -54,15 +57,18 @@ export default {
     padding: 4px 6px;
     font-size: 10px;
     margin-left: 10px;
+
     .filter-icon {
       width: 11px;
       height: 13px;
       margin-right: 5px;
     }
   }
+
   .search {
     flex-grow: 1;
     position: relative;
+
     .search-button {
       position: absolute;
       top: 5px;
@@ -71,6 +77,7 @@ export default {
       background-color: $color-orange;
       padding: 5px;
     }
+
     .search-icon {
       width: 11px;
       height: 13px;

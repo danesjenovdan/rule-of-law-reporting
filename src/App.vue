@@ -8,16 +8,16 @@
 import { computed } from 'vue';
 
 export default {
-  data() {
-    return {
-      windowWidth: window.innerWidth,
-    };
-  },
   provide() {
     return {
       isDesktop: computed(() => {
         return this.windowWidth > 991;
       }),
+    };
+  },
+  data() {
+    return {
+      windowWidth: window.innerWidth,
     };
   },
   mounted() {
