@@ -1,32 +1,44 @@
 <template>
   <header>
-    <SmallHeader />
-    <ToolsBar
-      :contributions-no="pageInfo.totalRows"
-      :chosen-no="selectedContributionsCount"
+    <DesktopHeader v-if="isDesktop.value" />
+    <DesktopToolsExport
+      v-if="isDesktop.value"
       @close="showFiltersModal = true"
     />
+    <SmallHeader v-if="!isDesktop.value" />
+    <ToolsBar v-if="!isDesktop.value" @close="showFiltersModal = true" />
+    <HeaderLine
+      :contributions-no="pageInfo.totalRows"
+      :chosen-no="selectedContributionsCount"
+    />
   </header>
-  <main v-if="contributions.length > 0" class="contributions-list">
-    <FormKit v-model="formData" type="form" :actions="false">
-      <FormKit
-        type="checkbox"
-        name="contributions"
-        :options="sortedContributions"
-        :wrapper-class="'contribution'"
-      />
-    </FormKit>
-  </main>
-  <footer>
-    <div class="buttons">
-      <FormKit type="button"> Izvozi prispevke </FormKit>
-    </div>
-  </footer>
+  <div class="container">
+    <main v-if="contributions.length > 0" class="contributions-list">
+      <FormKit v-model="formData" type="form" :actions="false">
+        <FormKit
+          type="checkbox"
+          name="contributions"
+          :options="sortedContributions"
+          :wrapper-class="'contribution'"
+        />
+      </FormKit>
+    </main>
+  </div>
+  <div class="container">
+    <footer>
+      <div class="buttons">
+        <FormKit type="button"> Izvozi prispevke </FormKit>
+      </div>
+    </footer>
+  </div>
   <FiltersModal v-if="showFiltersModal" @close="showFiltersModal = false" />
 </template>
 
 <script>
 import SmallHeader from '../../components/Header/SmallHeader.vue';
+import DesktopHeader from '../../components/Header/DesktopHeader.vue';
+import DesktopToolsExport from '../../components/Header/DesktopToolsExport.vue';
+import HeaderLine from '../../components/Header/HeaderLine.vue';
 import FiltersModal from '../../components/FiltersModal.vue';
 import ToolsBar from '../../components/Header/ToolsBar.vue';
 import { getContributions } from '../../helpers/api.js';
@@ -34,8 +46,16 @@ import { getContributions } from '../../helpers/api.js';
 export default {
   components: {
     SmallHeader,
+    DesktopHeader,
+    DesktopToolsExport,
+    HeaderLine,
     FiltersModal,
     ToolsBar,
+  },
+  inject: {
+    isDesktop: {
+      default: false,
+    },
   },
   data() {
     return {

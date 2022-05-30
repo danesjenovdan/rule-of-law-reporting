@@ -1,59 +1,34 @@
 <template>
-  <div class="tools">
-    <div class="search">
-      <FormKit type="text" name="" label="" />
-      <div class="search-button">
-        <div class="search-icon"></div>
+  <div :class="{ container: !isDesktop.value }">
+    <div class="tools">
+      <div class="search">
+        <FormKit type="text" name="" label="" />
+        <div class="search-button">
+          <div class="search-icon"></div>
+        </div>
       </div>
-    </div>
-    <div class="filter" @click="$emit('close')">
-      <div class="filter-icon"></div>
-      Filtiraj
+      <button class="filter" @click="$emit('close')">
+        <div class="filter-icon"></div>
+        Filtiraj
+      </button>
     </div>
   </div>
-  <div class="info">
-    <span>{{ contributionsNo }} prispevkov</span>
-    <span v-if="chosenNo != null">Število izbranih: {{ chosenNo }}</span>
-  </div>
-  <hr />
 </template>
 
 <script>
 export default {
-  props: {
-    contributionsNo: {
-      type: Number,
-      default: 0,
-    },
-    chosenNo: {
-      type: Number,
-      default: null,
+  emits: ['close'],
+  inject: {
+    isDesktop: {
+      default: false,
     },
   },
-  emits: ['close'],
 };
 </script>
 
 <style lang="scss" scoped>
 @import '../../assets/scss/variables';
 
-.info {
-  display: flex;
-  justify-content: space-between;
-  align-items: end;
-  margin-top: 20px;
-  span {
-    font-size: 10px;
-    font-style: italic;
-    padding-bottom: 4px;
-  }
-}
-hr {
-  margin: 0;
-  height: 2px !important;
-  background-color: #d2c8ee;
-  opacity: 1;
-}
 .tools {
   display: flex;
   box-shadow: 0 0 4px 1px #eeebf7;
@@ -61,6 +36,10 @@ hr {
   border: 1px solid #ffffff;
   background-color: #ffffff;
   padding: 7px;
+  @media (min-width: 992px) {
+    box-shadow: none;
+    padding: 0;
+  }
   span {
     font-size: 10px;
     font-style: italic;
@@ -69,6 +48,7 @@ hr {
   .filter {
     display: flex;
     align-items: center;
+    border: none;
     border-radius: 3px;
     background-color: $color-orange;
     padding: 4px 6px;

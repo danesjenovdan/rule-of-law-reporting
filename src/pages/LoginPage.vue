@@ -1,10 +1,12 @@
 <template>
-  <div class="login-page">
-    <div class="logo">
-      <CircleLogo />
-    </div>
-    <div>
-      <LoginForm />
+  <div class="container">
+    <div class="login-page">
+      <div class="logo">
+        <CircleLogo />
+      </div>
+      <div>
+        <LoginForm />
+      </div>
     </div>
   </div>
 </template>
@@ -18,6 +20,11 @@ export default {
   components: {
     CircleLogo,
     LoginForm,
+  },
+  inject: {
+    isDesktop: {
+      default: false,
+    },
   },
   mounted() {
     const { logout } = this.$route.query;

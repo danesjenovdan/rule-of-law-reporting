@@ -159,6 +159,7 @@ select.formkit-input {
   padding: 20px 0;
   border-bottom: 1px solid $color-accent-light;
   display: flex;
+  cursor: pointer;
   label {
     flex-grow: 1;
   }
@@ -232,9 +233,45 @@ select.formkit-input {
   }
 }
 
-// search
+// filter form overrides
+.filters-form {
+  max-height: 100vh;
+  // overflow-y: scroll;
+  // background-color: $color-white;
+  box-shadow: 0 0 4px 1px #eeebf7;
+  border-radius: 3px;
+  border: 1px solid #ffffff;
+  .formkit-actions {
+    background-color: $color-white;
+    margin-top: 0;
+    .formkit-outer {
+      margin-bottom: 0;
+      padding: 0 $gutter;
+      padding-bottom: 1rem;
+    }
+  }
+  
+}
+
+// search overrides
 .search {
   .formkit-outer {
     margin-bottom: 0;
+  }
+}
+
+// desktop
+@media (min-width: 992px) {
+  .tools-right {
+    .formkit-outer {
+      margin-bottom: 0;
+    }
+    [data-type='button'] {
+      .formkit-input {
+        font-size: 14px;
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+      }
+    }
   }
 }

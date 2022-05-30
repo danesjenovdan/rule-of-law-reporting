@@ -1,77 +1,88 @@
 <template>
   <header>
-    <SmallHeader />
-    <PillButtonNav />
+    <DesktopHeader v-if="isDesktop.value" />
+    <SmallHeader v-if="!isDesktop.value" />
+    <PillButtonNav v-if="!isDesktop.value" />
   </header>
-  <main>
-    <div class="tabs">
-      <div
-        :class="{ active: filterReportType == 'ec' }"
-        @click="filterReportType = 'ec'"
-      >
-        Evropska komisija
-      </div>
-      <div
-        :class="{ active: filterReportType == 'other' }"
-        @click="filterReportType = 'other'"
-      >
-        Drugo
-      </div>
-    </div>
-    <div class="filters">
-      <!-- TODO: style forms -->
-      <FormKit
-        v-model="filterAuthors"
-        type="select"
-        placeholder="Vsi avtorji poročil / odzivov"
-        :options="[]"
-        @click.stop=""
-      >
-      </FormKit>
-      <FormKit
-        v-model="filterYear"
-        type="select"
-        placeholder="Vsa leta"
-        :options="years"
-        @click.stop=""
-      >
-      </FormKit>
-    </div>
-    <div class="info">
-      <span>{{ reports?.length }} prispevkov</span>
-      <hr />
-    </div>
-    <div>
-      <div v-for="report in reports" :key="report.id" class="report">
-        <div>
-          <div class="title">{{ report['Ime poročila ali odziva'] }}</div>
-          <div class="subtitle">
-            <!-- TODO: zamenjaj za avtor polje, ko bo dodano v nocodb -->
-            <span class="author">{{ report['Tip poročila'] }}</span
-            ><span class="separator">|</span
-            ><span class="date">{{
-              formatDate(report['Datum oddaje ali objave poročila ali odziva'])
-            }}</span>
-          </div>
+  <div class="container">
+    <main>
+      <div class="tabs">
+        <div
+          :class="{ active: filterInstitution == 'ec' }"
+          @click="filterInstitution = 'ec'"
+        >
+          Evropska komisija
         </div>
-        <a :href="report['Link do poročila ali odziva']" target="_blank">
-          <div class="open-new-page-icon"></div>
-        </a>
+        <div
+          :class="{ active: filterInstitution == 'other' }"
+          @click="filterInstitution = 'other'"
+        >
+          Drugo
+        </div>
       </div>
-    </div>
-  </main>
-  <footer>
-    <div class="buttons">
-      <FormKit type="button" @click="$router.push({ name: 'new-report' })">
-        Želim dodati poročilo / odziv
-      </FormKit>
-    </div>
-  </footer>
+      <div class="filters">
+        <!-- TODO: style forms -->
+        <FormKit
+          v-model="filterAuthor"
+          type="select"
+          placeholder="Vsi avtorji poročil / odzivov"
+          :options="[]"
+          @click.stop=""
+        >
+        </FormKit>
+        <FormKit
+          v-model="filterYear"
+          type="select"
+          placeholder="Vsa leta"
+          :options="years"
+          @click.stop=""
+        >
+        </FormKit>
+      </div>
+      <div class="info">
+        <span>Število prispevkov: {{ reports?.length }}</span>
+        <hr />
+      </div>
+      <div>
+        <div v-for="report in reports" :key="report.id" class="report">
+          <div>
+            <div class="title">{{ report['Ime poročila ali odziva'] }}</div>
+            <div class="subtitle">
+              <!-- TODO: zamenjaj za avtor polje, ko bo dodano v nocodb -->
+              <span class="author"
+                >Avtor Lala / {{ report['Tip poročila'] }}</span
+              ><span class="separator">|</span
+              ><span class="date">{{
+                formatDate(
+                  report['Datum oddaje ali objave poročila ali odziva']
+                )
+              }}</span>
+            </div>
+          </div>
+          <a
+            v-if="report['Link do poročila ali odziva']"
+            :href="report['Link do poročila ali odziva']"
+            target="_blank"
+          >
+            <div class="open-new-page-icon"></div>
+          </a>
+        </div>
+      </div>
+    </main>
+    <footer>
+      <div class="buttons">
+        <FormKit type="button" @click="$router.push({ name: 'new-report' })">
+          Želim dodati poročilo / odziv
+        </FormKit>
+      </div>
+    </footer>
+  </div>
 </template>
 
 <script>
 import SmallHeader from '../../components/Header/SmallHeader.vue';
 import PillButtonNav from '../../components/PillButtonNav.vue';
+import DesktopHeader from '../../components/Header/DesktopHeader.vue';
 
 import { getReports } from '../../helpers/api.js';
 import { formatDate } from '../../helpers/format-time.js';
@@ -80,54 +91,67 @@ export default {
   components: {
     SmallHeader,
     PillButtonNav,
+    DesktopHeader,
   },
   data() {
     return {
       reports: [],
-      filterReportType: 'ec',
-      filterAuthors: null,
+      filterInstitution: 'ec',
+      filterAuthor: null,
       filterYear: null,
     };
   },
   computed: {
     authors() {
-      // s = Set();
-      // for (let r of this.reports) {
+      // TODO: authors list when they will be added to the database
+      // const s = new Set();
+      // this.reports.forEach((r) => {
       //   s.add(r.author);
-      // }
+      // });
       // return Array.from(s);
       return [];
     },
     years() {
-      const s = new Set();
-      this.reports.forEach((r) => {
-        s.add(r.Leto);
-      });
-      return Array.from(s);
+      return Array.from(new Array(10), (x, i) => new Date().getFullYear() - i);
+    },
+    filters() {
+      const filters = {};
+      if (this.filterYear) {
+        filters.Leto = this.filterYear;
+      }
+      if (this.filterInstitution) {
+        filters[
+          'Na kateri poročevalski mehanizem se nanaša poročilo ali odziv'
+        ] = this.filterInstitution === 'ec' ? 'evropska komisija' : 'drugo';
+      }
+      return filters;
+    }, // author: filterAuthor
+  },
+  watch: {
+    filterInstitution() {
+      this.fetchReports();
+    },
+    filterAuthor() {
+      this.fetchReports();
+    },
+    filterYear() {
+      this.fetchReports();
     },
   },
   mounted() {
     this.fetchReports();
-    // TODO: fetch authors and years for filters ?
+    // TODO: fetch authors
   },
   methods: {
     formatDate,
     async fetchReports() {
-      const response = await getReports();
+      const response = await getReports(this.filters);
       this.reports = response.data.list;
-      // this.pageInfo = response.data.pageInfo;
-      // const entries = response.data.list.map((item) => ({
-      //   value: item.id,
-      //   label: item['Ime prispevka'],
-      // }));
-      // this.contributions = [
-      //   {
-      //     value: '0',
-      //     label: '---',
-      //     attrs: { disabled: true },
-      //   },
-      //   ...entries,
-      // ];
+    },
+  },
+  inject: {
+    isDesktop: {
+      default: false,
     },
   },
 };
@@ -151,6 +175,7 @@ export default {
     color: $color-grey;
     font-size: 10px;
     font-weight: 900;
+    cursor: pointer;
   }
   .active {
     border-bottom: 4px solid $color-accent;
@@ -208,6 +233,15 @@ export default {
     padding-right: 5px;
     color: $color-medium-grey;
     font-size: 9px;
+  }
+}
+
+@media (min-width: 992px) {
+  footer {
+    padding-bottom: 20px;
+  }
+  footer .buttons {
+    display: none;
   }
 }
 </style>

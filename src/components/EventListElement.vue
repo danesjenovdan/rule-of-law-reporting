@@ -28,6 +28,11 @@
         :source="source"
       />
     </div>
+    <div class="connection-dots">
+      <div class="dot"></div>
+      <div class="line"></div>
+      <div class="dot"></div>
+    </div>
   </div>
 </template>
 
@@ -68,7 +73,8 @@ export default {
 .event {
   border: 1px solid $color-medium-grey;
   border-radius: 3px;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  position: relative;
   .event-header {
     padding: 1.5rem;
   }
@@ -102,6 +108,32 @@ export default {
       color: $color-accent;
       margin-bottom: 0.5rem;
       padding: 0 1.5rem;
+    }
+  }
+  .connection-dots {
+    position: absolute;
+    left: 1.5rem;
+    top: -26px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .dot {
+      height: 12px;
+      width: 12px;
+      border: 3px solid $color-accent;
+      border-radius: 6px;
+      background-color: $bg-color;
+    }
+    .line {
+      height: 6px;
+      width: 3px;
+      background-color: $color-accent;
+      margin: 1px;
+    }
+  }
+  &:first-of-type {
+    .connection-dots {
+      display: none;
     }
   }
 }

@@ -76,7 +76,7 @@ export async function getContributions() {
 export async function getContribution(id) {
   // TODO: change to fields=* when it will work: https://github.com/nocodb/nocodb/issues/1981
   return authedApi.get(
-    `data/noco/${projectName}/Prispevek/${id}?nested[Prispevek => Dogodek][fields]=Kaj se je zgodilo in kako vpliva na vladavino prava,Naslov dogodka,Objavljeno,created_at,id,updated_at`
+    `data/noco/${projectName}/Prispevek/${id}?nested[Prispevek => Dogodek][fields]=Kaj se je zgodilo in kako vpliva na vladavino prava,Naslov dogodka,Objavljeno,created_at,id,updated_at,nc_0zwf__dogodek_id`
   );
 }
 
@@ -151,6 +151,9 @@ export async function getSourcesFromEvent(dogodekId) {
   );
 }
 
-export async function getReports() {
-  return authedApi.get(`data/noco/${projectName}/Poročilo`);
+export async function getReports(filter = {}) {
+  const where = Object.entries(filter)
+    .map(([key, value]) => `(${key},eq,${value})`)
+    .join('~and');
+  return authedApi.get(`data/noco/${projectName}/Poročilo?where=${where}`);
 }

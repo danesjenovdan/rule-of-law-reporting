@@ -1,114 +1,125 @@
 <template>
   <header>
-    <SmallHeader />
+    <DesktopHeader v-if="isDesktop.value" />
+    <SmallHeader v-if="!isDesktop.value" />
     <BackArrow
       text="Nazaj na seznam prispevkov"
       :to="{ name: 'contributions' }"
     />
   </header>
-  <main>
-    <div>
-      <template v-if="!submitted">
-        <div class="lead-in-text">
-          <div class="lead">Nov vir</div>
-          <div>
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Asperiores
-            beatae expedita nostrum cumque quos!
-          </div>
-        </div>
-        <hr />
-        <FormKit
-          v-model="formData"
-          type="form"
-          submit-label="Oddaj vir"
-          @submit="submit"
-        >
-          <FormKit
-            type="select"
-            name="related_dogodek_id"
-            label="Dogodek"
-            :options="events"
-            validation="required|not:0"
-          />
-          <FormKit
-            type="text"
-            name="Naslov vira"
-            label="Naslov vira"
-            validation="required"
-          />
-          <FormKit
-            type="select"
-            name="Tip vira"
-            label="Tip vira"
-            :options="type"
-            validation="required"
-          />
-          <FormKit
-            type="text"
-            name="Avtor vira (oseba, organizacija, medij)"
-            label="Avtor vira (oseba, organizacija, medij)"
-            validation="required"
-          />
-          <FormKit
-            type="date"
-            name="Datum objave vira"
-            label="Datum objave vira"
-            validation="required"
-          />
-          <FormKit
-            type="date"
-            name="Datum začetka obdobja"
-            label="Datum začetka obdobja"
-            validation="required"
-          />
-          <FormKit
-            type="date"
-            name="Datum konca obdobja"
-            label="Datum konca obdobja"
-            validation="required"
-          />
-          <FormKit
-            type="url"
-            name="Povezava do vira"
-            label="Povezava do vira"
-            validation="required"
-          />
-          <FormKit
-            type="multifile"
-            name="Dokumenti povezani z virom"
-            label="Dokumenti povezani z virom"
-          />
-        </FormKit>
-      </template>
-      <template v-else>
-        <div class="submitted-container">
-          <div class="submitted-icon"></div>
+  <div class="container">
+    <main>
+      <div>
+        <template v-if="!submitted">
           <div class="lead-in-text">
-            <div class="lead">Hvala za oddajo!</div>
+            <div class="lead">Nov vir</div>
             <div>
-              Tvoj vir bo viden takoj, ko bo odobren s strani administratorjev.
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+              Asperiores beatae expedita nostrum cumque quos!
             </div>
           </div>
           <hr />
-          <div class="strong-text">Želiš dodati še en vir?</div>
-          <FormKit type="button" outer-class="small-button" @click="reset">
-            Dodaj povezan vir
+          <FormKit
+            v-model="formData"
+            type="form"
+            submit-label="Oddaj vir"
+            @submit="submit"
+          >
+            <FormKit
+              type="select"
+              name="related_dogodek_id"
+              label="Dogodek"
+              :options="events"
+              validation="required|not:0"
+            />
+            <FormKit
+              type="text"
+              name="Naslov vira"
+              label="Naslov vira"
+              validation="required"
+            />
+            <FormKit
+              type="select"
+              name="Tip vira"
+              label="Tip vira"
+              :options="type"
+              validation="required"
+            />
+            <FormKit
+              type="text"
+              name="Avtor vira (oseba, organizacija, medij)"
+              label="Avtor vira (oseba, organizacija, medij)"
+              validation="required"
+            />
+            <FormKit
+              type="date"
+              name="Datum objave vira"
+              label="Datum objave vira"
+              validation="required"
+            />
+            <FormKit
+              type="date"
+              name="Datum začetka obdobja"
+              label="Datum začetka obdobja"
+              validation="required"
+            />
+            <FormKit
+              type="date"
+              name="Datum konca obdobja"
+              label="Datum konca obdobja"
+              validation="required"
+            />
+            <FormKit
+              type="url"
+              name="Povezava do vira"
+              label="Povezava do vira"
+              validation="required"
+            />
+            <FormKit
+              type="multifile"
+              name="Dokumenti povezani z virom"
+              label="Dokumenti povezani z virom"
+            />
           </FormKit>
-        </div>
-      </template>
-    </div>
-  </main>
+        </template>
+        <template v-else>
+          <div class="submitted-container">
+            <div class="submitted-icon"></div>
+            <div class="lead-in-text">
+              <div class="lead">Hvala za oddajo!</div>
+              <div>
+                Tvoj vir bo viden takoj, ko bo odobren s strani
+                administratorjev.
+              </div>
+            </div>
+            <hr />
+            <div class="strong-text">Želiš dodati še en vir?</div>
+            <FormKit type="button" outer-class="small-button" @click="reset">
+              Dodaj povezan vir
+            </FormKit>
+          </div>
+        </template>
+      </div>
+    </main>
+  </div>
 </template>
 
 <script>
 import SmallHeader from '../../components/Header/SmallHeader.vue';
+import DesktopHeader from '../../components/Header/DesktopHeader.vue';
 import BackArrow from '../../components/Header/BackArrow.vue';
 import { getEvents, postSource } from '../../helpers/api.js';
 
 export default {
   components: {
     SmallHeader,
+    DesktopHeader,
     BackArrow,
+  },
+  inject: {
+    isDesktop: {
+      default: false,
+    },
   },
   data() {
     return {

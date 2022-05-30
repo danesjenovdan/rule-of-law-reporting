@@ -1,9 +1,10 @@
 <template>
-  <div class="filters-modal page-container">
+  <div class="filters-modal">
     <div class="dashboard-page">
       <FormKit
         v-model="formData"
         type="form"
+        :form-class="'filters-form'"
         submit-label="Prikaži rezultate"
         @submit="submit"
       >
@@ -11,39 +12,45 @@
           <div>Filtri</div>
           <span @click="$emit('close')">x</span>
         </header>
-        <main>
-          <h6>Področje</h6>
-          <FormKit
-            type="checkbox"
-            name="nc_0zwf__področja_id"
-            :options="areas"
-          />
-          <FormKit
-            type="checkbox"
-            name="'Če ste izbrali druga, na katerem področju'"
-            :options="otherAreas"
-          />
-          <hr />
-          <h6>Datum oddaje prispevka</h6>
-          <FormKit
-            type="text"
-            name="created_at,gt"
-            label="Začetek • opcijsko"
-          />
-          <FormKit type="text" name="created_at,le" label="Konec • opcijsko" />
-          <hr />
-          <h6>Datum objave vira</h6>
-          <!-- TODO: set correct names to use in filtering query -->
-          <FormKit type="text" name="" label="Začetek • opcijsko" />
-          <FormKit type="text" name="" label="Konec • opcijsko" />
-          <hr />
-          <!-- TODO: set correct name to use in filtering query -->
-          <FormKit
-            type="checkbox"
-            name="user"
-            label="Prikaži zgolj moje prispevke"
-          />
-        </main>
+        <div class="container">
+          <main>
+            <h6>Področje</h6>
+            <FormKit
+              type="checkbox"
+              name="nc_0zwf__področja_id"
+              :options="areas"
+            />
+            <FormKit
+              type="checkbox"
+              name="'Če ste izbrali druga, na katerem področju'"
+              :options="otherAreas"
+            />
+            <hr />
+            <h6>Datum oddaje prispevka</h6>
+            <FormKit
+              type="text"
+              name="created_at,gt"
+              label="Začetek • opcijsko"
+            />
+            <FormKit
+              type="text"
+              name="created_at,le"
+              label="Konec • opcijsko"
+            />
+            <hr />
+            <h6>Datum objave vira</h6>
+            <!-- TODO: set correct names to use in filtering query -->
+            <FormKit type="text" name="" label="Začetek • opcijsko" />
+            <FormKit type="text" name="" label="Konec • opcijsko" />
+            <hr />
+            <!-- TODO: set correct name to use in filtering query -->
+            <FormKit
+              type="checkbox"
+              name="user"
+              label="Prikaži zgolj moje prispevke"
+            />
+          </main>
+        </div>
       </FormKit>
     </div>
   </div>
@@ -109,6 +116,7 @@ header {
   padding: 1rem 0;
   position: relative;
   span {
+    cursor: pointer;
     position: absolute;
     right: 1.25rem;
     top: 1rem;
@@ -117,6 +125,8 @@ header {
 
 main {
   background-color: white;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
 }
 
 footer {
@@ -126,5 +136,18 @@ footer {
 h6 {
   font-size: 10px;
   font-weight: 600;
+}
+
+/* dekstop */
+@media (min-width: 992px) {
+  .filters-modal {
+    width: 560px;
+    height: 80vh;
+    margin: auto;
+    overflow-y: scroll;
+    box-shadow: 0 0 4px 1px #eeebf7;
+    border-radius: 3px;
+    border: 1px solid #ffffff;
+  }
 }
 </style>
