@@ -188,3 +188,14 @@ export async function getReports(filter = {}) {
     .join('~and');
   return authedApi.get(`data/noco/${projectName}/Poročilo?where=${where}`);
 }
+
+export async function postReport(data) {
+  const response = await authedApi.post(
+    `data/noco/${projectName}/Poročilo`,
+    data
+  );
+
+  await postAddUserToRecord('Poročilo', response.data.id);
+
+  return response;
+}

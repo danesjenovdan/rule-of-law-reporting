@@ -7,52 +7,77 @@
   <div class="container">
     <main>
       <div>
-        <div class="lead-in-text">
-          <div class="lead">Novo poročilo</div>
-          <div>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        <template v-if="!submitted">
+          <div class="lead-in-text">
+            <div class="lead">Novo poročilo</div>
+            <div>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </div>
           </div>
-        </div>
-        <hr />
-        <FormKit
-          v-model="formData"
-          type="form"
-          submit-label="Oddaj poročilo / odziv"
-          @submit="submit"
-        >
+          <hr />
           <FormKit
-            type="select"
-            name="Tip poročila"
-            label="Vrsta poročila / odziva"
-            :options="[
-              'proročilo / odziv je pripravila civilna družba',
-              'poročilo / odziv je pripravila institucija, kateri se poroča',
-              'poročilo / odziv je pripravila vlada',
-            ]"
-          />
-          <FormKit
-            type="text"
-            name="Ime poročila ali odziva"
-            label="Naslov poročila / odziva"
-          />
-          <FormKit type="text" name="name" label="Avtor poročila / odziva" />
-          <FormKit
-            type="date"
-            name="Datum oddaje ali objave poročila ali odziva"
-            label="Datum objave poročila / odziva"
-          />
-          <FormKit
-            type="text"
-            name="Link do poročila ali odziva"
-            label="Povezava do poročila / odziva"
-          />
-          <FormKit
-            type="file"
-            name="Dokument poročila ali odziva"
-            label="Dokumenti, povezani z virom"
-          />
-        </FormKit>
+            v-model="formData"
+            type="form"
+            submit-label="Oddaj poročilo / odziv"
+            @submit="submit"
+          >
+            <FormKit
+              type="select"
+              name="Na kateri poročevalski mehanizem se nanaša poročilo ali odziv"
+              label="Na kateri poročevalski mehanizem se nanaša poročilo ali odziv"
+              :options="['evropska komisija', 'drugo']"
+            />
+            <FormKit
+              type="select"
+              name="Tip poročila glede na avtorja"
+              label="Tip poročila glede na avtorja"
+              :options="[
+                'poročilo / odziv je pripravila civilna družba',
+                'poročilo / odziv je pripravila institucija, kateri se poroča',
+                'poročilo / odziv je pripravila vlada',
+              ]"
+            />
+            <FormKit
+              type="text"
+              name="Ime poročila ali odziva"
+              label="Ime poročila ali odziva"
+            />
+            <FormKit type="text" name="Avtor poročila" label="Avtor poročila" />
+            <FormKit
+              type="date"
+              name="Datum oddaje ali objave poročila ali odziva"
+              label="Datum oddaje ali objave poročila ali odziva"
+            />
+            <FormKit
+              type="text"
+              name="Link do poročila ali odziva"
+              label="Link do poročila ali odziva"
+            />
+            <FormKit
+              type="multifile"
+              name="Dokument poročila ali odziva"
+              label="Dokument poročila ali odziva"
+            />
+          </FormKit>
+        </template>
+        <template v-else>
+          <div class="submitted-container">
+            <div class="submitted-icon"></div>
+            <div class="lead-in-text">
+              <div class="lead">Hvala za oddajo!</div>
+              <div>
+                Tvoje poročilo bo vidno takoj, ko bo odobren s strani
+                administratorjev.
+              </div>
+            </div>
+            <hr />
+            <div class="strong-text">Želiš dodati novo poročilo?</div>
+            <FormKit type="button" outer-class="small-button" @click="reset">
+              Dodaj poročilo
+            </FormKit>
+          </div>
+        </template>
       </div>
     </main>
   </div>
@@ -62,7 +87,7 @@
 import SmallHeader from '../../components/Header/SmallHeader.vue';
 import DesktopHeader from '../../components/Header/DesktopHeader.vue';
 import BackArrow from '../../components/Header/BackArrow.vue';
-// import { getContributions, getEvents, postEvent } from '../../helpers/api.js';
+import { postReport } from '../../helpers/api.js';
 
 export default {
   components: {
@@ -77,30 +102,34 @@ export default {
   },
   data() {
     return {
-      formData: {},
+      formData: {
+        'Na kateri poročevalski mehanizem se nanaša poročilo ali odziv': '',
+        'Tip poročila glede na avtorja': '',
+        'Ime poročila ali odziva': '',
+        'Avtor poročila': '',
+        'Datum oddaje ali objave poročila ali odziva': '',
+        'Link do poročila ali odziva': '',
+        'Dokument poročila ali odziva': '',
+      },
+      submitted: true,
+      lastSubmittedId: 0,
     };
   },
-  mounted() {},
   methods: {
-    async submit() {
-      // async submit(data, node) {
-      // try {
-      //   const response = await postEvent(data);
-      //   node.reset();
-      //   this.lastSubmittedId = response.data.id;
-      //   this.submitted = true;
-      // } catch (error) {
-      //   const errorMessage = error.response?.data?.msg || error.message;
-      //   node.setErrors([errorMessage]);
-      // }
+    async submit(data, node) {
+      try {
+        const response = await postReport(data);
+        node.reset();
+        this.lastSubmittedId = response.data.id;
+        this.submitted = true;
+      } catch (error) {
+        const errorMessage = error.response?.data?.msg || error.message;
+        node.setErrors([errorMessage]);
+      }
     },
     reset() {
-      // this.submitted = false;
-      // this.lastSubmittedId = 0;
-      // const selectedContributionId = Number(this.$route.query.contribution);
-      // if (selectedContributionId) {
-      //   this.formData.nc_0zwf__prispevek_id = selectedContributionId;
-      // }
+      this.submitted = false;
+      this.lastSubmittedId = 0;
     },
   },
 };
