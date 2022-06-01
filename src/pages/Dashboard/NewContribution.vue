@@ -25,24 +25,11 @@
             submit-label="Oddaj prispevek"
             @submit="submit"
           >
-            <!-- TODO: move in to radio component -->
-            <div>
-              <button @click.prevent="showInfoModal = true">
-                Več o izbiri področja
-              </button>
-            </div>
             <FormKit
-              type="radio"
-              name="nc_0zwf__področja_id"
+              ref="areaAndSubarea"
+              type="contributiontyperadio"
+              name="areaAndSubarea"
               label="Izberi področje, na katerega se navezuje prispevek."
-              :options="areas"
-              validation="required"
-            />
-            <FormKit
-              type="radio"
-              name="Če ste izbrali druga, na katerem področju"
-              label="Če ste izbrali druga, na katerem področju"
-              :options="otherAreas"
               validation="required"
             />
             <FormKit
@@ -103,7 +90,7 @@ import SmallHeader from '../../components/Header/SmallHeader.vue';
 import DesktopHeader from '../../components/Header/DesktopHeader.vue';
 import BackArrow from '../../components/Header/BackArrow.vue';
 import InfoModal from '../../components/InfoModal.vue';
-import { getAreas, postContribution } from '../../helpers/api.js';
+import { postContribution } from '../../helpers/api.js';
 
 export default {
   components: {
@@ -119,15 +106,6 @@ export default {
   },
   data() {
     return {
-      areas: [],
-      otherAreas: [
-        'azil in migracije',
-        'sistemske kršitve človekovih pravic',
-        'prostor civilne družbe',
-        'lgbtqi+',
-        'manjšine',
-        'Drugo.',
-      ],
       formData: {
         nc_0zwf__področja_id: '',
         'Če ste izbrali druga, na katerem področju': '',
@@ -139,18 +117,21 @@ export default {
       showInfoModal: false,
     };
   },
-  async mounted() {
-    const response = await getAreas();
-    this.areas = response.data.list.map((item) => ({
-      value: item.id,
-      label: item['Ime področja'],
-      help: item['Opis področja'],
-    }));
+  mounted() {
+    if (this.$refs.areaAndSubarea) {
+      this.$refs.areaAndSubarea.node.on('modal-open', () => {
+        this.showInfoModal = true;
+      });
+    }
   },
   methods: {
     async submit(data, node) {
+      const { areaAndSubarea, ...postData } = data;
+      postData.nc_0zwf__področja_id = String(areaAndSubarea.area);
+      postData['Če ste izbrali druga, na katerem področju'] =
+        areaAndSubarea.subarea || '';
       try {
-        const response = await postContribution(data);
+        const response = await postContribution(postData);
         node.reset();
         this.lastSubmittedId = response.data.id;
         this.submitted = true;
@@ -162,6 +143,9 @@ export default {
     reset() {
       this.submitted = false;
       this.lastSubmittedId = 0;
+    },
+    myEventHandler() {
+      console.log('myEventHandler');
     },
   },
 };

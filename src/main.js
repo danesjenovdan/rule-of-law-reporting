@@ -5,6 +5,7 @@ import * as sl from './helpers/formkit-locale-sl.js';
 import { routes } from './routes.js';
 import App from './App.vue';
 import MultiFile from './components/MultiFile.vue';
+import ContributionTypeRadio from './components/ContributionTypeRadio.vue';
 
 import './assets/css/bootstrap-reboot.min.css';
 // eslint-disable-next-line import/no-unresolved
@@ -27,6 +28,7 @@ app.use(
     locale: 'sl',
     inputs: {
       multifile: createInput(MultiFile),
+      contributiontyperadio: createInput(ContributionTypeRadio),
     },
   })
 );

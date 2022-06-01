@@ -34,7 +34,8 @@
   color: $color-error;
 }
 
-[data-type='multifile'] {
+[data-type='multifile'],
+[data-type='contributiontyperadio'] {
   .formkit-inner {
     border: none !important;
     box-shadow: none !important;
@@ -251,7 +252,7 @@ select.formkit-input {
       padding-bottom: 1rem;
     }
   }
-  
+
 }
 
 // search overrides
