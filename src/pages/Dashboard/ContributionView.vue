@@ -1,7 +1,7 @@
 <template>
   <header>
-    <DesktopHeader v-if="isDesktop.value" />
-    <SmallHeader v-if="!isDesktop.value" />
+    <DesktopHeader v-if="isDesktop" />
+    <SmallHeader v-if="!isDesktop" />
     <BackArrow
       text="Nazaj na seznam prispevkov"
       :to="{ name: 'contributions' }"
@@ -23,7 +23,16 @@
         >
           {{ contribution['Področja <= Prispevek']['Ime področja'] }}
         </div>
-        <div class="author">Maja, Danes je nov dan</div>
+        <div
+          v-if="
+            contribution['Prispevek <=> Uporabnik'] &&
+            contribution['Prispevek <=> Uporabnik'][0]
+          "
+          class="author"
+        >
+          {{ contribution['Prispevek <=> Uporabnik'][0]['Ime'] }},
+          {{ contribution['Prispevek <=> Uporabnik'][0]['Organizacija'] }}
+        </div>
         <div class="date">
           {{ formatDate(contribution['created_at']) }}
         </div>

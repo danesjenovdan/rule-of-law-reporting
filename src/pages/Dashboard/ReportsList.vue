@@ -1,8 +1,8 @@
 <template>
   <header>
-    <DesktopHeader v-if="isDesktop.value" />
-    <SmallHeader v-if="!isDesktop.value" />
-    <PillButtonNav v-if="!isDesktop.value" />
+    <DesktopHeader v-if="isDesktop" />
+    <SmallHeader v-if="!isDesktop" />
+    <PillButtonNav v-if="!isDesktop" />
   </header>
   <div class="container">
     <main>
@@ -93,6 +93,11 @@ export default {
     PillButtonNav,
     DesktopHeader,
   },
+  inject: {
+    isDesktop: {
+      default: false,
+    },
+  },
   data() {
     return {
       reports: [],
@@ -149,11 +154,6 @@ export default {
       this.reports = response.data.list;
     },
   },
-  inject: {
-    isDesktop: {
-      default: false,
-    },
-  },
 };
 </script>
 
@@ -169,6 +169,7 @@ export default {
   margin-right: -1.6667rem;
   padding-left: 1.6667rem;
   padding-right: 1.6667rem;
+
   div {
     display: inline-block;
     padding: 1rem;
@@ -177,6 +178,7 @@ export default {
     font-weight: 900;
     cursor: pointer;
   }
+
   .active {
     border-bottom: 4px solid $color-accent;
     color: $color-accent;
@@ -195,6 +197,7 @@ export default {
     font-style: italic;
     line-height: 20px;
   }
+
   hr {
     background-color: $color-accent-light;
     height: 2px;
@@ -228,6 +231,7 @@ export default {
     font-size: 10px;
     font-style: italic;
   }
+
   .separator {
     padding-left: 5px;
     padding-right: 5px;
@@ -240,6 +244,7 @@ export default {
   footer {
     padding-bottom: 20px;
   }
+
   footer .buttons {
     display: none;
   }

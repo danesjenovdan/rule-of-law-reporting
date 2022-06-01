@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { objectToWhereString } from './query-builder.js';
 
 const plainApi = axios.create({
   baseURL: 'https://nocodb.lb.djnd.si/api/v1/db/',
@@ -7,7 +8,7 @@ const authedApi = axios.create({
   baseURL: 'https://nocodb.lb.djnd.si/api/v1/db/',
 });
 
-// window.api = authedApi;
+window.api = authedApi;
 
 const projectName = 'ROL App Try 2';
 
@@ -52,6 +53,13 @@ export async function me() {
   return authedApi.get('auth/user/me');
 }
 
+export async function getUser(email) {
+  const where = objectToWhereString({ Email: email });
+  return authedApi.get(
+    `data/noco/${projectName}/Uporabnik?where=${where}&fields=id`
+  );
+}
+
 export async function uploadFile(file) {
   const formData = new FormData();
   formData.append('files', file);
@@ -74,14 +82,28 @@ export async function getContributions() {
 }
 
 export async function getContribution(id) {
-  // TODO: change to fields=* when it will work: https://github.com/nocodb/nocodb/issues/1981
+  // FIXME: change `nested[nested]` to correct query when https://github.com/nocodb/nocodb/pull/2224 is merged
   return authedApi.get(
-    `data/noco/${projectName}/Prispevek/${id}?nested[Prispevek => Dogodek][fields]=Kaj se je zgodilo in kako vpliva na vladavino prava,Naslov dogodka,Objavljeno,created_at,id,updated_at,nc_0zwf__dogodek_id`
+    `data/noco/${projectName}/Prispevek/${id}?fields=*&nested[Prispevek <=> Uporabnik][fields]=*&nested[Prispevek => Dogodek][fields]=*&nested[nested][Dogodek <=> Uporabnik][fields]=*`
+  );
+}
+
+function postAddUserToRecord(recordName, contributionId) {
+  const userId = localStorage.getItem('user_id');
+  return authedApi.post(
+    `data/noco/${projectName}/${recordName}/${contributionId}/mm/${recordName} <=> Uporabnik/${userId}`
   );
 }
 
 export async function postContribution(data) {
-  return authedApi.post(`data/noco/${projectName}/Prispevek`, data);
+  const response = await authedApi.post(
+    `data/noco/${projectName}/Prispevek`,
+    data
+  );
+
+  await postAddUserToRecord('Prispevek', response.data.id);
+
+  return response;
 }
 
 export async function filterContributions(filter = {}) {
@@ -116,7 +138,14 @@ export async function postEvent(data) {
   ) {
     postData.nc_0zwf__dogodek_id = undefined;
   }
-  return authedApi.post(`data/noco/${projectName}/Dogodek`, postData);
+  const response = await authedApi.post(
+    `data/noco/${projectName}/Dogodek`,
+    postData
+  );
+
+  await postAddUserToRecord('Dogodek', response.data.id);
+
+  return response;
 }
 
 export async function postSource(data) {
@@ -142,6 +171,8 @@ export async function postSource(data) {
     await postConnectDogodekVir(dogodekId, response.data.id);
   }
 
+  await postAddUserToRecord('Vir', response.data.id);
+
   return response;
 }
 
@@ -156,4 +187,15 @@ export async function getReports(filter = {}) {
     .map(([key, value]) => `(${key},eq,${value})`)
     .join('~and');
   return authedApi.get(`data/noco/${projectName}/Poročilo?where=${where}`);
+}
+
+export async function postReport(data) {
+  const response = await authedApi.post(
+    `data/noco/${projectName}/Poročilo`,
+    data
+  );
+
+  await postAddUserToRecord('Poročilo', response.data.id);
+
+  return response;
 }

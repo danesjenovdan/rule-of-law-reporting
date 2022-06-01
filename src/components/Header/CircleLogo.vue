@@ -39,6 +39,11 @@ export default {
     width: 2.5rem;
     height: 2.5rem;
 
+    @media (min-width: 992px) {
+      width: 4.166667rem;
+      height: 4.166667rem;
+    }
+
     .text {
       padding: 0.5rem;
       font-size: 0.666rem;

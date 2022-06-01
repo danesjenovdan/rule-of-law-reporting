@@ -1,8 +1,8 @@
 <template>
   <header>
-    <DesktopHeader v-if="isDesktop.value" />
-    <SmallHeader v-if="!isDesktop.value" />
-    <PillButtonNav v-if="!isDesktop.value" />
+    <DesktopHeader v-if="isDesktop" />
+    <SmallHeader v-if="!isDesktop" />
+    <PillButtonNav v-if="!isDesktop" />
   </header>
   <div class="container">
     <main>

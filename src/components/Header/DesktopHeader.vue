@@ -4,7 +4,7 @@
       <div class="desktop-header-left">
         <DashboardLogoLink />
       </div>
-      <div>
+      <div class="desktop-header-middle">
         <PillButtonNav />
       </div>
       <div class="desktop-header-right">
@@ -33,11 +33,22 @@ export default {
 
 .desktop-header {
   background-color: $bg-color;
-}
 
-.container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .desktop-header-left,
+    .desktop-header-middle,
+    .desktop-header-right {
+      display: flex;
+      align-items: center;
+    }
+
+    .desktop-header-right {
+      justify-content: flex-end;
+    }
+  }
 }
 </style>

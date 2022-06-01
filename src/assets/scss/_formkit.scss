@@ -34,7 +34,8 @@
   color: $color-error;
 }
 
-[data-type='multifile'] {
+[data-type='multifile'],
+[data-type='contributiontyperadio'] {
   .formkit-inner {
     border: none !important;
     box-shadow: none !important;
@@ -45,33 +46,34 @@
 
 [data-type='checkbox'],
 [data-type='radio'] {
+  .formkit-inner {
+    border: none !important;
+    box-shadow: none !important;
+
+    &:focus-within {
+      .formkit-input ~ .formkit-decorator {
+        border-color: $color-accent;
+        box-shadow: 0 0 0 2px $color-accent;
+      }
+    }
+
+    .formkit-input ~ .formkit-decorator {
+      width: 1rem;
+      height: 1rem;
+      box-shadow: 0 0 0 2px $color-accent-light;
+      background: transparent;
+      margin-left: 0.15rem;
+      margin-right: 0.75rem;
+    }
+  }
+
+  .formkit-label {
+    font-size: 1rem;
+    color: $color-black;
+  }
+
   .formkit-option {
     margin-bottom: 1.5rem;
-
-    .formkit-inner {
-      box-shadow: none;
-
-      &:focus-within {
-        .formkit-input ~ .formkit-decorator {
-          border-color: $color-accent;
-          box-shadow: 0 0 0 2px $color-accent;
-        }
-      }
-
-      .formkit-input ~ .formkit-decorator {
-        width: 1rem;
-        height: 1rem;
-        box-shadow: 0 0 0 2px $color-accent-light;
-        background: transparent;
-        margin-left: 0.15rem;
-        margin-right: 0.75rem;
-      }
-    }
-
-    .formkit-label {
-      font-size: 1rem;
-      color: $color-black;
-    }
 
     .formkit-option-help {
       margin-left: 3.3rem;
@@ -250,7 +252,7 @@ select.formkit-input {
       padding-bottom: 1rem;
     }
   }
-  
+
 }
 
 // search overrides

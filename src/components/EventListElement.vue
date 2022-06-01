@@ -3,7 +3,14 @@
     <div class="event-header">
       <h4>{{ event['Naslov dogodka'] }}</h4>
       <div>
-        <span class="author">Maja, Danes je nov dan</span
+        <span
+          v-if="
+            event['Dogodek <=> Uporabnik'] && event['Dogodek <=> Uporabnik'][0]
+          "
+          class="author"
+        >
+          {{ event['Dogodek <=> Uporabnik'][0]['Ime'] }},
+          {{ event['Dogodek <=> Uporabnik'][0]['Organizacija'] }} </span
         ><span class="separator">|</span
         ><span class="date">{{ formatDate(event['created_at']) }}</span>
       </div>

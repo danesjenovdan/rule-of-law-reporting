@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import { login } from '../helpers/api.js';
+import { getUser, login } from '../helpers/api.js';
 
 export default {
   data() {
@@ -51,6 +51,8 @@ export default {
       try {
         const response = await login(data.email, data.password);
         localStorage.setItem('token', response.data.token);
+        const userResponse = await getUser(data.email);
+        localStorage.setItem('user_id', userResponse.data.list[0].id);
         this.$router.push({ name: 'dashboard' });
       } catch (error) {
         const errorMessage = error.response?.data?.msg || error.message;
