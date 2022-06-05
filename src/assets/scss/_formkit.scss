@@ -139,10 +139,16 @@
   box-shadow: 0 0 0 2px $color-accent;
 }
 
-[data-type='select']:not([data-multiple]) .formkit-inner::after {
-  height: 16px;
-  width: 16px;
-  right: 8px;
+[data-type='select']:not([data-multiple]) {
+  .formkit-inner {
+    border-radius: 5em;
+
+    &::after {
+      height: 16px;
+      width: 16px;
+      right: 8px;
+    }
+  }
 }
 
 select.formkit-input {
