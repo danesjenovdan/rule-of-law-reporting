@@ -111,7 +111,7 @@ export default {
         'Link do poročila ali odziva': '',
         'Dokument poročila ali odziva': '',
       },
-      submitted: true,
+      submitted: false,
       lastSubmittedId: 0,
     };
   },
