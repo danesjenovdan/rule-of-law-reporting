@@ -73,10 +73,6 @@ export async function postConnectDogodekVir(dogodekId, virId) {
   });
 }
 
-export async function getAreas() {
-  return authedApi.get(`data/noco/${projectName}/Področje`);
-}
-
 export async function getContributions() {
   return authedApi.get(`data/noco/${projectName}/Prispevek`);
 }

@@ -57,14 +57,28 @@
 </template>
 
 <script>
-import { getAreas, filterContributions } from '../helpers/api.js';
+import { filterContributions } from '../helpers/api.js';
 
 export default {
   emits: ['close'],
   data() {
     return {
       formData: {},
-      areas: [],
+      areas: [
+        {
+          value: '1',
+          label: 'Pravosodni sistem',
+          help: 'kartek opis za Pravosodni sistem',
+        },
+        { value: '2', label: 'Protikorupcijski sistem', help: '' },
+        { value: '3', label: 'Pluralnost medijev', help: '' },
+        {
+          value: '4',
+          label:
+            'Druga institucionalna vprašanja povezana s sistemom zavor in ravnovesij',
+          help: '',
+        },
+      ],
       otherAreas: [
         'azil in migracije',
         'sistemske kršitve človekovih pravic',
@@ -74,15 +88,6 @@ export default {
         'Drugo.',
       ],
     };
-  },
-  computed: {},
-  async mounted() {
-    const response = await getAreas();
-    this.areas = response.data.list.map((item) => ({
-      value: item.id,
-      label: item['Ime področja'],
-      // help: item['Opis področja'],
-    }));
   },
   methods: {
     async submit(data, node) {

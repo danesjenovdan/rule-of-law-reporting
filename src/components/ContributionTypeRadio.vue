@@ -60,8 +60,6 @@
 </template>
 
 <script>
-import { getAreas } from '../helpers/api.js';
-
 export default {
   props: {
     context: {
@@ -72,7 +70,21 @@ export default {
   emits: ['modal-open'],
   data() {
     return {
-      areas: [],
+      areas: [
+        {
+          value: '1',
+          label: 'Pravosodni sistem',
+          help: 'kartek opis za Pravosodni sistem',
+        },
+        { value: '2', label: 'Protikorupcijski sistem', help: '' },
+        { value: '3', label: 'Pluralnost medijev', help: '' },
+        {
+          value: '4',
+          label:
+            'Druga institucionalna vprašanja povezana s sistemom zavor in ravnovesij',
+          help: '',
+        },
+      ],
       otherAreas: [
         { value: 'azil in migracije', label: 'azil in migracije', help: '' },
         {
@@ -94,9 +106,6 @@ export default {
   },
   computed: {
     allAreas() {
-      if (!this.areas?.length) {
-        return [];
-      }
       return [...this.areas, ...this.otherAreas];
     },
   },
@@ -113,14 +122,6 @@ export default {
         });
       }
     },
-  },
-  async mounted() {
-    const response = await getAreas();
-    this.areas = response.data.list.map((item) => ({
-      value: item.id,
-      label: item['Ime področja'],
-      help: item['Opis področja'],
-    }));
   },
 };
 </script>
