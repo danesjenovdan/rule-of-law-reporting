@@ -96,7 +96,7 @@ export default {
   font-size: 12px;
   font-weight: 600;
   padding: 20px 0;
-  border-bottom: 2px solid $color-accent-light;
+  border-bottom: 1px solid $color-accent-light;
   display: flex;
   justify-content: space-between;
   align-items: center;

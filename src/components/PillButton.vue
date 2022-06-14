@@ -32,5 +32,10 @@ export default {
     background: $color-accent;
     color: $color-white;
   }
+
+  &:hover {
+    background: $color-accent;
+    color: $color-white;
+  }
 }
 </style>

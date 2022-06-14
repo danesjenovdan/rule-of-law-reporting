@@ -29,5 +29,10 @@
     background-size: 50% 50%;
     background-color: $color-accent-light;
   }
+
+  &:hover {
+    background-color: $color-accent;
+    background-image: url('../../assets/icons/logout-white.svg');
+  }
 }
 </style>

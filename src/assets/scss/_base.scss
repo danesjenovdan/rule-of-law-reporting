@@ -47,7 +47,7 @@ body {
     padding-left: $gutter;
     padding-right: $gutter;
     background: $color-white;
-    overflow-y: scroll;
+    // overflow-y: scroll; // FIXME: only scroll main not whole page
   }
 
   footer {
