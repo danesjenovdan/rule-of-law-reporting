@@ -258,7 +258,6 @@ select.formkit-input {
       padding-bottom: 1rem;
     }
   }
-
 }
 
 // search overrides
@@ -274,11 +273,35 @@ select.formkit-input {
     .formkit-outer {
       margin-bottom: 0;
     }
+
     [data-type='button'] {
       .formkit-input {
         font-size: 14px;
         padding-left: 0.75rem;
         padding-right: 0.75rem;
+      }
+    }
+
+    .export-contributions-link {
+      margin-right: 1rem;
+
+      .formkit-input {
+        box-shadow: 0 0 0 2px $color-accent-light;
+        padding-top: calc(0.75em - 2px);
+        padding-bottom: calc(0.75em - 2px);
+        height: calc(2.75em - 4px);
+        padding-left: 2.4em;
+        background-color: transparent;
+        background-image: url('../../assets/icons/download.svg');
+        background-repeat: no-repeat;
+        background-position: left 0.7em top 0.7em;
+        background-size: 1.25em 1.25em;
+        color: $color-black;
+
+        &:focus-within,
+        &:hover {
+          box-shadow: 0 0 0 2px $color-accent;
+        }
       }
     }
   }
