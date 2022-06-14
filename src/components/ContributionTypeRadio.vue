@@ -134,6 +134,20 @@ export default {
 
   .info-button-container {
     float: right;
+    transform: translateY(-2.15rem);
+
+    button {
+      display: flex;
+      background: transparent;
+      border: 1px solid $color-black;
+      border-radius: 50%;
+      font-size: 10px;
+      width: 1.5em;
+      height: 1.5em;
+      padding: 0;
+      justify-content: center;
+      align-items: center;
+    }
   }
 
   .no-radio-decorator {
