@@ -1,10 +1,18 @@
 <template>
   <header>
     <DesktopHeader v-if="isDesktop" />
-    <DesktopToolsList v-if="isDesktop" @close="showFiltersModal = true" />
+    <DesktopToolsList
+      v-if="isDesktop"
+      @open-filters="showFiltersModal = true"
+      @search="onSearch"
+    />
     <SmallHeader v-if="!isDesktop" />
     <PillButtonNav v-if="!isDesktop" />
-    <ToolsBar v-if="!isDesktop" @close="showFiltersModal = true" />
+    <ToolsBar
+      v-if="!isDesktop"
+      @open-filters="showFiltersModal = true"
+      @search="onSearch"
+    />
     <HeaderLine :contributions-no="pageInfo.totalRows" />
   </header>
   <div class="container">
@@ -38,6 +46,7 @@
 </template>
 
 <script>
+import { debounce } from 'lodash-es';
 import SmallHeader from '../../components/Header/SmallHeader.vue';
 import DesktopHeader from '../../components/Header/DesktopHeader.vue';
 import DesktopToolsList from '../../components/Header/DesktopToolsList.vue';
@@ -86,6 +95,11 @@ export default {
       this.contributions = response.data.list;
       this.pageInfo = response.data.pageInfo;
     },
+    onSearch: debounce(async function onSearch(query) {
+      const response = await getContributions(query);
+      this.contributions = response.data.list;
+      this.pageInfo = response.data.pageInfo;
+    }, 750),
   },
 };
 </script>

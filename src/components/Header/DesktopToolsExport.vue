@@ -1,6 +1,9 @@
 <template>
   <div class="desktop-toolbar container">
-    <ToolsBar @close="$emit('close')" />
+    <ToolsBar
+      @open-filters="$emit('open-filters')"
+      @search="$emit('search', $event)"
+    />
   </div>
 </template>
 
@@ -11,7 +14,7 @@ export default {
   components: {
     ToolsBar,
   },
-  emits: ['close'],
+  emits: ['open-filters', 'search'],
 };
 </script>
 

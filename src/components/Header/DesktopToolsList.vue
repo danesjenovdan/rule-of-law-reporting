@@ -1,6 +1,9 @@
 <template>
   <div class="desktop-toolbar container">
-    <ToolsBar @close="$emit('close')" />
+    <ToolsBar
+      @open-filters="$emit('open-filters')"
+      @search="$emit('search', $event)"
+    />
     <div class="tools-right">
       <ExportContributionsLink />
       <FormKit
@@ -22,7 +25,7 @@ export default {
     ToolsBar,
     ExportContributionsLink,
   },
-  emits: ['close'],
+  emits: ['open-filters', 'search'],
 };
 </script>
 
