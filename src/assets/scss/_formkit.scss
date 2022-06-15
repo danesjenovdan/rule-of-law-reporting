@@ -18,6 +18,7 @@
   font-size: 1rem;
   font-weight: 600;
   padding-bottom: 1rem;
+  display: flex;
 }
 
 .formkit-inner {
@@ -169,7 +170,7 @@ select.formkit-input {
 
 [data-type='date'] {
   .formkit-inner {
-    max-width: 8em;
+    max-width: 9.5em;
 
     .formkit-input {
       &::-webkit-calendar-picker-indicator {
@@ -184,6 +185,11 @@ select.formkit-input {
         top: 0;
         width: auto;
       }
+
+      background-image: url('../icons/calendar.svg');
+      background-repeat: no-repeat;
+      background-size: 0.9em;
+      background-position: right 0.8em center;
     }
   }
 }
@@ -252,8 +258,7 @@ select.formkit-input {
       background-position: right 0.8em top 0.7em;
       background-size: 0.45em 1em;
       box-shadow: 0 0 0 2px $color-accent-light;
-      padding-top: 0.6em;
-      padding-left: 0.75em;
+      padding: 0.6em 2.5em 0.6em 1.5em;
 
       &:hover {
         border-color: $color-accent;
