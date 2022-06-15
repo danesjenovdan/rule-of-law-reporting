@@ -8,4 +8,4 @@ resources:
 images:
   - name: rule-of-law-reporting
     newName: rg.fr-par.scw.cloud/djnd/rule-of-law-reporting
-    newTag: 'd433a8fdf704ad9be9215ba3baa6b17e00b33fc8'
+    newTag: '003a41b11250d18d58dabbd5d6ed69dc210a197b'
