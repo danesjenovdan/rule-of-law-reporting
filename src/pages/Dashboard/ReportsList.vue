@@ -21,23 +21,33 @@
         </div>
       </div>
       <div class="filters">
-        <!-- TODO: style forms -->
-        <FormKit
-          v-model="filterAuthor"
-          type="select"
-          placeholder="Vsi avtorji poročil / odzivov"
-          :options="[]"
-          @click.stop=""
-        >
-        </FormKit>
-        <FormKit
-          v-model="filterYear"
-          type="select"
-          placeholder="Vsa leta"
-          :options="years"
-          @click.stop=""
-        >
-        </FormKit>
+        <div class="filters-left">
+          <FormKit
+            v-model="filterAuthor"
+            type="select"
+            placeholder="Vsi avtorji poročil / odzivov"
+            :options="[]"
+            @click.stop=""
+          >
+          </FormKit>
+          <FormKit
+            v-model="filterYear"
+            type="select"
+            placeholder="Vsa leta"
+            :options="years"
+            @click.stop=""
+          >
+          </FormKit>
+        </div>
+        <div class="tools-right">
+          <FormKit
+            v-if="isDesktop"
+            type="button"
+            @click="$router.push({ name: 'new-report' })"
+          >
+            Želim dodati poročilo / odziv
+          </FormKit>
+        </div>
       </div>
       <div class="info">
         <span>Število prispevkov: {{ reports?.length }}</span>
@@ -188,6 +198,12 @@ export default {
 .filters {
   margin: 2rem 0;
   display: flex;
+  justify-content: space-between;
+
+  .filters-left {
+    display: flex;
+    gap: 0.75rem;
+  }
 }
 
 .info {
