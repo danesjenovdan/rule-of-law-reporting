@@ -76,18 +76,18 @@ export default {
   align-items: center;
   justify-content: center;
   z-index: 9999999999;
+  background: rgba(0, 0, 0, 0.5);
 
   .info-modal {
     position: relative;
+    display: flex;
     max-width: 600px;
     max-height: 100%;
-    overflow-y: auto;
     background: $bg-color;
 
     @media (min-width: 992px) {
       margin: 0 auto;
       max-height: 90vh;
-      box-shadow: 0 0 4px 1px $color-accent-light;
     }
 
     .close-button {
@@ -115,6 +115,7 @@ export default {
 
     .container {
       padding: 1rem 3rem;
+      overflow-y: auto;
 
       h4 {
         font-size: 16px;
