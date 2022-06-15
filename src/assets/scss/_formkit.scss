@@ -267,6 +267,24 @@ select.formkit-input {
   }
 }
 
+.small-header-right {
+  .export-contributions-link {
+    margin-bottom: 0;
+
+    .formkit-input {
+      background-color: transparent;
+      background-image: url('../../assets/icons/download.svg');
+      background-repeat: no-repeat;
+      background-position: left 0.7em top 0.7em;
+      background-size: 1.25em 1.25em;
+      box-shadow: 0 0 0 2px $color-accent-light;
+      height: 2.0833334rem;
+      padding: 0.8em 0.8em 0.4em 2.6em;
+      font-size: 0.66667rem;
+    }
+  }
+}
+
 // desktop
 @media (min-width: 992px) {
   .tools-right {
