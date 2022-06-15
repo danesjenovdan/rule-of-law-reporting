@@ -21,8 +21,9 @@
         </router-link>
       </div>
     </main>
-
-    <footer>
+  </div>
+  <footer>
+    <div class="container">
       <div class="buttons">
         <FormKit
           type="button"
@@ -31,8 +32,8 @@
           Želim dodati nov prispevek
         </FormKit>
       </div>
-    </footer>
-  </div>
+    </div>
+  </footer>
   <FiltersModal v-if="showFiltersModal" @close="showFiltersModal = false" />
 </template>
 
@@ -107,14 +108,5 @@ export default {
 .arrow-right-icon {
   width: 8px;
   height: 13px;
-}
-
-@media (min-width: 992px) {
-  footer {
-    padding-bottom: 20px;
-  }
-  footer .buttons {
-    display: none;
-  }
 }
 </style>

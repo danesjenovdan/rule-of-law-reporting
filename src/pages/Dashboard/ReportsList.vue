@@ -79,14 +79,16 @@
         </div>
       </div>
     </main>
-    <footer>
+  </div>
+  <footer>
+    <div class="container">
       <div class="buttons">
         <FormKit type="button" @click="$router.push({ name: 'new-report' })">
           Želim dodati poročilo / odziv
         </FormKit>
       </div>
-    </footer>
-  </div>
+    </div>
+  </footer>
 </template>
 
 <script>
@@ -253,16 +255,6 @@ export default {
     padding-right: 5px;
     color: $color-medium-grey;
     font-size: 9px;
-  }
-}
-
-@media (min-width: 992px) {
-  footer {
-    padding-bottom: 20px;
-  }
-
-  footer .buttons {
-    display: none;
   }
 }
 </style>

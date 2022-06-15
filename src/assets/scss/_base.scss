@@ -14,13 +14,10 @@ body {
   font-size: 100%;
   font-family: $base-font;
   position: relative;
+
   @media (min-width: 992px) {
     background: $color-white;
   }
-}
-
-.page-container {
-  height: 100vh;
 }
 
 .container {
@@ -33,7 +30,6 @@ body {
 .dashboard-page {
   display: flex;
   flex-direction: column;
-  height: 100%;
 
   header,
   footer {
@@ -47,12 +43,22 @@ body {
     padding-left: $gutter;
     padding-right: $gutter;
     background: $color-white;
-    // overflow-y: scroll; // FIXME: only scroll main not whole page
+    padding-bottom: 6rem; // space for footer
   }
 
   footer {
+    background: $bg-color;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
     .buttons {
       margin: 1rem 0;
+    }
+
+    @media (min-width: 992px) {
+      display: none;
     }
   }
 }
