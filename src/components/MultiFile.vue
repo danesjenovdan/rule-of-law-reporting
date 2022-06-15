@@ -110,7 +110,7 @@ export default {
 
   th,
   td {
-    padding: 0.5em 0;
+    padding: 1em 0;
     border-bottom: 1px solid $color-light-grey;
     font-size: 0.833334rem;
     font-weight: 400;

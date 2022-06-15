@@ -4,6 +4,8 @@
 }
 
 .formkit-form {
+  max-width: 600px;
+
   .formkit-outer {
     font-family: $base-font;
     margin-bottom: 4rem;
@@ -148,7 +150,7 @@
       width: 16px;
       right: 8px;
       background-color: $color-accent;
-      clip-path: path("M 8 11.01 L 3 5 L 13 5 L 8 11.01 Z");
+      clip-path: path('M 8 11.01 L 3 5 L 13 5 L 8 11.01 Z');
     }
   }
 }
@@ -163,6 +165,27 @@ select.formkit-input {
   height: unset;
   padding: 5px 8px;
   font-size: 12px;
+}
+
+[data-type='date'] {
+  .formkit-inner {
+    max-width: 8em;
+
+    .formkit-input {
+      &::-webkit-calendar-picker-indicator {
+        background: transparent;
+        bottom: 0;
+        color: transparent;
+        cursor: pointer;
+        height: auto;
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: auto;
+      }
+    }
+  }
 }
 
 // export list of contributions
@@ -228,9 +251,15 @@ select.formkit-input {
       background-repeat: no-repeat;
       background-position: right 0.8em top 0.7em;
       background-size: 0.45em 1em;
-      box-shadow: 0 0 0 1px $color-accent-light;
+      box-shadow: 0 0 0 2px $color-accent-light;
       padding-top: 0.6em;
       padding-left: 0.75em;
+
+      &:hover {
+        border-color: $color-accent;
+        box-shadow: 0 0 0 1px $color-accent;
+        color: inherit;
+      }
     }
   }
 }

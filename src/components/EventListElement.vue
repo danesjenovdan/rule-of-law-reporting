@@ -26,7 +26,12 @@
         :classes="{
           outer: 'small',
         }"
-        @click="$router.push({ name: 'new-source' })"
+        @click="
+          $router.push({
+            name: 'new-source',
+            query: { event: event.id },
+          })
+        "
       >
         Dodaj vir za ta dogodek
       </FormKit>
