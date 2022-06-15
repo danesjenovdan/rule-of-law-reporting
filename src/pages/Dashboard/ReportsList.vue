@@ -184,15 +184,16 @@ export default {
 
   div {
     display: inline-block;
-    padding: 1rem;
+    padding: 0.75rem 1rem calc(0.75rem - 3px) 1rem;
     color: $color-grey;
-    font-size: 10px;
+    font-size: 12px;
     font-weight: 900;
     cursor: pointer;
+    border-bottom: 4px solid transparent;
   }
 
   .active {
-    border-bottom: 4px solid $color-accent;
+    border-color: $color-accent;
     color: $color-accent;
   }
 }
@@ -204,7 +205,7 @@ export default {
 
   .filters-left {
     display: flex;
-    gap: 0.75rem;
+    gap: 1rem;
   }
 }
 

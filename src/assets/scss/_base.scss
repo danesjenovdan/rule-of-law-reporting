@@ -43,7 +43,7 @@ body {
     padding-left: $gutter;
     padding-right: $gutter;
     background: $color-white;
-    padding-bottom: 6rem; // space for footer
+    padding-bottom: 5.7rem; // space for footer
   }
 
   footer {
@@ -52,6 +52,7 @@ body {
     bottom: 0;
     left: 0;
     right: 0;
+    border-top: 1px solid $color-accent-light;
 
     .buttons {
       margin: 1rem 0;

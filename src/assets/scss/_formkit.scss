@@ -147,12 +147,15 @@
       height: 16px;
       width: 16px;
       right: 8px;
+      background-color: $color-accent;
+      clip-path: path("M 8 11.01 L 3 5 L 13 5 L 8 11.01 Z");
     }
   }
 }
 
 select.formkit-input {
-  padding-right: 28px;
+  padding-right: 3em;
+  padding-left: 1.5em;
 }
 
 .small .formkit-input {
@@ -276,11 +279,11 @@ select.formkit-input {
       background-image: url('../../assets/icons/download.svg');
       background-repeat: no-repeat;
       background-position: left 0.7em top 0.7em;
-      background-size: 1.25em 1.25em;
+      background-size: 1.5em 1.5em;
       box-shadow: 0 0 0 2px $color-accent-light;
-      height: 2.0833334rem;
-      padding: 0.8em 0.8em 0.4em 2.6em;
-      font-size: 0.66667rem;
+      height: 2.5rem;
+      padding: 0.8em 0.8em 0.4em 3em;
+      font-size: 10px;
     }
   }
 }

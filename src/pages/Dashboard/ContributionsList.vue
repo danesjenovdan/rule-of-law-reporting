@@ -103,6 +103,10 @@ export default {
   align-items: center;
   color: $color-black;
   text-decoration: none;
+
+  &:last-child {
+    border-bottom: 0;
+  }
 }
 
 .arrow-right-icon {
