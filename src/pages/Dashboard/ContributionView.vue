@@ -177,7 +177,7 @@ export default {
 
 h2 {
   font-size: 20px;
-  font-weight: 700;
+  font-weight: 900;
   line-height: 1.3;
   margin-bottom: 0.5rem;
 }

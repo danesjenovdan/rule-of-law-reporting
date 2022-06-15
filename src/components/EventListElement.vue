@@ -96,7 +96,7 @@ export default {
   }
 
   h4 {
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 900;
     color: $color-black;
     margin-bottom: 0;
@@ -126,7 +126,7 @@ export default {
   }
 
   p {
-    line-height: 1.333334;
+    line-height: 1.5;
     margin-bottom: 1.5rem;
   }
 
