@@ -144,9 +144,6 @@ export default {
       this.submitted = false;
       this.lastSubmittedId = 0;
     },
-    myEventHandler() {
-      console.log('myEventHandler');
-    },
   },
 };
 </script>

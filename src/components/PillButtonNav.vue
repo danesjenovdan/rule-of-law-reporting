@@ -24,6 +24,7 @@ export default {
 .pill-button-nav {
   margin: 1.5rem 0;
   display: flex;
-  gap: 0.5rem;
+  gap: 1rem;
+  justify-content: center;
 }
 </style>

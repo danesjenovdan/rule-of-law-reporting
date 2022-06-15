@@ -41,7 +41,6 @@ export default {
 }
 hr {
   margin: 0;
-  height: 2px !important;
   background-color: #d2c8ee;
   opacity: 1;
 }

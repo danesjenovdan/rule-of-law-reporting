@@ -29,7 +29,7 @@
             formatDate(source['Datum začetka obdobja'])
           }}</span
           ><span v-else>?</span>
-          <span> - </span>
+          <span> – </span>
           <span v-if="source['Datum konca obdobja']">
             {{ formatDate(source['Datum konca obdobja']) }}</span
           >
@@ -87,10 +87,8 @@ export default {
 @import '../assets/scss/variables';
 
 .source {
-  margin: 0.5rem 0;
-
   .source-header {
-    padding: 0 1.5rem;
+    padding: 0 2rem 0.75rem 2rem;
     cursor: pointer;
 
     .source-header-wrapper {
@@ -100,9 +98,7 @@ export default {
       border-top: 1px solid $color-medium-grey;
 
       .arrow-icon {
-        width: 9px;
-        height: 6px;
-        transform: rotate(90deg);
+        transform: rotate(180deg);
       }
     }
   }
@@ -115,15 +111,23 @@ export default {
       border-color: $color-white;
 
       .arrow-icon {
-        transform: rotate(-90deg);
+        transform: none;
       }
+    }
+  }
+
+  &:last-of-type {
+    margin-bottom: 1.25rem;
+
+    &.expanded {
+      margin-bottom: 0;
     }
   }
 }
 
 h4 {
   font-size: 12px;
-  margin-top: 0.5rem;
+  margin-top: 0.75rem;
   margin-bottom: 0;
   font-weight: 900;
   color: $color-black;
@@ -139,7 +143,7 @@ p {
 }
 
 .collapsed {
-  padding: 0 1.5rem;
+  padding: 0 2rem;
 }
 
 .date {
@@ -156,11 +160,22 @@ p {
 }
 
 a.source-button {
+  display: inline-block;
+  margin: 1rem 0 0.5rem 0;
+  font-size: 0.833334rem;
+  background-color: transparent;
+  background-image: url('../assets/icons/arrow-right.svg');
+  background-repeat: no-repeat;
+  background-position: right 0.8em top 0.6em;
+  background-size: 0.4em 1em;
+  padding: 0.4em 2em 0.4em 1em;
   text-decoration: none;
-  border: 3px solid $color-accent-light;
+  color: inherit;
+  border: 2px solid $color-accent-light;
   border-radius: 5px;
-  color: $color-black;
-  padding: 4px 16px;
-  margin: 1rem 0;
+
+  &:hover {
+    border-color: $color-accent;
+  }
 }
 </style>

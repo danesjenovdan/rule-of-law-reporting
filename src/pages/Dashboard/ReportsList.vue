@@ -21,23 +21,33 @@
         </div>
       </div>
       <div class="filters">
-        <!-- TODO: style forms -->
-        <FormKit
-          v-model="filterAuthor"
-          type="select"
-          placeholder="Vsi avtorji poročil / odzivov"
-          :options="[]"
-          @click.stop=""
-        >
-        </FormKit>
-        <FormKit
-          v-model="filterYear"
-          type="select"
-          placeholder="Vsa leta"
-          :options="years"
-          @click.stop=""
-        >
-        </FormKit>
+        <div class="filters-left">
+          <FormKit
+            v-model="filterAuthor"
+            type="select"
+            placeholder="Vsi avtorji poročil / odzivov"
+            :options="[]"
+            @click.stop=""
+          >
+          </FormKit>
+          <FormKit
+            v-model="filterYear"
+            type="select"
+            placeholder="Vsa leta"
+            :options="years"
+            @click.stop=""
+          >
+          </FormKit>
+        </div>
+        <div class="tools-right">
+          <FormKit
+            v-if="isDesktop"
+            type="button"
+            @click="$router.push({ name: 'new-report' })"
+          >
+            Želim dodati poročilo / odziv
+          </FormKit>
+        </div>
       </div>
       <div class="info">
         <span>Število prispevkov: {{ reports?.length }}</span>
@@ -69,14 +79,16 @@
         </div>
       </div>
     </main>
-    <footer>
+  </div>
+  <footer>
+    <div class="container">
       <div class="buttons">
         <FormKit type="button" @click="$router.push({ name: 'new-report' })">
           Želim dodati poročilo / odziv
         </FormKit>
       </div>
-    </footer>
-  </div>
+    </div>
+  </footer>
 </template>
 
 <script>
@@ -172,15 +184,16 @@ export default {
 
   div {
     display: inline-block;
-    padding: 1rem;
+    padding: 0.75rem 1rem calc(0.75rem - 3px) 1rem;
     color: $color-grey;
-    font-size: 10px;
+    font-size: 12px;
     font-weight: 900;
     cursor: pointer;
+    border-bottom: 4px solid transparent;
   }
 
   .active {
-    border-bottom: 4px solid $color-accent;
+    border-color: $color-accent;
     color: $color-accent;
   }
 }
@@ -188,6 +201,12 @@ export default {
 .filters {
   margin: 2rem 0;
   display: flex;
+  justify-content: space-between;
+
+  .filters-left {
+    display: flex;
+    gap: 1rem;
+  }
 }
 
 .info {
@@ -237,16 +256,6 @@ export default {
     padding-right: 5px;
     color: $color-medium-grey;
     font-size: 9px;
-  }
-}
-
-@media (min-width: 992px) {
-  footer {
-    padding-bottom: 20px;
-  }
-
-  footer .buttons {
-    display: none;
   }
 }
 </style>

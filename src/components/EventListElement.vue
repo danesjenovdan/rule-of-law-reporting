@@ -2,17 +2,21 @@
   <div class="event">
     <div class="event-header">
       <h4>{{ event['Naslov dogodka'] }}</h4>
-      <div>
-        <span
-          v-if="
-            event['Dogodek <=> Uporabnik'] && event['Dogodek <=> Uporabnik'][0]
-          "
-          class="author"
-        >
-          {{ event['Dogodek <=> Uporabnik'][0]['Ime'] }},
-          {{ event['Dogodek <=> Uporabnik'][0]['Organizacija'] }} </span
-        ><span class="separator">|</span
-        ><span class="date">{{ formatDate(event['created_at']) }}</span>
+      <div class="author-line">
+        <span class="author">
+          <template
+            v-if="
+              event['Dogodek <=> Uporabnik'] &&
+              event['Dogodek <=> Uporabnik'][0]
+            "
+          >
+            {{ event['Dogodek <=> Uporabnik'][0]['Ime'] }},
+            {{ event['Dogodek <=> Uporabnik'][0]['Organizacija'] }}
+          </template>
+          <template v-else>N/A</template>
+        </span>
+        <span class="separator">|</span>
+        <span class="date">{{ formatDate(event['created_at']) }}</span>
       </div>
       <p>
         {{ event['Kaj se je zgodilo in kako vpliva na vladavino prava'] }}
@@ -22,7 +26,12 @@
         :classes="{
           outer: 'small',
         }"
-        @click="$router.push({ name: 'new-source' })"
+        @click="
+          $router.push({
+            name: 'new-source',
+            query: { event: event.id },
+          })
+        "
       >
         Dodaj vir za ta dogodek
       </FormKit>
@@ -82,14 +91,26 @@ export default {
   border-radius: 3px;
   margin-bottom: 1.5rem;
   position: relative;
+
   .event-header {
-    padding: 1.5rem;
+    padding: 2rem;
+
+    :deep(.formkit-outer.small) {
+      margin-bottom: 0;
+    }
   }
+
   h4 {
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 900;
     color: $color-black;
+    margin-bottom: 0;
   }
+
+  .author-line {
+    margin-bottom: 1.5rem;
+  }
+
   .author {
     font-size: 10px;
     font-style: italic;
@@ -101,22 +122,31 @@ export default {
     font-size: 10px;
     font-style: italic;
   }
+
   .separator {
     padding-left: 5px;
     padding-right: 5px;
     color: $color-medium-grey;
     font-size: 9px;
   }
-  .event-sources {
+
+  p {
+    line-height: 1.5;
     margin-bottom: 1.5rem;
+  }
+
+  .event-sources {
+    // margin-bottom: 1.5rem;
+
     h3 {
       font-size: 10px;
       font-weight: 600;
       color: $color-accent;
       margin-bottom: 0.5rem;
-      padding: 0 1.5rem;
+      padding: 0 2rem;
     }
   }
+
   .connection-dots {
     position: absolute;
     left: 1.5rem;

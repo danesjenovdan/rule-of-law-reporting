@@ -36,8 +36,8 @@ export default {
   }
 
   &.circle-logo--small {
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 3rem;
+    height: 3rem;
 
     @media (min-width: 992px) {
       width: 4.166667rem;

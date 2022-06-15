@@ -4,6 +4,8 @@
 }
 
 .formkit-form {
+  max-width: 600px;
+
   .formkit-outer {
     font-family: $base-font;
     margin-bottom: 4rem;
@@ -16,6 +18,7 @@
   font-size: 1rem;
   font-weight: 600;
   padding-bottom: 1rem;
+  display: flex;
 }
 
 .formkit-inner {
@@ -147,19 +150,48 @@
       height: 16px;
       width: 16px;
       right: 8px;
+      background-color: $color-accent;
+      clip-path: path('M 8 11.01 L 3 5 L 13 5 L 8 11.01 Z');
     }
   }
 }
 
 select.formkit-input {
-  padding-right: 28px;
+  padding-right: 3em;
+  padding-left: 1.5em;
 }
 
 .small .formkit-input {
   width: unset;
   height: unset;
   padding: 5px 8px;
-  font-size: 10px;
+  font-size: 12px;
+}
+
+[data-type='date'] {
+  .formkit-inner {
+    max-width: 9.5em;
+
+    .formkit-input {
+      &::-webkit-calendar-picker-indicator {
+        background: transparent;
+        bottom: 0;
+        color: transparent;
+        cursor: pointer;
+        height: auto;
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: auto;
+      }
+
+      background-image: url('../icons/calendar.svg');
+      background-repeat: no-repeat;
+      background-size: 0.9em;
+      background-position: right 0.8em center;
+    }
+  }
 }
 
 // export list of contributions
@@ -225,9 +257,14 @@ select.formkit-input {
       background-repeat: no-repeat;
       background-position: right 0.8em top 0.7em;
       background-size: 0.45em 1em;
-      box-shadow: 0 0 0 1px $color-accent-light;
-      padding-top: 0.6em;
-      padding-left: 0.75em;
+      box-shadow: 0 0 0 2px $color-accent-light;
+      padding: 0.6em 2.5em 0.6em 1.5em;
+
+      &:hover {
+        border-color: $color-accent;
+        box-shadow: 0 0 0 1px $color-accent;
+        color: inherit;
+      }
     }
   }
 }
@@ -241,30 +278,28 @@ select.formkit-input {
   }
 }
 
-// filter form overrides
-.filters-form {
-  max-height: 100vh;
-  // overflow-y: scroll;
-  // background-color: $color-white;
-  box-shadow: 0 0 4px 1px #eeebf7;
-  border-radius: 3px;
-  border: 1px solid #ffffff;
-  .formkit-actions {
-    background-color: $color-white;
-    margin-top: 0;
-    .formkit-outer {
-      margin-bottom: 0;
-      padding: 0 $gutter;
-      padding-bottom: 1rem;
-    }
-  }
-
-}
-
 // search overrides
 .search {
   .formkit-outer {
     margin-bottom: 0;
+  }
+}
+
+.small-header-right {
+  .export-contributions-link {
+    margin-bottom: 0;
+
+    .formkit-input {
+      background-color: transparent;
+      background-image: url('../../assets/icons/download.svg');
+      background-repeat: no-repeat;
+      background-position: left 0.7em top 0.7em;
+      background-size: 1.5em 1.5em;
+      box-shadow: 0 0 0 2px $color-accent-light;
+      height: 2.5rem;
+      padding: 0.8em 0.8em 0.4em 3em;
+      font-size: 10px;
+    }
   }
 }
 
@@ -274,11 +309,35 @@ select.formkit-input {
     .formkit-outer {
       margin-bottom: 0;
     }
+
     [data-type='button'] {
       .formkit-input {
         font-size: 14px;
         padding-left: 0.75rem;
         padding-right: 0.75rem;
+      }
+    }
+
+    .export-contributions-link {
+      margin-right: 1rem;
+
+      .formkit-input {
+        box-shadow: 0 0 0 2px $color-accent-light;
+        padding-top: calc(0.75em - 2px);
+        padding-bottom: calc(0.75em - 2px);
+        height: calc(2.75em - 4px);
+        padding-left: 2.4em;
+        background-color: transparent;
+        background-image: url('../../assets/icons/download.svg');
+        background-repeat: no-repeat;
+        background-position: left 0.7em top 0.7em;
+        background-size: 1.25em 1.25em;
+        color: $color-black;
+
+        &:focus-within,
+        &:hover {
+          box-shadow: 0 0 0 2px $color-accent;
+        }
       }
     }
   }

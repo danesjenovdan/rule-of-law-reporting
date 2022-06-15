@@ -1,9 +1,17 @@
 <template>
   <header>
     <DesktopHeader v-if="isDesktop" />
-    <DesktopToolsExport v-if="isDesktop" @close="showFiltersModal = true" />
+    <DesktopToolsExport
+      v-if="isDesktop"
+      @open-filters="showFiltersModal = true"
+      @search="onSearch"
+    />
     <SmallHeader v-if="!isDesktop" />
-    <ToolsBar v-if="!isDesktop" @close="showFiltersModal = true" />
+    <ToolsBar
+      v-if="!isDesktop"
+      @open-filters="showFiltersModal = true"
+      @search="onSearch"
+    />
     <HeaderLine
       :contributions-no="pageInfo.totalRows"
       :chosen-no="selectedContributionsCount"

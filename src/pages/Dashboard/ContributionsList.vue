@@ -1,10 +1,18 @@
 <template>
   <header>
     <DesktopHeader v-if="isDesktop" />
-    <DesktopToolsList v-if="isDesktop" @close="showFiltersModal = true" />
+    <DesktopToolsList
+      v-if="isDesktop"
+      @open-filters="showFiltersModal = true"
+      @search="onSearch"
+    />
     <SmallHeader v-if="!isDesktop" />
     <PillButtonNav v-if="!isDesktop" />
-    <ToolsBar v-if="!isDesktop" @close="showFiltersModal = true" />
+    <ToolsBar
+      v-if="!isDesktop"
+      @open-filters="showFiltersModal = true"
+      @search="onSearch"
+    />
     <HeaderLine :contributions-no="pageInfo.totalRows" />
   </header>
   <div class="container">
@@ -21,8 +29,9 @@
         </router-link>
       </div>
     </main>
-
-    <footer>
+  </div>
+  <footer>
+    <div class="container">
       <div class="buttons">
         <FormKit
           type="button"
@@ -31,12 +40,13 @@
           Želim dodati nov prispevek
         </FormKit>
       </div>
-    </footer>
-  </div>
+    </div>
+  </footer>
   <FiltersModal v-if="showFiltersModal" @close="showFiltersModal = false" />
 </template>
 
 <script>
+import { debounce } from 'lodash-es';
 import SmallHeader from '../../components/Header/SmallHeader.vue';
 import DesktopHeader from '../../components/Header/DesktopHeader.vue';
 import DesktopToolsList from '../../components/Header/DesktopToolsList.vue';
@@ -85,6 +95,11 @@ export default {
       this.contributions = response.data.list;
       this.pageInfo = response.data.pageInfo;
     },
+    onSearch: debounce(async function onSearch(query) {
+      const response = await getContributions(query);
+      this.contributions = response.data.list;
+      this.pageInfo = response.data.pageInfo;
+    }, 750),
   },
 };
 </script>
@@ -96,25 +111,20 @@ export default {
   font-size: 12px;
   font-weight: 600;
   padding: 20px 0;
-  border-bottom: 2px solid $color-accent-light;
+  border-bottom: 1px solid $color-accent-light;
   display: flex;
   justify-content: space-between;
   align-items: center;
   color: $color-black;
   text-decoration: none;
+
+  &:last-child {
+    border-bottom: 0;
+  }
 }
 
 .arrow-right-icon {
   width: 8px;
   height: 13px;
-}
-
-@media (min-width: 992px) {
-  footer {
-    padding-bottom: 20px;
-  }
-  footer .buttons {
-    display: none;
-  }
 }
 </style>

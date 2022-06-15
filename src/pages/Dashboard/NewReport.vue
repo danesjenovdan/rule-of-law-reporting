@@ -27,6 +27,7 @@
               name="Na kateri poročevalski mehanizem se nanaša poročilo ali odziv"
               label="Na kateri poročevalski mehanizem se nanaša poročilo ali odziv"
               :options="['evropska komisija', 'drugo']"
+              validation="required"
             />
             <FormKit
               type="select"
@@ -37,27 +38,37 @@
                 'poročilo / odziv je pripravila institucija, kateri se poroča',
                 'poročilo / odziv je pripravila vlada',
               ]"
+              validation="required"
             />
             <FormKit
               type="text"
               name="Ime poročila ali odziva"
               label="Ime poročila ali odziva"
+              validation="required"
             />
-            <FormKit type="text" name="Avtor poročila" label="Avtor poročila" />
+            <FormKit
+              type="text"
+              name="Avtor poročila"
+              label="Avtor poročila"
+              validation="required"
+            />
             <FormKit
               type="date"
               name="Datum oddaje ali objave poročila ali odziva"
               label="Datum oddaje ali objave poročila ali odziva"
+              validation="required"
             />
             <FormKit
               type="text"
               name="Link do poročila ali odziva"
               label="Link do poročila ali odziva"
+              validation="required"
             />
             <FormKit
               type="multifile"
               name="Dokument poročila ali odziva"
               label="Dokument poročila ali odziva"
+              validation="required"
             />
           </FormKit>
         </template>

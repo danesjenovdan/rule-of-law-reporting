@@ -1,70 +1,76 @@
 <template>
-  <div class="filters-modal">
-    <div class="dashboard-page">
-      <FormKit
-        v-model="formData"
-        type="form"
-        :form-class="'filters-form'"
-        submit-label="Prikaži rezultate"
-        @submit="submit"
-      >
-        <header>
-          <div>Filtri</div>
-          <span @click="$emit('close')">x</span>
-        </header>
-        <div class="container">
-          <main>
-            <h6>Področje</h6>
-            <FormKit
-              type="checkbox"
-              name="nc_0zwf__področja_id"
-              :options="areas"
-            />
-            <FormKit
-              type="checkbox"
-              name="'Če ste izbrali druga, na katerem področju'"
-              :options="otherAreas"
-            />
-            <hr />
-            <h6>Datum oddaje prispevka</h6>
-            <FormKit
-              type="text"
-              name="created_at,gt"
-              label="Začetek • opcijsko"
-            />
-            <FormKit
-              type="text"
-              name="created_at,le"
-              label="Konec • opcijsko"
-            />
-            <hr />
-            <h6>Datum objave vira</h6>
-            <!-- TODO: set correct names to use in filtering query -->
-            <FormKit type="text" name="" label="Začetek • opcijsko" />
-            <FormKit type="text" name="" label="Konec • opcijsko" />
-            <hr />
-            <!-- TODO: set correct name to use in filtering query -->
-            <FormKit
-              type="checkbox"
-              name="user"
-              label="Prikaži zgolj moje prispevke"
-            />
-          </main>
-        </div>
-      </FormKit>
+  <div class="filters-modal-bg">
+    <div class="filters-modal">
+      <!-- <div>Filtri</div> -->
+      <button class="close-button" @click="$emit('close')">×</button>
+      <div class="container">
+        <FormKit
+          v-model="formData"
+          type="form"
+          :form-class="'filters-form'"
+          submit-label="Prikaži rezultate"
+          @submit="submit"
+        >
+          <h6>Področje</h6>
+          <FormKit
+            type="checkbox"
+            name="nc_0zwf__področja_id"
+            :options="areas"
+          />
+          <FormKit
+            type="checkbox"
+            name="'Če ste izbrali druga, na katerem področju'"
+            :options="otherAreas"
+          />
+          <hr />
+          <h6>Datum oddaje prispevka</h6>
+          <FormKit
+            type="text"
+            name="created_at,gt"
+            label="Začetek • opcijsko"
+          />
+          <FormKit type="text" name="created_at,le" label="Konec • opcijsko" />
+          <hr />
+          <h6>Datum objave vira</h6>
+          <!-- TODO: set correct names to use in filtering query -->
+          <FormKit type="text" name="" label="Začetek • opcijsko" />
+          <FormKit type="text" name="" label="Konec • opcijsko" />
+          <hr />
+          <!-- TODO: set correct name to use in filtering query -->
+          <FormKit
+            type="checkbox"
+            name="user"
+            label="Prikaži zgolj moje prispevke"
+          />
+        </FormKit>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import { getAreas, filterContributions } from '../helpers/api.js';
+import { filterContributions } from '../helpers/api.js';
 
 export default {
   emits: ['close'],
   data() {
     return {
       formData: {},
-      areas: [],
+      areas: [
+        {
+          value: '1',
+          label: 'Pravosodni sistem',
+          help: 'kartek opis za Pravosodni sistem',
+        },
+        { value: '2', label: 'Protikorupcijski sistem', help: '' },
+        { value: '3', label: 'Pluralnost medijev', help: '' },
+        {
+          value: '4',
+          label:
+            'Druga institucionalna vprašanja povezana s sistemom zavor in ravnovesij',
+          help: '',
+        },
+      ],
       otherAreas: [
         'azil in migracije',
         'sistemske kršitve človekovih pravic',
@@ -75,14 +81,15 @@ export default {
       ],
     };
   },
-  computed: {},
-  async mounted() {
-    const response = await getAreas();
-    this.areas = response.data.list.map((item) => ({
-      value: item.id,
-      label: item['Ime področja'],
-      // help: item['Opis področja'],
-    }));
+  mounted() {
+    if (typeof window !== 'undefined') {
+      document.body.style.overflow = 'hidden';
+    }
+  },
+  beforeUnmount() {
+    if (typeof window !== 'undefined') {
+      document.body.style.overflow = '';
+    }
   },
   methods: {
     async submit(data, node) {
@@ -102,52 +109,61 @@ export default {
 <style lang="scss" scoped>
 @import '../assets/scss/variables';
 
-.filters-modal {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-}
+.filters-modal-bg {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999999999;
+  background: rgba(0, 0, 0, 0.5);
 
-header {
-  background-color: $bg-color;
-  text-align: center;
-  padding: 1rem 0;
-  position: relative;
-  span {
-    cursor: pointer;
-    position: absolute;
-    right: 1.25rem;
-    top: 1rem;
-  }
-}
-
-main {
-  background-color: white;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-}
-
-footer {
-  background-color: $bg-color;
-}
-
-h6 {
-  font-size: 10px;
-  font-weight: 600;
-}
-
-/* dekstop */
-@media (min-width: 992px) {
   .filters-modal {
-    width: 560px;
-    height: 80vh;
-    margin: auto;
-    overflow-y: scroll;
-    box-shadow: 0 0 4px 1px #eeebf7;
-    border-radius: 3px;
-    border: 1px solid #ffffff;
+    position: relative;
+    display: flex;
+    max-width: 600px;
+    max-height: 100%;
+    background: $bg-color;
+
+    @media (min-width: 992px) {
+      margin: 0 auto;
+      max-height: 90vh;
+    }
+
+    .close-button {
+      position: absolute;
+      top: 0.75rem;
+      right: 1rem;
+      width: 1.25em;
+      height: 1.25em;
+      padding: 0;
+      margin: 0;
+      background: $color-white;
+      border: none;
+      border-radius: 50%;
+      font-size: 1.75rem;
+      font-weight: 900;
+      line-height: 1.25em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &:focus {
+        box-shadow: 0 0 0 2px $color-accent;
+      }
+    }
+
+    .container {
+      padding: 1rem 3rem;
+      overflow-y: auto;
+
+      h4 {
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        margin-top: 2rem;
+      }
+    }
   }
 }
 </style>

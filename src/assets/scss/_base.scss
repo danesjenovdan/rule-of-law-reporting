@@ -14,13 +14,10 @@ body {
   font-size: 100%;
   font-family: $base-font;
   position: relative;
+
   @media (min-width: 992px) {
     background: $color-white;
   }
-}
-
-.page-container {
-  height: 100vh;
 }
 
 .container {
@@ -33,11 +30,16 @@ body {
 .dashboard-page {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  height: 100vh;
 
   header,
   footer {
     flex: 0 0 0%;
+  }
+
+  > .container {
+    flex: 1 0 0%;
+    display: flex;
   }
 
   main {
@@ -47,12 +49,24 @@ body {
     padding-left: $gutter;
     padding-right: $gutter;
     background: $color-white;
-    overflow-y: scroll;
+    padding-bottom: 5.7rem; // space for footer
+    padding-top: 1px;
   }
 
   footer {
+    background: $bg-color;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-top: 1px solid $color-accent-light;
+
     .buttons {
       margin: 1rem 0;
+    }
+
+    @media (min-width: 992px) {
+      display: none;
     }
   }
 }
@@ -77,6 +91,7 @@ h2 {
 hr {
   margin: 1.75rem 0;
   background-color: $color-accent-light;
+  opacity: 1;
 }
 
 .arrow-right-icon {
@@ -111,8 +126,8 @@ hr {
 
 .arrow-icon {
   position: relative;
-  width: 9px;
-  height: 6px;
+  width: 7px;
+  height: 10px;
   background-image: url('../../assets/icons/arrow.svg');
   background-position: center;
   background-size: 100% 100%;
@@ -131,22 +146,26 @@ hr {
 
 .submitted-container {
   text-align: center;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
 
-  // TODO: add icon
   .submitted-icon {
     margin: 4rem auto 1rem;
     width: 80px;
-    height: 80px;
+    height: 100px;
     background-image: url('../../assets/icons/package.svg');
     background-position: center;
     background-size: 100% 100%;
     background-repeat: no-repeat;
+    background-color: transparent;
   }
 
   .lead-in-text {
     max-width: 250px;
     margin-left: auto;
     margin-right: auto;
+    margin-bottom: 5rem;
 
     .lead {
       margin-bottom: 1rem;
@@ -159,5 +178,9 @@ hr {
     margin-right: auto;
     font-weight: 600;
     margin-bottom: 1.5rem;
+  }
+
+  [data-type='button'] .formkit-input {
+    width: auto;
   }
 }

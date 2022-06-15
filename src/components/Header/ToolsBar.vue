@@ -2,12 +2,17 @@
   <div :class="{ container: !isDesktop }">
     <div class="tools">
       <div class="search">
-        <FormKit type="text" name="" label="" />
+        <FormKit
+          type="text"
+          name=""
+          label=""
+          @input="$emit('search', $event)"
+        />
         <div class="search-button">
           <div class="search-icon"></div>
         </div>
       </div>
-      <button class="filter" @click="$emit('close')">
+      <button class="filter" @click="$emit('open-filters')">
         <div class="filter-icon"></div>
         Filtiraj
       </button>
@@ -22,7 +27,7 @@ export default {
       default: false,
     },
   },
-  emits: ['close'],
+  emits: ['open-filters', 'search'],
 };
 </script>
 

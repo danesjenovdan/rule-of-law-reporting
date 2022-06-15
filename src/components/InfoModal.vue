@@ -1,48 +1,50 @@
 <template>
-  <div class="filters-modal">
-    <div class="dashboard-page">
-      <header>
-        <div>&nbsp;</div>
-        <span @click="$emit('close')">x</span>
-      </header>
+  <div class="info-modal-bg">
+    <div class="info-modal">
+      <button class="close-button" @click="$emit('close')">×</button>
       <div class="container">
-        <main>
-          <h4>Ime področja</h4>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro
-            reiciendis facere labore aut fugit aperiam id architecto molestias
-            at rem, harum voluptatem commodi quo quibusdam quis necessitatibus
-            mollitia deserunt tempore?
-          </p>
-          <h4>Ime področja</h4>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro
-            reiciendis facere labore aut fugit aperiam id architecto molestias
-            at rem, harum voluptatem commodi quo quibusdam quis necessitatibus
-            mollitia deserunt tempore?
-          </p>
-          <h4>Ime področja</h4>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro
-            reiciendis facere labore aut fugit aperiam id architecto molestias
-            at rem, harum voluptatem commodi quo quibusdam quis necessitatibus
-            mollitia deserunt tempore?
-          </p>
-          <h4>Ime področja</h4>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro
-            reiciendis facere labore aut fugit aperiam id architecto molestias
-            at rem, harum voluptatem commodi quo quibusdam quis necessitatibus
-            mollitia deserunt tempore?
-          </p>
-          <h4>Ime področja</h4>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro
-            reiciendis facere labore aut fugit aperiam id architecto molestias
-            at rem, harum voluptatem commodi quo quibusdam quis necessitatibus
-            mollitia deserunt tempore?
-          </p>
-        </main>
+        <h4>Ime področja</h4>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro
+          reiciendis facere labore aut fugit aperiam id architecto molestias at
+          rem, harum voluptatem commodi quo quibusdam quis necessitatibus
+          mollitia deserunt tempore?
+        </p>
+        <h4>Ime področja</h4>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro
+          reiciendis facere labore aut fugit aperiam id architecto molestias at
+          rem, harum voluptatem commodi quo quibusdam quis necessitatibus
+          mollitia deserunt tempore?
+        </p>
+        <h4>Ime področja</h4>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro
+          reiciendis facere labore aut fugit aperiam id architecto molestias at
+          rem, harum voluptatem commodi quo quibusdam quis necessitatibus
+          mollitia deserunt tempore?
+        </p>
+        <h4>Ime področja</h4>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro
+          reiciendis facere labore aut fugit aperiam id architecto molestias at
+          rem, harum voluptatem commodi quo quibusdam quis necessitatibus
+          mollitia deserunt tempore?
+        </p>
+        <h4>Ime področja</h4>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro
+          reiciendis facere labore aut fugit aperiam id architecto molestias at
+          rem, harum voluptatem commodi quo quibusdam quis necessitatibus
+          mollitia deserunt tempore?
+        </p>
+        <h4>Ime področja</h4>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro
+          reiciendis facere labore aut fugit aperiam id architecto molestias at
+          rem, harum voluptatem commodi quo quibusdam quis necessitatibus
+          mollitia deserunt tempore?
+        </p>
       </div>
     </div>
   </div>
@@ -51,58 +53,77 @@
 <script>
 export default {
   emits: ['close'],
+  mounted() {
+    if (typeof window !== 'undefined') {
+      document.body.style.overflow = 'hidden';
+    }
+  },
+  beforeUnmount() {
+    if (typeof window !== 'undefined') {
+      document.body.style.overflow = '';
+    }
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 @import '../assets/scss/variables';
 
-.filters-modal {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-}
+.info-modal-bg {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999999999;
+  background: rgba(0, 0, 0, 0.5);
 
-header {
-  background-color: $bg-color;
-  text-align: center;
-  padding: 1rem 0;
-  position: relative;
-  span {
-    cursor: pointer;
-    position: absolute;
-    right: 1.25rem;
-    top: 1rem;
-  }
-}
+  .info-modal {
+    position: relative;
+    display: flex;
+    max-width: 600px;
+    max-height: 100%;
+    background: $bg-color;
 
-main {
-  background-color: white;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-}
+    @media (min-width: 992px) {
+      margin: 0 auto;
+      max-height: 90vh;
+    }
 
-footer {
-  background-color: $bg-color;
-}
+    .close-button {
+      position: absolute;
+      top: 0.75rem;
+      right: 1rem;
+      width: 1.25em;
+      height: 1.25em;
+      padding: 0;
+      margin: 0;
+      background: $color-white;
+      border: none;
+      border-radius: 50%;
+      font-size: 1.75rem;
+      font-weight: 900;
+      line-height: 1.25em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
-h4 {
-  font-size: 16px;
-  font-weight: 600;
-}
+      &:focus {
+        box-shadow: 0 0 0 2px $color-accent;
+      }
+    }
 
-/* dekstop */
-@media (min-width: 992px) {
-  .filters-modal {
-    width: 560px;
-    height: 80vh;
-    margin: auto;
-    overflow-y: scroll;
-    box-shadow: 0 0 4px 1px #eeebf7;
-    border-radius: 3px;
-    border: 1px solid #ffffff;
+    .container {
+      padding: 1rem 3rem;
+      overflow-y: auto;
+
+      h4 {
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        margin-top: 2rem;
+      }
+    }
   }
 }
 </style>
