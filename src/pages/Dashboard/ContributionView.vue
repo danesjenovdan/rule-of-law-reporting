@@ -23,15 +23,17 @@
         >
           {{ contribution['Področja <= Prispevek']['Ime področja'] }}
         </div>
-        <div
-          v-if="
-            contribution['Prispevek <=> Uporabnik'] &&
-            contribution['Prispevek <=> Uporabnik'][0]
-          "
-          class="author"
-        >
-          {{ contribution['Prispevek <=> Uporabnik'][0]['Ime'] }},
-          {{ contribution['Prispevek <=> Uporabnik'][0]['Organizacija'] }}
+        <div class="author">
+          <template
+            v-if="
+              contribution['Prispevek <=> Uporabnik'] &&
+              contribution['Prispevek <=> Uporabnik'][0]
+            "
+          >
+            {{ contribution['Prispevek <=> Uporabnik'][0]['Ime'] }},
+            {{ contribution['Prispevek <=> Uporabnik'][0]['Organizacija'] }}
+          </template>
+          <template v-else>N/A</template>
         </div>
         <div class="date">
           {{ formatDate(contribution['created_at']) }}
@@ -176,18 +178,18 @@ export default {
 h2 {
   font-size: 20px;
   font-weight: 700;
-  line-height: 30px;
+  line-height: 1.3;
   margin-bottom: 0.5rem;
 }
 
 .contribution-area {
   display: inline-block;
-  padding: 7px;
+  padding: 5px 7px;
   background-color: #aed8f0;
   color: $color-black;
   font-size: 8px;
   font-style: italic;
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
 }
 
 .author {
@@ -203,21 +205,23 @@ h2 {
 }
 
 .short-hr {
-  border-color: $color-light-grey;
+  border-color: $color-medium-grey;
   width: 50px;
-  margin: 1rem 0;
+  margin: 1.5rem 0;
 }
 
 p {
-  font-size: 12px;
+  font-size: 14px;
+  margin-bottom: 2rem;
 }
 
 main {
+  padding-top: 1px;
   padding-bottom: 2rem;
 }
 
 .events {
-  padding-top: 2rem;
+  padding-top: 3rem;
   padding-bottom: 2rem;
   background-color: $bg-color;
 }
