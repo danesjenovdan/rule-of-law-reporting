@@ -100,8 +100,8 @@ export const validation = {
   //   number({ name }) {
   //     return `${s(name)} must be a number.`;
   //   },
-  required({ name }) {
-    return `${s(name)} je obvezno polje.`;
+  required() {
+    return `Polje je obvezno.`;
   },
   //   starts_with({ name, args }) {
   //     return `${s(name)} doesn’t start with ${list(args)}.`;
