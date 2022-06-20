@@ -3,9 +3,7 @@
     <DesktopHeader v-if="isDesktop" />
     <SmallHeader v-if="!isDesktop" />
     <PillButtonNav v-if="!isDesktop" />
-  </header>
-  <div class="container">
-    <main>
+    <div :class="['tabs-container', { container: !isDesktop }]">
       <div class="tabs">
         <div
           :class="{ active: filterInstitution == 'ec' }"
@@ -20,6 +18,10 @@
           Drugo
         </div>
       </div>
+    </div>
+  </header>
+  <div class="container">
+    <main>
       <div class="filters">
         <div class="filters-left">
           <FormKit
@@ -172,15 +174,25 @@ export default {
 <style lang="scss" scoped>
 @import '../../assets/scss/variables';
 
+.tabs-container {
+  box-shadow: 0px 5px 4px -4px $color-accent-super-light;
+  position: relative;
+}
+
 .tabs {
-  box-shadow: 0 0 4px 1px $color-accent-super-light;
   border-radius: 3px;
-  border: 1px solid $color-white;
+  // border: 1px solid $color-white;
   background-color: $color-white;
   margin-left: -1.6667rem;
   margin-right: -1.6667rem;
   padding-left: 1.6667rem;
   padding-right: 1.6667rem;
+
+  @media (min-width: 992px) {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 960px;
+  }
 
   div {
     display: inline-block;
