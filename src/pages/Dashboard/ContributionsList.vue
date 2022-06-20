@@ -13,36 +13,41 @@
       @open-filters="showFiltersModal = true"
       @search="onSearch"
     />
-    <HeaderLine :contributions-no="pageInfo.totalRows" />
+    <HeaderLine v-if="!loading" :contributions-no="pageInfo.totalRows" />
   </header>
-  <div class="container">
-    <main>
-      <div>
-        <router-link
-          v-for="contribution in sortedContributions"
-          :key="contribution.id"
-          class="contribution"
-          :to="{ name: 'contribution', params: { id: contribution.id } }"
-        >
-          <span>{{ contribution['Ime prispevka'] }}</span>
-          <span class="arrow-right-icon"></span>
-        </router-link>
-      </div>
-    </main>
+  <div v-if="loading" class="spinner-container">
+    <div class="spinner"></div>
   </div>
-  <footer>
+  <template v-else>
     <div class="container">
-      <div class="buttons">
-        <FormKit
-          type="button"
-          @click="$router.push({ name: 'new-contribution' })"
-        >
-          Želim dodati nov prispevek
-        </FormKit>
-      </div>
+      <main>
+        <div>
+          <router-link
+            v-for="contribution in sortedContributions"
+            :key="contribution.id"
+            class="contribution"
+            :to="{ name: 'contribution', params: { id: contribution.id } }"
+          >
+            <span>{{ contribution['Ime prispevka'] }}</span>
+            <span class="arrow-right-icon"></span>
+          </router-link>
+        </div>
+      </main>
     </div>
-  </footer>
-  <FiltersModal v-if="showFiltersModal" @close="showFiltersModal = false" />
+    <footer>
+      <div class="container">
+        <div class="buttons">
+          <FormKit
+            type="button"
+            @click="$router.push({ name: 'new-contribution' })"
+          >
+            Želim dodati nov prispevek
+          </FormKit>
+        </div>
+      </div>
+    </footer>
+    <FiltersModal v-if="showFiltersModal" @close="showFiltersModal = false" />
+  </template>
 </template>
 
 <script>
@@ -73,6 +78,7 @@ export default {
   },
   data() {
     return {
+      loading: true,
       contributions: [],
       pageInfo: {},
       showFiltersModal: false,
@@ -85,9 +91,9 @@ export default {
       );
     },
   },
-  mounted() {
-    // get data
-    this.fetchContributions();
+  async mounted() {
+    await this.fetchContributions();
+    this.loading = false;
   },
   methods: {
     async fetchContributions() {
@@ -95,11 +101,16 @@ export default {
       this.contributions = response.data.list;
       this.pageInfo = response.data.pageInfo;
     },
-    onSearch: debounce(async function onSearch(query) {
+    debouncedSearchContributions: debounce(async function d(query) {
       const response = await getContributions('id,Ime prispevka', query);
       this.contributions = response.data.list;
       this.pageInfo = response.data.pageInfo;
+      this.loading = false;
     }, 500),
+    onSearch(query) {
+      this.loading = true;
+      this.debouncedSearchContributions(query);
+    },
   },
 };
 </script>

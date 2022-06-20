@@ -7,91 +7,95 @@
       :to="{ name: 'contributions' }"
     />
   </header>
-
-  <section>
-    <div class="container">
-      <main>
-        <h2>{{ contribution['Ime prispevka'] }}</h2>
-        <div
-          v-if="contribution['Področja <= Prispevek']"
-          class="contribution-area"
-          :style="{
-            backgroundColor:
-              colors[contribution['Področja <= Prispevek']['Ime področja']] ||
-              '#dadada',
-          }"
-        >
-          {{ contribution['Področja <= Prispevek']['Ime področja'] }}
-        </div>
-        <div class="author">
-          <template
-            v-if="
-              contribution['Prispevek <=> Uporabnik'] &&
-              contribution['Prispevek <=> Uporabnik'][0]
+  <div v-if="loading" class="spinner-container">
+    <div class="spinner"></div>
+  </div>
+  <template v-else>
+    <section>
+      <div class="container">
+        <main>
+          <h2>{{ contribution['Ime prispevka'] }}</h2>
+          <div
+            v-if="contribution['Področja <= Prispevek']"
+            class="contribution-area"
+            :style="{
+              backgroundColor:
+                colors[contribution['Področja <= Prispevek']['Ime področja']] ||
+                '#dadada',
+            }"
+          >
+            {{ contribution['Področja <= Prispevek']['Ime področja'] }}
+          </div>
+          <div class="author">
+            <template
+              v-if="
+                contribution['Prispevek <=> Uporabnik'] &&
+                contribution['Prispevek <=> Uporabnik'][0]
+              "
+            >
+              {{ contribution['Prispevek <=> Uporabnik'][0]['Ime'] }},
+              {{ contribution['Prispevek <=> Uporabnik'][0]['Organizacija'] }}
+            </template>
+            <template v-else>N/A</template>
+          </div>
+          <div class="date">
+            {{ formatDate(contribution['created_at']) }}
+          </div>
+          <hr class="short-hr" />
+          <p>
+            {{ contribution['O področju prispevka'] }}
+          </p>
+          <FormKit
+            v-if="events?.length > 0"
+            type="button"
+            :classes="{
+              outer: 'small',
+            }"
+            @click="
+              $router.push({
+                name: 'new-event',
+                query: { contribution: $route.params.id },
+              })
             "
           >
-            {{ contribution['Prispevek <=> Uporabnik'][0]['Ime'] }},
-            {{ contribution['Prispevek <=> Uporabnik'][0]['Organizacija'] }}
-          </template>
-          <template v-else>N/A</template>
-        </div>
-        <div class="date">
-          {{ formatDate(contribution['created_at']) }}
-        </div>
-        <hr class="short-hr" />
-        <p>
-          {{ contribution['O področju prispevka'] }}
-        </p>
-        <FormKit
-          v-if="events?.length > 0"
-          type="button"
-          :classes="{
-            outer: 'small',
-          }"
-          @click="
-            $router.push({
-              name: 'new-event',
-              query: { contribution: $route.params.id },
-            })
-          "
-        >
-          Dodaj dogodek na ta prispevek
-        </FormKit>
-      </main>
-    </div>
-    <section v-if="events?.length > 0" class="events">
-      <div class="container">
-        <div class="events-header">
-          <h3>Povezani dogodki</h3>
-          <hr />
-        </div>
-        <div v-for="(chain, key) in eventChains" :key="key">
-          <EventListElement
-            v-for="event in chain"
-            :key="event['Naslov dogodka']"
-            :event="event"
-          />
-        </div>
+            Dodaj dogodek na ta prispevek
+          </FormKit>
+        </main>
       </div>
+      <section v-if="events?.length > 0" class="events">
+        <div class="container">
+          <div class="events-header">
+            <h3>Povezani dogodki</h3>
+            <hr />
+          </div>
+          <div v-for="(chain, key) in eventChains" :key="key">
+            <EventListElement
+              v-for="event in chain"
+              :key="event['Naslov dogodka']"
+              :event="event"
+            />
+          </div>
+        </div>
+      </section>
     </section>
-  </section>
-  <footer v-if="events?.length === 0">
-    <div class="container">
-      <div class="buttons">
-        <FormKit
-          type="button"
-          @click="
-            $router.push({
-              name: 'new-event',
-              query: { contribution: $route.params.id },
-            })
-          "
-        >
-          Želim dodati povezani dogodek
-        </FormKit>
+    <footer v-if="events?.length === 0">
+      <div class="container">
+        <div class="buttons">
+          <FormKit
+            type="button"
+            @click="
+              $router.push({
+                name: 'new-event',
+                query: { contribution: $route.params.id },
+              })
+            "
+          >
+            Želim dodati povezani dogodek
+          </FormKit>
+        </div>
       </div>
-    </div>
-  </footer>
+    </footer>
+  </template>
 </template>
 
 <script>
@@ -118,6 +122,7 @@ export default {
   },
   data() {
     return {
+      loading: true,
       contribution: {},
       pageInfo: {},
       colors,
@@ -170,9 +175,10 @@ export default {
       return chains;
     },
   },
-  mounted() {
+  async mounted() {
     const { id } = this.$route.params;
-    this.fetchContribution(id);
+    await this.fetchContribution(id);
+    this.loading = false;
   },
   methods: {
     async fetchContribution(id) {
