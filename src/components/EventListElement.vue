@@ -36,7 +36,10 @@
         Dodaj vir za ta dogodek
       </FormKit>
     </div>
-    <div v-if="sources.length > 0" class="event-sources">
+    <div v-if="loading" class="spinner-container small">
+      <div class="spinner"></div>
+    </div>
+    <div v-else-if="sources.length > 0" class="event-sources">
       <h3>Viri</h3>
       <SourceListElement
         v-for="source in sources"
@@ -70,12 +73,14 @@ export default {
   },
   data() {
     return {
+      loading: true,
       sources: [],
     };
   },
   async mounted() {
     const response = await getSourcesFromEvent(this.event.id);
     this.sources = response.data.list;
+    this.loading = false;
   },
   methods: {
     formatDate,
@@ -101,7 +106,7 @@ export default {
   }
 
   h4 {
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 900;
     color: $color-black;
     margin-bottom: 0;
@@ -112,14 +117,14 @@ export default {
   }
 
   .author {
-    font-size: 10px;
+    font-size: 12px;
     font-style: italic;
     color: $color-black;
   }
 
   .date {
     color: $color-black;
-    font-size: 10px;
+    font-size: 12px;
     font-style: italic;
   }
 
@@ -139,7 +144,7 @@ export default {
     // margin-bottom: 1.5rem;
 
     h3 {
-      font-size: 10px;
+      font-size: 12px;
       font-weight: 600;
       color: $color-accent;
       margin-bottom: 0.5rem;

@@ -29,7 +29,7 @@
             formatDate(source['Datum začetka obdobja'])
           }}</span
           ><span v-else>?</span>
-          <span> – </span>
+          <span>–</span>
           <span v-if="source['Datum konca obdobja']">
             {{ formatDate(source['Datum konca obdobja']) }}</span
           >
@@ -126,15 +126,15 @@ export default {
 }
 
 h4 {
-  font-size: 12px;
+  font-size: 14px;
   margin-top: 0.75rem;
   margin-bottom: 0;
-  font-weight: 900;
+  font-weight: 600;
   color: $color-black;
 }
 
 p {
-  font-size: 8px;
+  font-size: 10px;
   margin-bottom: 0;
 
   i {
@@ -148,13 +148,13 @@ p {
 
 .date {
   p:last-child {
-    font-size: 10px;
+    font-size: 12px;
   }
 }
 
 .documents a {
   display: block;
-  font-size: 10px;
+  font-size: 12px;
   color: $color-blue;
   margin-bottom: 1rem;
 }
@@ -162,7 +162,7 @@ p {
 a.source-button {
   display: inline-block;
   margin: 1rem 0 0.5rem 0;
-  font-size: 0.833334rem;
+  font-size: 12px;
   background-color: transparent;
   background-image: url('../assets/icons/arrow-right.svg');
   background-repeat: no-repeat;

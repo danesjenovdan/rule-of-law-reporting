@@ -95,13 +95,16 @@ export const validation = {
   //     return `${s(name)} must be at least ${args[0]}.`;
   //   },
   not({ name, node: { value } }) {
+    if (value && String(value) === '0') {
+      return `Polje je obvezno.`;
+    }
     return `${s(name)} ne sprejme vrednosti "${value}".`;
   },
   //   number({ name }) {
   //     return `${s(name)} must be a number.`;
   //   },
-  required({ name }) {
-    return `${s(name)} je obvezno polje.`;
+  required() {
+    return `Polje je obvezno.`;
   },
   //   starts_with({ name, args }) {
   //     return `${s(name)} doesn’t start with ${list(args)}.`;

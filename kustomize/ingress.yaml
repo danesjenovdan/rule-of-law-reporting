@@ -8,10 +8,10 @@ spec:
   ingressClassName: nginx
   tls:
     - hosts:
-        - rolr.lb.djnd.si
+        - rolr.pravna-mreza.si
       secretName: rule-of-law-reporting-tls
   rules:
-    - host: rolr.lb.djnd.si
+    - host: rolr.pravna-mreza.si
       http:
         paths:
           - path: /

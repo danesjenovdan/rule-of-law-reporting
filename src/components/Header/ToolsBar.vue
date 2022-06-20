@@ -48,7 +48,7 @@ export default {
   }
 
   span {
-    font-size: 10px;
+    font-size: 12px;
     font-style: italic;
     padding-bottom: 4px;
   }
@@ -60,7 +60,7 @@ export default {
     border-radius: 3px;
     background-color: $color-orange;
     padding: 4px 6px;
-    font-size: 10px;
+    font-size: 12px;
     margin-left: 10px;
 
     .filter-icon {

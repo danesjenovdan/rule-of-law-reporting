@@ -7,78 +7,95 @@
       :to="{ name: 'contributions' }"
     />
   </header>
-
-  <section>
-    <div class="container">
-      <main>
-        <h2>{{ contribution['Ime prispevka'] }}</h2>
-        <div
-          v-if="contribution['Področja <= Prispevek']"
-          class="contribution-area"
-          :style="{
-            backgroundColor:
-              colors[contribution['Področja <= Prispevek']['Ime področja']] ||
-              '#dadada',
-          }"
-        >
-          {{ contribution['Področja <= Prispevek']['Ime področja'] }}
-        </div>
-        <div class="author">
-          <template
-            v-if="
-              contribution['Prispevek <=> Uporabnik'] &&
-              contribution['Prispevek <=> Uporabnik'][0]
+  <div v-if="loading" class="spinner-container">
+    <div class="spinner"></div>
+  </div>
+  <template v-else>
+    <section>
+      <div class="container">
+        <main>
+          <h2>{{ contribution['Ime prispevka'] }}</h2>
+          <div
+            v-if="contribution['Področja <= Prispevek']"
+            class="contribution-area"
+            :style="{
+              backgroundColor:
+                colors[contribution['Področja <= Prispevek']['Ime področja']] ||
+                '#dadada',
+            }"
+          >
+            {{ contribution['Področja <= Prispevek']['Ime področja'] }}
+          </div>
+          <div class="author">
+            <template
+              v-if="
+                contribution['Prispevek <=> Uporabnik'] &&
+                contribution['Prispevek <=> Uporabnik'][0]
+              "
+            >
+              {{ contribution['Prispevek <=> Uporabnik'][0]['Ime'] }},
+              {{ contribution['Prispevek <=> Uporabnik'][0]['Organizacija'] }}
+            </template>
+            <template v-else>N/A</template>
+          </div>
+          <div class="date">
+            {{ formatDate(contribution['created_at']) }}
+          </div>
+          <hr class="short-hr" />
+          <p>
+            {{ contribution['O področju prispevka'] }}
+          </p>
+          <FormKit
+            v-if="events?.length > 0"
+            type="button"
+            :classes="{
+              outer: 'small',
+            }"
+            @click="
+              $router.push({
+                name: 'new-event',
+                query: { contribution: $route.params.id },
+              })
             "
           >
-            {{ contribution['Prispevek <=> Uporabnik'][0]['Ime'] }},
-            {{ contribution['Prispevek <=> Uporabnik'][0]['Organizacija'] }}
-          </template>
-          <template v-else>N/A</template>
-        </div>
-        <div class="date">
-          {{ formatDate(contribution['created_at']) }}
-        </div>
-        <hr class="short-hr" />
-        <p>
-          {{ contribution['O področju prispevka'] }}
-        </p>
-        <FormKit
-          v-if="events?.length > 0"
-          type="button"
-          :classes="{
-            outer: 'small',
-          }"
-          @click="$router.push({ name: 'new-event' })"
-        >
-          Dodaj dogodek na ta prispevek
-        </FormKit>
-      </main>
-    </div>
-    <section v-if="events?.length > 0" class="events">
-      <div class="container">
-        <div class="events-header">
-          <h3>Povezani dogodki</h3>
-          <hr />
-        </div>
-        <div v-for="(chain, key) in eventChains" :key="key">
-          <EventListElement
-            v-for="event in chain"
-            :key="event['Naslov dogodka']"
-            :event="event"
-          />
-        </div>
+            Dodaj dogodek na ta prispevek
+          </FormKit>
+        </main>
       </div>
+      <section v-if="events?.length > 0" class="events">
+        <div class="container">
+          <div class="events-header">
+            <h3>Povezani dogodki</h3>
+            <hr />
+          </div>
+          <div v-for="(chain, key) in eventChains" :key="key">
+            <EventListElement
+              v-for="event in chain"
+              :key="event['Naslov dogodka']"
+              :event="event"
+            />
+          </div>
+        </div>
+      </section>
     </section>
-  </section>
-  <footer v-if="events?.length === 0">
-    <div class="container">
-      <div class="buttons">
-        <FormKit type="button" @click="$router.push({ name: 'new-event' })">
-          Želim dodati povezani dogodek
-        </FormKit>
+    <footer v-if="events?.length === 0">
+      <div class="container">
+        <div class="buttons">
+          <FormKit
+            type="button"
+            @click="
+              $router.push({
+                name: 'new-event',
+                query: { contribution: $route.params.id },
+              })
+            "
+          >
+            Želim dodati povezani dogodek
+          </FormKit>
+        </div>
       </div>
-    </div>
-  </footer>
+    </footer>
+  </template>
 </template>
 
 <script>
@@ -105,6 +122,7 @@ export default {
   },
   data() {
     return {
+      loading: true,
       contribution: {},
       pageInfo: {},
       colors,
@@ -157,13 +175,17 @@ export default {
       return chains;
     },
   },
-  mounted() {
+  async mounted() {
     const { id } = this.$route.params;
-    this.fetchContribution(id);
+    await this.fetchContribution(id);
+    this.loading = false;
   },
   methods: {
     async fetchContribution(id) {
-      const response = await getContribution(id);
+      const response = await getContribution(
+        id,
+        'Ime prispevka,created_at,Področja <= Prispevek,Prispevek <=> Uporabnik,O področju prispevka,Prispevek => Dogodek'
+      );
       this.contribution = response.data;
       // nc_0zwf__dogodek_id je polje, ki ti pove, na kater dogodek je povezan ta dogodek
     },
@@ -176,7 +198,7 @@ export default {
 @import '../../assets/scss/variables';
 
 h2 {
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 900;
   line-height: 1.3;
   margin-bottom: 0.5rem;
@@ -187,20 +209,20 @@ h2 {
   padding: 5px 7px;
   background-color: #aed8f0;
   color: $color-black;
-  font-size: 8px;
+  font-size: 10px;
   font-style: italic;
   margin-bottom: 0.75rem;
 }
 
 .author {
-  font-size: 10px;
+  font-size: 12px;
   font-style: italic;
   color: $color-black;
 }
 
 .date {
   color: $color-grey;
-  font-size: 10px;
+  font-size: 12px;
   font-style: italic;
 }
 
@@ -221,7 +243,7 @@ main {
 }
 
 .events {
-  padding-top: 3rem;
+  padding-top: 1.5rem;
   padding-bottom: 2rem;
   background-color: $bg-color;
 }
@@ -229,14 +251,16 @@ main {
 .events-header {
   display: flex;
   align-items: center;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
+
   h3 {
-    font-size: 10px;
+    font-size: 12px;
     font-weight: 600;
     color: $color-accent;
     margin-bottom: 0;
     padding-right: 5px;
   }
+
   hr {
     flex-grow: 1;
     background-color: $color-accent;

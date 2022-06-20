@@ -158,7 +158,7 @@ export default {
       overflow-y: auto;
 
       h4 {
-        font-size: 16px;
+        font-size: 18px;
         font-weight: 600;
         margin-bottom: 1rem;
         margin-top: 2rem;

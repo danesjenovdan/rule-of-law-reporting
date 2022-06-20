@@ -132,11 +132,11 @@ export default {
   mounted() {
     const selectedContributionId = Number(this.$route.query.contribution);
     this.fetchContributions(selectedContributionId);
-    this.fetchEvents();
+    // this.fetchEvents();
   },
   methods: {
     async fetchContributions(selectedContributionId) {
-      const response = await getContributions();
+      const response = await getContributions('id,Ime prispevka');
       const entries = response.data.list.map((item) => ({
         value: item.id,
         label: item['Ime prispevka'],
@@ -154,7 +154,7 @@ export default {
       }
     },
     async fetchEvents() {
-      const response = await getEvents({
+      const response = await getEvents('id,Naslov dogodka', {
         nc_0zwf__prispevek_id: this.formData.nc_0zwf__prispevek_id,
       });
       const entries = response.data.list.map((item) => ({

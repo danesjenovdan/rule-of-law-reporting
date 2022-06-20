@@ -3,9 +3,7 @@
     <DesktopHeader v-if="isDesktop" />
     <SmallHeader v-if="!isDesktop" />
     <PillButtonNav v-if="!isDesktop" />
-  </header>
-  <div class="container">
-    <main>
+    <div :class="['tabs-container', { container: !isDesktop }]">
       <div class="tabs">
         <div
           :class="{ active: filterInstitution == 'ec' }"
@@ -20,6 +18,10 @@
           Drugo
         </div>
       </div>
+    </div>
+  </header>
+  <div class="container">
+    <main>
       <div class="filters">
         <div class="filters-left">
           <FormKit
@@ -172,21 +174,31 @@ export default {
 <style lang="scss" scoped>
 @import '../../assets/scss/variables';
 
+.tabs-container {
+  box-shadow: 0px 5px 4px -4px $color-accent-super-light;
+  position: relative;
+}
+
 .tabs {
-  box-shadow: 0 0 4px 1px $color-accent-super-light;
   border-radius: 3px;
-  border: 1px solid $color-white;
+  // border: 1px solid $color-white;
   background-color: $color-white;
   margin-left: -1.6667rem;
   margin-right: -1.6667rem;
   padding-left: 1.6667rem;
   padding-right: 1.6667rem;
 
+  @media (min-width: 992px) {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 960px;
+  }
+
   div {
     display: inline-block;
     padding: 0.75rem 1rem calc(0.75rem - 3px) 1rem;
     color: $color-grey;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 900;
     cursor: pointer;
     border-bottom: 4px solid transparent;
@@ -212,7 +224,7 @@ export default {
 .info {
   span {
     color: $color-black;
-    font-size: 8px;
+    font-size: 10px;
     font-style: italic;
     line-height: 20px;
   }
@@ -234,20 +246,20 @@ export default {
 }
 
 .title {
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 600;
 }
 
 .subtitle {
   .author {
-    font-size: 10px;
+    font-size: 12px;
     font-style: italic;
     color: $color-black;
   }
 
   .date {
     color: $color-black;
-    font-size: 10px;
+    font-size: 12px;
     font-style: italic;
   }
 

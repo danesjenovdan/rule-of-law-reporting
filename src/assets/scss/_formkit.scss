@@ -5,6 +5,8 @@
 
 .formkit-form {
   max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
 
   .formkit-outer {
     font-family: $base-font;
@@ -15,7 +17,7 @@
 .formkit-label,
 .formkit-legend {
   font-family: $base-font;
-  font-size: 1rem;
+  font-size: 14px;
   font-weight: 600;
   padding-bottom: 1rem;
   display: flex;
@@ -71,7 +73,7 @@
   }
 
   .formkit-label {
-    font-size: 1rem;
+    font-size: 14px;
     color: $color-black;
   }
 
@@ -101,10 +103,6 @@
   }
 }
 
-.formkit-actions {
-  margin-top: 3rem;
-}
-
 .formkit-input:not(textarea) {
   padding-top: 0;
   padding-bottom: 0;
@@ -119,7 +117,7 @@
     background: $color-accent-light;
     color: $color-black;
     font-family: $base-font;
-    font-size: 1.333334rem;
+    font-size: 18px;
     font-weight: 600;
 
     &:hover {
@@ -165,7 +163,7 @@ select.formkit-input {
   width: unset;
   height: unset;
   padding: 5px 8px;
-  font-size: 12px;
+  font-size: 14px;
 }
 
 [data-type='date'] {
@@ -194,6 +192,17 @@ select.formkit-input {
   }
 }
 
+.formkit-actions {
+  margin-top: 3rem;
+
+  [data-type='button'],
+  [data-type='submit'] {
+    .formkit-input {
+      width: auto;
+    }
+  }
+}
+
 // export list of contributions
 .contribution.formkit-wrapper {
   padding: 20px 0;
@@ -204,7 +213,7 @@ select.formkit-input {
     flex-grow: 1;
   }
   span {
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 700;
     display: block;
   }
@@ -242,6 +251,22 @@ select.formkit-input {
   }
 }
 
+// disable counter on login form
+.login-form .formkit-form {
+  .formkit-label,
+  .formkit-legend {
+    &::before {
+      display: none;
+    }
+  }
+
+  .formkit-inner,
+  .formkit-messages,
+  .formkit-help {
+    margin-left: 0;
+  }
+}
+
 // small button overrides
 [data-type='button'],
 [data-type='submit'] {
@@ -251,7 +276,7 @@ select.formkit-input {
     margin-right: auto;
 
     .formkit-input {
-      font-size: 0.833334rem;
+      font-size: 12px;
       background-color: transparent;
       background-image: url('../icons/arrow-right.svg');
       background-repeat: no-repeat;
@@ -298,7 +323,7 @@ select.formkit-input {
       box-shadow: 0 0 0 2px $color-accent-light;
       height: 2.5rem;
       padding: 0.8em 0.8em 0.4em 3em;
-      font-size: 10px;
+      font-size: 12px;
     }
   }
 }
