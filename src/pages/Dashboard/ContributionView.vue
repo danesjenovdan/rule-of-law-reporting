@@ -163,7 +163,10 @@ export default {
   },
   methods: {
     async fetchContribution(id) {
-      const response = await getContribution(id);
+      const response = await getContribution(
+        id,
+        'Ime prispevka,created_at,Področja <= Prispevek,Prispevek <=> Uporabnik,O področju prispevka,Prispevek => Dogodek'
+      );
       this.contribution = response.data;
       // nc_0zwf__dogodek_id je polje, ki ti pove, na kater dogodek je povezan ta dogodek
     },

@@ -91,15 +91,15 @@ export default {
   },
   methods: {
     async fetchContributions() {
-      const response = await getContributions();
+      const response = await getContributions('id,Ime prispevka');
       this.contributions = response.data.list;
       this.pageInfo = response.data.pageInfo;
     },
     onSearch: debounce(async function onSearch(query) {
-      const response = await getContributions(query);
+      const response = await getContributions('id,Ime prispevka', query);
       this.contributions = response.data.list;
       this.pageInfo = response.data.pageInfo;
-    }, 750),
+    }, 500),
   },
 };
 </script>

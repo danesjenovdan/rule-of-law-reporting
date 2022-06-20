@@ -154,7 +154,7 @@ export default {
   },
   methods: {
     async fetchEvents(selectedEventId) {
-      const response = await getEvents();
+      const response = await getEvents('id,Naslov dogodka');
       const entries = response.data.list.map((item) => ({
         value: item.id,
         label: item['Naslov dogodka'],

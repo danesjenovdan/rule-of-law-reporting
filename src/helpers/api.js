@@ -73,20 +73,21 @@ export async function postConnectDogodekVir(dogodekId, virId) {
   });
 }
 
-export async function getContributions(search) {
+export async function getContributions(fields = 'id', search = '') {
   let where = '';
   if (search) {
     where = objectToWhereString({
       'Ime prispevka': { op: 'like', value: search },
     });
   }
-  return authedApi.get(`data/noco/${projectName}/Prispevek?where=${where}`);
+  return authedApi.get(
+    `data/noco/${projectName}/Prispevek?fields=${fields}&where=${where}&sort=-updated_at`
+  );
 }
 
-export async function getContribution(id) {
-  // FIXME: change `nested[nested]` to correct query when https://github.com/nocodb/nocodb/pull/2224 is merged
+export async function getContribution(id, fields = 'id') {
   return authedApi.get(
-    `data/noco/${projectName}/Prispevek/${id}?fields=*&nested[Prispevek <=> Uporabnik][fields]=*&nested[Prispevek => Dogodek][fields]=*&nested[nested][Dogodek <=> Uporabnik][fields]=*`
+    `data/noco/${projectName}/Prispevek/${id}?fields=${fields}&nested[Področja <= Prispevek][fields]=Ime področja&nested[Prispevek <=> Uporabnik][fields]=Ime,Organizacija`
   );
 }
 
@@ -125,11 +126,11 @@ export async function filterContributions(filter = {}) {
   return authedApi.get(`data/noco/${projectName}/Prispevek?where=${where}`);
 }
 
-export async function getEvents(filter = {}) {
-  const where = Object.entries(filter)
-    .map(([key, value]) => `(${key},eq,${value})`)
-    .join('~and');
-  return authedApi.get(`data/noco/${projectName}/Dogodek?where=${where}`);
+export async function getEvents(fields = 'id', filter = {}) {
+  const where = objectToWhereString(filter);
+  return authedApi.get(
+    `data/noco/${projectName}/Dogodek?fields=${fields}&where=${where}`
+  );
 }
 
 export async function postEvent(data) {
