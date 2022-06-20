@@ -34,7 +34,7 @@ export default {
   align-items: end;
   margin-top: 20px;
   span {
-    font-size: 10px;
+    font-size: 12px;
     font-style: italic;
     padding-bottom: 4px;
   }

@@ -108,7 +108,7 @@ export default {
 @import '../../assets/scss/variables';
 
 .contribution {
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 600;
   padding: 20px 0;
   border-bottom: 1px solid $color-accent-light;

@@ -192,7 +192,7 @@ export default {
 @import '../../assets/scss/variables';
 
 h2 {
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 900;
   line-height: 1.3;
   margin-bottom: 0.5rem;
@@ -203,20 +203,20 @@ h2 {
   padding: 5px 7px;
   background-color: #aed8f0;
   color: $color-black;
-  font-size: 8px;
+  font-size: 10px;
   font-style: italic;
   margin-bottom: 0.75rem;
 }
 
 .author {
-  font-size: 10px;
+  font-size: 12px;
   font-style: italic;
   color: $color-black;
 }
 
 .date {
   color: $color-grey;
-  font-size: 10px;
+  font-size: 12px;
   font-style: italic;
 }
 
@@ -248,7 +248,7 @@ main {
   margin-bottom: 1.5rem;
 
   h3 {
-    font-size: 10px;
+    font-size: 12px;
     font-weight: 600;
     color: $color-accent;
     margin-bottom: 0;

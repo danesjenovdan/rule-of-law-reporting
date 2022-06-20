@@ -45,7 +45,7 @@ export default {
   }
 
   .text {
-    font-size: 0.833334em;
+    font-size: 12px;
   }
 }
 

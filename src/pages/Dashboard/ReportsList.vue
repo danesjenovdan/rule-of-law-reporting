@@ -198,7 +198,7 @@ export default {
     display: inline-block;
     padding: 0.75rem 1rem calc(0.75rem - 3px) 1rem;
     color: $color-grey;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 900;
     cursor: pointer;
     border-bottom: 4px solid transparent;
@@ -224,7 +224,7 @@ export default {
 .info {
   span {
     color: $color-black;
-    font-size: 8px;
+    font-size: 10px;
     font-style: italic;
     line-height: 20px;
   }
@@ -246,20 +246,20 @@ export default {
 }
 
 .title {
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 600;
 }
 
 .subtitle {
   .author {
-    font-size: 10px;
+    font-size: 12px;
     font-style: italic;
     color: $color-black;
   }
 
   .date {
     color: $color-black;
-    font-size: 10px;
+    font-size: 12px;
     font-style: italic;
   }
 

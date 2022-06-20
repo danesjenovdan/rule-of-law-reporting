@@ -46,7 +46,7 @@ export default {
 
     .text {
       padding: 0.5rem;
-      font-size: 0.666rem;
+      font-size: 10px;
     }
   }
 }

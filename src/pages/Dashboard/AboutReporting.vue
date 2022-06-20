@@ -100,21 +100,21 @@ main.about-reporting {
 
 h1 {
   font-weight: 900;
-  font-size: 16px;
+  font-size: 18px;
   line-height: 30px;
 }
 
 h2 {
   font-weight: 900;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 15px;
   margin-top: 2rem;
 }
 
 p,
 li {
-  font-size: 12px;
-  line-height: 16px;
+  font-size: 14px;
+  line-height: 18px;
   margin-bottom: 0.5rem;
   span {
     font-weight: 600;

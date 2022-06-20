@@ -141,7 +141,7 @@ export default {
       background: transparent;
       border: 1px solid $color-black;
       border-radius: 50%;
-      font-size: 10px;
+      font-size: 12px;
       width: 1.5em;
       height: 1.5em;
       padding: 0;

@@ -112,7 +112,7 @@ export default {
   td {
     padding: 1em 0;
     border-bottom: 1px solid $color-light-grey;
-    font-size: 0.833334rem;
+    font-size: 12px;
     font-weight: 400;
   }
 
