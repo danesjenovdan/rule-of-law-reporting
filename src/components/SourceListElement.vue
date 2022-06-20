@@ -29,7 +29,7 @@
             formatDate(source['Datum začetka obdobja'])
           }}</span
           ><span v-else>?</span>
-          <span> – </span>
+          <span>–</span>
           <span v-if="source['Datum konca obdobja']">
             {{ formatDate(source['Datum konca obdobja']) }}</span
           >
