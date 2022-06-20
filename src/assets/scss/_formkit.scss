@@ -103,10 +103,6 @@
   }
 }
 
-.formkit-actions {
-  margin-top: 3rem;
-}
-
 .formkit-input:not(textarea) {
   padding-top: 0;
   padding-bottom: 0;
@@ -196,6 +192,17 @@ select.formkit-input {
   }
 }
 
+.formkit-actions {
+  margin-top: 3rem;
+
+  [data-type='button'],
+  [data-type='submit'] {
+    .formkit-input {
+      width: auto;
+    }
+  }
+}
+
 // export list of contributions
 .contribution.formkit-wrapper {
   padding: 20px 0;
@@ -243,9 +250,9 @@ select.formkit-input {
     margin-left: 1.35rem;
   }
 }
+
 // disable counter on login form
 .login-form .formkit-form {
-
   .formkit-label,
   .formkit-legend {
     &::before {
