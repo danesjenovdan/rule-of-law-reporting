@@ -26,19 +26,32 @@
               type="select"
               name="Na kateri poročevalski mehanizem se nanaša poročilo ali odziv"
               label="Na kateri poročevalski mehanizem se nanaša poročilo ali odziv"
-              :options="['evropska komisija', 'drugo']"
-              validation="required"
+              :options="[
+                {
+                  value: '0',
+                  label: '---',
+                  attrs: { disabled: true },
+                },
+                'evropska komisija',
+                'drugo',
+              ]"
+              validation="required|not:0"
             />
             <FormKit
               type="select"
               name="Tip poročila glede na avtorja"
               label="Tip poročila glede na avtorja"
               :options="[
+                {
+                  value: '0',
+                  label: '---',
+                  attrs: { disabled: true },
+                },
                 'poročilo / odziv je pripravila civilna družba',
                 'poročilo / odziv je pripravila institucija, kateri se poroča',
                 'poročilo / odziv je pripravila vlada',
               ]"
-              validation="required"
+              validation="required|not:0"
             />
             <FormKit
               type="text"
@@ -114,8 +127,8 @@ export default {
   data() {
     return {
       formData: {
-        'Na kateri poročevalski mehanizem se nanaša poročilo ali odziv': '',
-        'Tip poročila glede na avtorja': '',
+        'Na kateri poročevalski mehanizem se nanaša poročilo ali odziv': '0',
+        'Tip poročila glede na avtorja': '0',
         'Ime poročila ali odziva': '',
         'Avtor poročila': '',
         'Datum oddaje ali objave poročila ali odziva': '',

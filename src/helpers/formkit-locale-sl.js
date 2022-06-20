@@ -95,6 +95,9 @@ export const validation = {
   //     return `${s(name)} must be at least ${args[0]}.`;
   //   },
   not({ name, node: { value } }) {
+    if (value && String(value) === '0') {
+      return `Polje je obvezno.`;
+    }
     return `${s(name)} ne sprejme vrednosti "${value}".`;
   },
   //   number({ name }) {

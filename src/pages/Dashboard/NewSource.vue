@@ -43,7 +43,7 @@
               name="Tip vira"
               label="Tip vira"
               :options="type"
-              validation="required"
+              validation="required|not:0"
             />
             <FormKit
               type="text"
@@ -125,6 +125,11 @@ export default {
     return {
       events: [],
       type: [
+        {
+          value: '0',
+          label: '---',
+          attrs: { disabled: true },
+        },
         'Sodna praksa',
         'Sprememba zakonodaje',
         'Nove prakse / sporne prakse',
@@ -136,7 +141,7 @@ export default {
       formData: {
         related_dogodek_id: '0',
         'Naslov vira': '',
-        'Tip vira': 'Sodna praksa',
+        'Tip vira': '0',
         'Avtor vira (oseba, organizacija, medij)': '',
         'Datum objave vira': '',
         'Povezava do vira': '',
@@ -163,6 +168,7 @@ export default {
         {
           value: '0',
           label: '---',
+          attrs: { disabled: true },
         },
         ...entries,
       ];
