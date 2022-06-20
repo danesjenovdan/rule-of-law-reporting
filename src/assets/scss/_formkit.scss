@@ -241,6 +241,22 @@ select.formkit-input {
     margin-left: 1.35rem;
   }
 }
+// disable counter on login form
+.login-form .formkit-form {
+
+  .formkit-label,
+  .formkit-legend {
+    &::before {
+      display: none;
+    }
+  }
+
+  .formkit-inner,
+  .formkit-messages,
+  .formkit-help {
+    margin-left: 0;
+  }
+}
 
 // small button overrides
 [data-type='button'],
