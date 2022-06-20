@@ -48,7 +48,12 @@
           :classes="{
             outer: 'small',
           }"
-          @click="$router.push({ name: 'new-event' })"
+          @click="
+            $router.push({
+              name: 'new-event',
+              query: { contribution: $route.params.id },
+            })
+          "
         >
           Dodaj dogodek na ta prispevek
         </FormKit>
@@ -73,7 +78,15 @@
   <footer v-if="events?.length === 0">
     <div class="container">
       <div class="buttons">
-        <FormKit type="button" @click="$router.push({ name: 'new-event' })">
+        <FormKit
+          type="button"
+          @click="
+            $router.push({
+              name: 'new-event',
+              query: { contribution: $route.params.id },
+            })
+          "
+        >
           Želim dodati povezani dogodek
         </FormKit>
       </div>
