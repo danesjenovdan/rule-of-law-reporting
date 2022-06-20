@@ -237,7 +237,7 @@ main {
 }
 
 .events {
-  padding-top: 3rem;
+  padding-top: 1.5rem;
   padding-bottom: 2rem;
   background-color: $bg-color;
 }
@@ -245,7 +245,8 @@ main {
 .events-header {
   display: flex;
   align-items: center;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
+
   h3 {
     font-size: 10px;
     font-weight: 600;
@@ -253,6 +254,7 @@ main {
     margin-bottom: 0;
     padding-right: 5px;
   }
+
   hr {
     flex-grow: 1;
     background-color: $color-accent;
