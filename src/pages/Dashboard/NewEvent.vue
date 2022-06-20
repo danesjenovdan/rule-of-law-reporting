@@ -132,7 +132,7 @@ export default {
   mounted() {
     const selectedContributionId = Number(this.$route.query.contribution);
     this.fetchContributions(selectedContributionId);
-    this.fetchEvents();
+    // this.fetchEvents();
   },
   methods: {
     async fetchContributions(selectedContributionId) {
