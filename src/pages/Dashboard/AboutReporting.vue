@@ -5,7 +5,7 @@
     <PillButtonNav v-if="!isDesktop" />
   </header>
   <div class="container">
-    <main>
+    <main class="about-reporting">
       <h1>Nastanek in namen mehanizma</h1>
       <p>
         Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
@@ -87,10 +87,15 @@ export default {
 <style lang="scss" scoped>
 @import '../../assets/scss/variables';
 
-main {
+main.about-reporting {
   padding-top: 2rem;
   padding-bottom: 2rem;
   color: $color-black;
+
+  @media (min-width: 992px) {
+    padding-top: 3.5rem;
+    padding-bottom: 3.5rem;
+  }
 }
 
 h1 {
