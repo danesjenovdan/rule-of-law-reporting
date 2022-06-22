@@ -73,13 +73,19 @@ export async function postConnectDogodekVir(dogodekId, virId) {
   });
 }
 
-export async function getContributions(fields = 'id', search = '') {
-  let where = '';
-  if (search) {
-    where = objectToWhereString({
-      'Ime prispevka': { op: 'like', value: search },
-    });
+export async function getContributions(
+  fields = 'id',
+  search = '',
+  onlyPublished = true
+) {
+  const filter = {};
+  if (onlyPublished) {
+    filter.Objavljeno = true;
   }
+  if (search) {
+    filter['Ime prispevka'] = { op: 'like', value: search };
+  }
+  const where = objectToWhereString(filter);
   return authedApi.get(
     `data/noco/${projectName}/Prispevek?limit=10000&fields=${fields}&where=${where}&sort=-updated_at`
   );
@@ -182,14 +188,21 @@ export async function postSource(data) {
 }
 
 export async function getSourcesFromEvent(dogodekId) {
+  const where = objectToWhereString({
+    Objavljeno: true,
+  });
   return authedApi.get(
-    `data/noco/${projectName}/Dogodek/${dogodekId}/mm/Dogodek <=> Vir?limit=10000`
+    `data/noco/${projectName}/Dogodek/${dogodekId}/mm/Dogodek <=> Vir?limit=10000&where=${where}`
   );
 }
 
 export async function getEventsFromContribution(prispevekId, fields = 'id') {
+  const where = objectToWhereString({
+    Objavljeno: true,
+    nc_0zwf__prispevek_id: prispevekId,
+  });
   return authedApi.get(
-    `data/noco/${projectName}/Dogodek?limit=10000&fields=${fields}&where=(nc_0zwf__prispevek_id,eq,${prispevekId})`
+    `data/noco/${projectName}/Dogodek?limit=10000&fields=${fields}&where=${where}`
   );
 }
 

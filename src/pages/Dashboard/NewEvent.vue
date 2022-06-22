@@ -137,7 +137,7 @@ export default {
   },
   methods: {
     async fetchContributions(selectedContributionId) {
-      const response = await getContributions('id,Ime prispevka');
+      const response = await getContributions('id,Ime prispevka', null, false);
       const entries = response.data.list.map((item) => ({
         value: item.id,
         label: item['Ime prispevka'],
