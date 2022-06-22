@@ -1,6 +1,7 @@
 <template>
   <div :class="['circle-logo', `circle-logo--${size}`]">
-    <div class="text">ROLR LOGO</div>
+    <div class="text">ROLR</div>
+    <img src="/rolr-logo.svg" alt="ROLR logo" />
   </div>
 </template>
 
@@ -20,33 +21,31 @@ export default {
 
 .circle-logo {
   position: relative;
-  width: 10rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 15rem;
   height: 10rem;
-  border-radius: 50%;
-  background-color: $color-white;
 
   .text {
     position: absolute;
-    inset: 0;
-    padding: 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
+    width: 1px;
+    height: 1px;
+    font-size: 10px;
+    text-indent: -999999px;
+  }
+
+  img {
+    width: 100%;
   }
 
   &.circle-logo--small {
-    width: 3rem;
+    width: 4rem;
     height: 3rem;
 
     @media (min-width: 992px) {
-      width: 4.166667rem;
+      width: 5.55rem;
       height: 4.166667rem;
-    }
-
-    .text {
-      padding: 0.5rem;
-      font-size: 10px;
     }
   }
 }
