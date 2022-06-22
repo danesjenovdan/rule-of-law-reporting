@@ -194,9 +194,7 @@ export async function getEventsFromContribution(prispevekId, fields = 'id') {
 }
 
 export async function getReports(filter = {}) {
-  const where = Object.entries(filter)
-    .map(([key, value]) => `(${key},eq,${value})`)
-    .join('~and');
+  const where = objectToWhereString(filter);
   return authedApi.get(
     `data/noco/${projectName}/Poročilo?limit=10000&where=${where}`
   );
@@ -211,4 +209,10 @@ export async function postReport(data) {
   await postAddUserToRecord('Poročilo', response.data.id);
 
   return response;
+}
+
+export async function getReportAuthors() {
+  return authedApi.get(
+    `data/noco/${projectName}/Poročilo/groupby?limit=10000&column_name=Avtor poročila`
+  );
 }

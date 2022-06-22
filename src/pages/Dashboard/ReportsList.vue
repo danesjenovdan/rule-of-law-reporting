@@ -24,20 +24,13 @@
     <main>
       <div class="filters">
         <div class="filters-left">
-          <FormKit
-            v-model="filterAuthor"
-            type="select"
-            placeholder="Vsi avtorji poročil / odzivov"
-            :options="[]"
-            @click.stop=""
-          >
+          <FormKit v-model="filterAuthor" type="select" :options="authors">
           </FormKit>
           <FormKit
             v-model="filterYear"
             type="select"
             placeholder="Vsa leta"
             :options="years"
-            @click.stop=""
           >
           </FormKit>
         </div>
@@ -51,35 +44,40 @@
           </FormKit>
         </div>
       </div>
-      <div class="info">
-        <span>Število prispevkov: {{ reports?.length }}</span>
-        <hr />
+      <div v-if="loading" class="spinner-container">
+        <div class="spinner"></div>
       </div>
-      <div>
-        <div v-for="report in reports" :key="report.id" class="report">
-          <div>
-            <div class="title">{{ report['Ime poročila ali odziva'] }}</div>
-            <div class="subtitle">
-              <!-- TODO: zamenjaj za avtor polje, ko bo dodano v nocodb -->
-              <span class="author"
-                >Avtor Lala / {{ report['Tip poročila'] }}</span
-              ><span class="separator">|</span
-              ><span class="date">{{
-                formatDate(
-                  report['Datum oddaje ali objave poročila ali odziva']
-                )
-              }}</span>
-            </div>
-          </div>
-          <a
-            v-if="report['Link do poročila ali odziva']"
-            :href="report['Link do poročila ali odziva']"
-            target="_blank"
-          >
-            <div class="open-new-page-icon"></div>
-          </a>
+      <template v-else>
+        <div class="info">
+          <span>Število prispevkov: {{ reports?.length }}</span>
+          <hr />
         </div>
-      </div>
+        <div>
+          <div v-for="report in reports" :key="report.id" class="report">
+            <div>
+              <div class="title">{{ report['Ime poročila ali odziva'] }}</div>
+              <div class="subtitle">
+                <span class="author"
+                  >{{ report['Avtor poročila'] }} /
+                  {{ report['Tip poročila glede na avtorja'] }}</span
+                ><span class="separator">|</span
+                ><span class="date">{{
+                  formatDate(
+                    report['Datum oddaje ali objave poročila ali odziva']
+                  )
+                }}</span>
+              </div>
+            </div>
+            <a
+              v-if="report['Link do poročila ali odziva']"
+              :href="report['Link do poročila ali odziva']"
+              target="_blank"
+            >
+              <div class="open-new-page-icon"></div>
+            </a>
+          </div>
+        </div>
+      </template>
     </main>
   </div>
   <footer>
@@ -97,8 +95,7 @@
 import SmallHeader from '../../components/Header/SmallHeader.vue';
 import PillButtonNav from '../../components/PillButtonNav.vue';
 import DesktopHeader from '../../components/Header/DesktopHeader.vue';
-
-import { getReports } from '../../helpers/api.js';
+import { getReportAuthors, getReports } from '../../helpers/api.js';
 import { formatDate } from '../../helpers/format-time.js';
 
 export default {
@@ -114,58 +111,75 @@ export default {
   },
   data() {
     return {
+      loading: true,
+      authors: ['Vsi avtorji poročil / odzivov'],
       reports: [],
       filterInstitution: 'ec',
-      filterAuthor: null,
+      filterAuthor: 'Vsi avtorji poročil / odzivov',
       filterYear: null,
     };
   },
   computed: {
-    authors() {
-      // TODO: authors list when they will be added to the database
-      // const s = new Set();
-      // this.reports.forEach((r) => {
-      //   s.add(r.author);
-      // });
-      // return Array.from(s);
-      return [];
-    },
     years() {
-      return Array.from(new Array(10), (x, i) => new Date().getFullYear() - i);
+      const currentYear = new Date().getFullYear();
+      return Array.from(new Array(10), (x, i) => currentYear - i);
     },
     filters() {
       const filters = {};
       if (this.filterYear) {
-        filters.Leto = this.filterYear;
+        filters['Datum oddaje ali objave poročila ali odziva'] = {
+          op: 'btw',
+          value: `${this.filterYear}-01-01,${this.filterYear}-12-31`,
+        };
       }
       if (this.filterInstitution) {
         filters[
           'Na kateri poročevalski mehanizem se nanaša poročilo ali odziv'
         ] = this.filterInstitution === 'ec' ? 'evropska komisija' : 'drugo';
       }
+      if (
+        this.filterAuthor &&
+        this.filterAuthor !== 'Vsi avtorji poročil / odzivov'
+      ) {
+        filters['Avtor poročila'] = this.filterAuthor;
+      }
       return filters;
-    }, // author: filterAuthor
+    },
   },
   watch: {
     filterInstitution() {
-      this.fetchReports();
+      this.filterReports();
     },
     filterAuthor() {
-      this.fetchReports();
+      this.filterReports();
     },
     filterYear() {
-      this.fetchReports();
+      this.filterReports();
     },
   },
-  mounted() {
-    this.fetchReports();
-    // TODO: fetch authors
+  async mounted() {
+    await this.fetchReports();
+    await this.fetchAuthors();
+    this.loading = false;
   },
   methods: {
     formatDate,
     async fetchReports() {
       const response = await getReports(this.filters);
       this.reports = response.data.list;
+    },
+    async filterReports() {
+      this.loading = true;
+      const response = await getReports(this.filters);
+      this.reports = response.data.list;
+      this.loading = false;
+    },
+    async fetchAuthors() {
+      const response = await getReportAuthors();
+      this.authors = [
+        ...this.authors,
+        ...response.data.list.map((o) => o['Avtor poročila'] || 'N/A'),
+      ];
     },
   },
 };
