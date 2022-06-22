@@ -61,19 +61,16 @@
               type="date"
               name="Datum začetka obdobja"
               label="Obdobje, na katerega se nanaša vir (datum začetka obdobja)"
-              validation="required"
             />
             <FormKit
               type="date"
               name="Datum konca obdobja"
               label="Obdobje, na katerega se nanaša vir (datum konca obdobja)"
-              validation="required"
             />
             <FormKit
               type="url"
               name="Povezava do vira"
               label="Povezava do vira"
-              validation="required"
             />
             <FormKit
               type="multifile"

@@ -75,13 +75,11 @@
               type="text"
               name="Link do poročila ali odziva"
               label="Link do poročila ali odziva"
-              validation="required"
             />
             <FormKit
               type="multifile"
               name="Dokument poročila ali odziva"
               label="Dokument poročila ali odziva"
-              validation="required"
             />
           </FormKit>
         </template>
