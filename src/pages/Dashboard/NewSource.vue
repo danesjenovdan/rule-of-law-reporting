@@ -12,10 +12,10 @@
       <div>
         <template v-if="!submitted">
           <div class="lead-in-text">
-            <div class="lead">Nov vir</div>
+            <div class="lead">Dodaj vir</div>
             <div>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-              Asperiores beatae expedita nostrum cumque quos!
+              Dogodku, ki vpliva na vladavino prava dodaj enega ali več virov,
+              ki podpirajo tvoj opis stanja.
             </div>
           </div>
           <hr />
