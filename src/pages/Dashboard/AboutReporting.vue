@@ -82,18 +82,21 @@
     </main>
   </div>
   <footer></footer>
+  <DesktopFooter v-if="isDesktop" />
 </template>
 
 <script>
 import SmallHeader from '../../components/Header/SmallHeader.vue';
 import PillButtonNav from '../../components/PillButtonNav.vue';
 import DesktopHeader from '../../components/Header/DesktopHeader.vue';
+import DesktopFooter from '../../components/Header/DesktopFooter.vue';
 
 export default {
   components: {
     SmallHeader,
     PillButtonNav,
     DesktopHeader,
+    DesktopFooter,
   },
   inject: {
     isDesktop: {

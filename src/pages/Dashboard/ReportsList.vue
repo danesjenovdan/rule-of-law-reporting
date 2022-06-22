@@ -89,12 +89,14 @@
       </div>
     </div>
   </footer>
+  <DesktopFooter v-if="isDesktop" />
 </template>
 
 <script>
 import SmallHeader from '../../components/Header/SmallHeader.vue';
 import PillButtonNav from '../../components/PillButtonNav.vue';
 import DesktopHeader from '../../components/Header/DesktopHeader.vue';
+import DesktopFooter from '../../components/Header/DesktopFooter.vue';
 import { getReportAuthors, getReports } from '../../helpers/api.js';
 import { formatDate } from '../../helpers/format-time.js';
 
@@ -103,6 +105,7 @@ export default {
     SmallHeader,
     PillButtonNav,
     DesktopHeader,
+    DesktopFooter,
   },
   inject: {
     isDesktop: {
