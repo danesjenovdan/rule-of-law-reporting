@@ -28,7 +28,7 @@
       <div class="lead">Še nisi registriran_a?</div>
       <div>
         Za dostop nam piši na
-        <a href="mailto:todo-email@example.com">todo-email@example.com</a>.
+        <a href="mailto:pomoc@pravna-mreza.si">pomoc@pravna-mreza.si</a>.
       </div>
     </footer>
   </section>
