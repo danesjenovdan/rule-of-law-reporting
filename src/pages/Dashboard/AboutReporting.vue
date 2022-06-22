@@ -6,75 +6,97 @@
   </header>
   <div class="container">
     <main class="about-reporting">
-      <h1>Nastanek in namen mehanizma</h1>
+      <h1>
+        Poročanje o stanju pravne države - opis mehanizma in postopka
+        sodelovanja civilne družbe
+      </h1>
       <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-        commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-        occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-        mollit anim id est laborum.
+        Evropski mehanizem pravne države omogoča letni dialog o pravni državi
+        med Komisijo, Svetom in Evropskim parlamentom, skupaj z državami
+        članicami ter nacionalnimi parlamenti, civilno družbo in drugimi
+        deležniki. Poročilo o stanju pravne države je temelj tega novega
+        mehanizma.
       </p>
-      <h2>Podnaslov tega sklopa</h2>
       <p>
-        Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-        accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab
-        illo inventore veritatis et quasi architecto beatae vitae dicta sunt
-        explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut
-        odit aut fugit, sed quia consequuntur magni dolores eos qui ratione
-        voluptatem sequi nesciunt.
+        Osrednji cilj mehanizma je okrepiti medinstitucionalno sodelovanje in
+        spodbujati vse institucije EU, da prispevajo v skladu s svojimi
+        institucionalnimi vlogami. Ta cilj odraža dolgoročni interes Evropskega
+        parlamenta in Sveta. Komisija poleg tega poziva nacionalne parlamente in
+        organe, da razpravljajo o poročilu, ter spodbuja druge deležnike na
+        nacionalni ravni in ravni EU, da sodelujejo v razpravi.
       </p>
-      <ul>
-        <li>
-          <span>Neque porro quisquam est</span>, qui dolorem ipsum quia dolor
-          sit amet, consectetur, adipisci velit, sed quia non numquam eius modi
-          tempora.
-        </li>
-        <li>Incidunt ut labore et dolore magnam aliquam quaerat voluptatem.</li>
-      </ul>
-      <h1>Nastanek in namen mehanizma</h1>
       <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-        commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-        occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-        mollit anim id est laborum.
+        Poročilo o stanju pravne države in pripravljalno delo z državami
+        članicami v okviru mehanizma potekata vsako leto in sta podlaga za
+        razprave v EU ter za preprečevanje nastajanja ali poglabljanja težav.
+        Čimprejšnja opredelitev izzivov ob vzajemni podpori Komisije, drugih
+        držav članic ter deležnikov, kot sta na primer Svet Evrope in Beneška
+        komisija, bi bila državam članicam lahko v pomoč pri iskanju rešitev, ki
+        ščitijo pravno državo.
       </p>
-      <h2>Podnaslov tega sklopa</h2>
       <p>
-        Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-        accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab
-        illo inventore veritatis et quasi architecto beatae vitae dicta sunt
-        explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut
-        odit aut fugit, sed quia consequuntur magni dolores eos qui ratione
-        voluptatem sequi nesciunt.
+        Poročilo o pravni državi predstavlja povzetek stanja na področju pravne
+        države v Evropski uniji in oceno pomembnih sprememb na področju pravne
+        države v državah članicah v 27 poglavjih. Poročilo zajema štiri stebre:
+        pravosodni sistem, protikorupcijski okvir, pluralnost medijev ter druga
+        institucionalna vprašanja, povezana s sistemom zavor in ravnovesij.
+        Poglavja o državah temeljijo na kvalitativni oceni, ki jo je izvedla
+        Komisija. Osredotočajo se na sintezo pomembnih sprememb od januarja
+        2019, za vsak steber pa je najprej na kratko predstavljen ustrezni
+        pravni in institucionalni okvir. Ocena predstavlja tako izzive kot
+        pozitivne vidike, vključno z dobrimi praksami. v vseh državah članicah
+        uporablja enako metodologijo in proučuje ista vprašanja, pri tem pa je
+        vprašanjem namenja pozornost, sorazmerno s stanjem in razvojem dogodkov.
+        Več o informacij o metodologiji je dostopnih na:
+        <a
+          href="https://ec.europa.eu/info/sites/default/files/2020_rule_of_law_report_methodology_en.pdf"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          https://ec.europa.eu/info/sites/default/files/2020_rule_of_law_report_methodology_en.pdf
+        </a>
       </p>
-      <ul>
-        <li>
-          <span>Neque porro quisquam est</span>, qui dolorem ipsum quia dolor
-          sit amet, consectetur, adipisci velit, sed quia non numquam eius modi
-          tempora.
-        </li>
-        <li>Incidunt ut labore et dolore magnam aliquam quaerat voluptatem.</li>
-      </ul>
+      <p>
+        Cikel poročanja se določa sproti, ko Komisija začne postopek javnega
+        posvetovanja; ta praviloma traja 8 tednov. V tem času mora prispevke
+        predložiti tudi civilna družba.
+      </p>
+      <hr />
+      <p>
+        Projekt je bil delno financiran s strani Veleposlaništva Kraljevine
+        Nizozemske.
+      </p>
+      <p>
+        Projekt je bil delno financiran s strani Veleposlaništva Združenih držav
+        Amerike. Izražena mnenja, ugotovitve in zaključki ali priporočila
+        izražajo stališča avtorjev in ne nujno tudi Ministrstva za zunanje
+        zadeve ZDA.
+      </p>
+      <p>
+        <img
+          src="../../assets/images/Embassy_LJ_LOGO.svg"
+          alt="US Embassy Ljubljana logo"
+          width="100"
+        />
+      </p>
     </main>
   </div>
   <footer></footer>
+  <DesktopFooter v-if="isDesktop" />
 </template>
 
 <script>
 import SmallHeader from '../../components/Header/SmallHeader.vue';
 import PillButtonNav from '../../components/PillButtonNav.vue';
 import DesktopHeader from '../../components/Header/DesktopHeader.vue';
+import DesktopFooter from '../../components/Header/DesktopFooter.vue';
 
 export default {
   components: {
     SmallHeader,
     PillButtonNav,
     DesktopHeader,
+    DesktopFooter,
   },
   inject: {
     isDesktop: {
@@ -91,6 +113,8 @@ main.about-reporting {
   padding-top: 2rem;
   padding-bottom: 2rem;
   color: $color-black;
+  word-break: normal;
+  overflow-wrap: anywhere;
 
   @media (min-width: 992px) {
     padding-top: 3.5rem;
@@ -101,7 +125,8 @@ main.about-reporting {
 h1 {
   font-weight: 900;
   font-size: 18px;
-  line-height: 30px;
+  line-height: 1.4;
+  margin-bottom: 1em;
 }
 
 h2 {
@@ -114,8 +139,9 @@ h2 {
 p,
 li {
   font-size: 14px;
-  line-height: 18px;
-  margin-bottom: 0.5rem;
+  line-height: 1.4;
+  margin-bottom: 1em;
+
   span {
     font-weight: 600;
   }

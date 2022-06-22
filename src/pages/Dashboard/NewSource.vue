@@ -12,10 +12,10 @@
       <div>
         <template v-if="!submitted">
           <div class="lead-in-text">
-            <div class="lead">Nov vir</div>
+            <div class="lead">Dodaj vir</div>
             <div>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-              Asperiores beatae expedita nostrum cumque quos!
+              Dogodku, ki vpliva na vladavino prava dodaj enega ali več virov,
+              ki podpirajo tvoj opis stanja.
             </div>
           </div>
           <hr />
@@ -60,20 +60,17 @@
             <FormKit
               type="date"
               name="Datum začetka obdobja"
-              label="Datum začetka obdobja"
-              validation="required"
+              label="Obdobje, na katerega se nanaša vir (datum začetka obdobja)"
             />
             <FormKit
               type="date"
               name="Datum konca obdobja"
-              label="Datum konca obdobja"
-              validation="required"
+              label="Obdobje, na katerega se nanaša vir (datum konca obdobja)"
             />
             <FormKit
               type="url"
               name="Povezava do vira"
               label="Povezava do vira"
-              validation="required"
             />
             <FormKit
               type="multifile"

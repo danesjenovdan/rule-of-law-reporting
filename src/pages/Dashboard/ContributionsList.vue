@@ -15,45 +15,45 @@
     />
     <HeaderLine v-if="!loading" :contributions-no="pageInfo.totalRows" />
   </header>
-  <div v-if="loading" class="spinner-container">
-    <div class="spinner"></div>
-  </div>
-  <template v-else>
-    <div class="container">
-      <main>
-        <div>
-          <router-link
-            v-for="contribution in sortedContributions"
-            :key="contribution.id"
-            class="contribution"
-            :to="{ name: 'contribution', params: { id: contribution.id } }"
-          >
-            <span>{{ contribution['Ime prispevka'] }}</span>
-            <span class="arrow-right-icon"></span>
-          </router-link>
-        </div>
-      </main>
-    </div>
-    <footer>
-      <div class="container">
-        <div class="buttons">
-          <FormKit
-            type="button"
-            @click="$router.push({ name: 'new-contribution' })"
-          >
-            Želim dodati nov prispevek
-          </FormKit>
-        </div>
+  <div class="container">
+    <main>
+      <div v-if="loading" class="spinner-container">
+        <div class="spinner"></div>
       </div>
-    </footer>
-    <FiltersModal v-if="showFiltersModal" @close="showFiltersModal = false" />
-  </template>
+      <div v-else>
+        <router-link
+          v-for="contribution in sortedContributions"
+          :key="contribution.id"
+          class="contribution"
+          :to="{ name: 'contribution', params: { id: contribution.id } }"
+        >
+          <span>{{ contribution['Ime prispevka'] }}</span>
+          <span class="arrow-right-icon"></span>
+        </router-link>
+      </div>
+    </main>
+  </div>
+  <footer>
+    <div class="container">
+      <div class="buttons">
+        <FormKit
+          type="button"
+          @click="$router.push({ name: 'new-contribution' })"
+        >
+          Želim dodati nov prispevek
+        </FormKit>
+      </div>
+    </div>
+  </footer>
+  <DesktopFooter v-if="isDesktop" />
+  <FiltersModal v-if="showFiltersModal" @close="showFiltersModal = false" />
 </template>
 
 <script>
 import { debounce } from 'lodash-es';
 import SmallHeader from '../../components/Header/SmallHeader.vue';
 import DesktopHeader from '../../components/Header/DesktopHeader.vue';
+import DesktopFooter from '../../components/Header/DesktopFooter.vue';
 import DesktopToolsList from '../../components/Header/DesktopToolsList.vue';
 import HeaderLine from '../../components/Header/HeaderLine.vue';
 import PillButtonNav from '../../components/PillButtonNav.vue';
@@ -65,6 +65,7 @@ export default {
   components: {
     SmallHeader,
     DesktopHeader,
+    DesktopFooter,
     DesktopToolsList,
     PillButtonNav,
     FiltersModal,

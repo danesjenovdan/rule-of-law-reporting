@@ -95,7 +95,7 @@ export default {
 
   .small-button button {
     background-image: url('../assets/icons/plus.svg');
-    background-size: 0.85em 1em;
+    background-size: 0.95em 1em;
   }
 
   &:focus-within .small-button button {

@@ -57,11 +57,7 @@ export default {
     return {
       formData: {},
       areas: [
-        {
-          value: '1',
-          label: 'Pravosodni sistem',
-          help: 'kartek opis za Pravosodni sistem',
-        },
+        { value: '1', label: 'Pravosodni sistem', help: '' },
         { value: '2', label: 'Protikorupcijski sistem', help: '' },
         { value: '3', label: 'Pluralnost medijev', help: '' },
         {

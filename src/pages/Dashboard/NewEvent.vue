@@ -12,10 +12,11 @@
       <div>
         <template v-if="!submitted">
           <div class="lead-in-text">
-            <div class="lead">Povezan dogodek</div>
+            <div class="lead">Dodaj dogodek</div>
             <div>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-              Asperiores beatae expedita nostrum cumque quos!
+              Dodaj dogodek, ki je zaznamoval vladavino prava, nato pa dogodku
+              dodaj enega ali več virov. Če gre za dva povezana dogodka, lahko
+              to označiš na dnu obrazca.
             </div>
           </div>
           <hr />
@@ -28,7 +29,7 @@
             <FormKit
               type="select"
               name="nc_0zwf__prispevek_id"
-              label="Prispevek"
+              label="Povezan prispevek"
               :options="contributions"
               validation="required|not:0"
             />
@@ -47,9 +48,9 @@
             <FormKit
               type="select"
               name="nc_0zwf__dogodek_id"
-              label="Dogodek"
+              label="Povezan dogodek"
               :options="events"
-              help="Izberite če ta dogodek posodobi drug dogodek."
+              help="Izberite samo, če ta dogodek posodobi drug dogodek."
             />
           </FormKit>
         </template>

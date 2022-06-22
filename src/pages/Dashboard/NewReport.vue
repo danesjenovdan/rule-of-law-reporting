@@ -56,7 +56,8 @@
             <FormKit
               type="text"
               name="Ime poročila ali odziva"
-              label="Ime poročila ali odziva"
+              label="Naslov poročila ali odziva"
+              help="Naslov poročila naj vključuje organizacijo, ki poroča, in mehanizem, kateremu se poroča. Primer: Prispevki slovenskih NVO za poročilo Evropske komisije o vladavini prava."
               validation="required"
             />
             <FormKit
@@ -75,13 +76,11 @@
               type="text"
               name="Link do poročila ali odziva"
               label="Link do poročila ali odziva"
-              validation="required"
             />
             <FormKit
               type="multifile"
               name="Dokument poročila ali odziva"
               label="Dokument poročila ali odziva"
-              validation="required"
             />
           </FormKit>
         </template>

@@ -103,8 +103,10 @@ import SmallHeader from '../../components/Header/SmallHeader.vue';
 import BackArrow from '../../components/Header/BackArrow.vue';
 import EventListElement from '../../components/EventListElement.vue';
 import DesktopHeader from '../../components/Header/DesktopHeader.vue';
-
-import { getContribution } from '../../helpers/api.js';
+import {
+  getContribution,
+  getEventsFromContribution,
+} from '../../helpers/api.js';
 import { colors } from '../../helpers/area-colors.js';
 import { formatDate } from '../../helpers/format-time.js';
 
@@ -178,16 +180,26 @@ export default {
   async mounted() {
     const { id } = this.$route.params;
     await this.fetchContribution(id);
+    await this.fetchEvents(id);
     this.loading = false;
   },
   methods: {
     async fetchContribution(id) {
       const response = await getContribution(
         id,
-        'Ime prispevka,created_at,Področja <= Prispevek,Prispevek <=> Uporabnik,O področju prispevka,Prispevek => Dogodek'
+        'Ime prispevka,created_at,Področja <= Prispevek,Prispevek <=> Uporabnik,O področju prispevka'
       );
       this.contribution = response.data;
       // nc_0zwf__dogodek_id je polje, ki ti pove, na kater dogodek je povezan ta dogodek
+    },
+    async fetchEvents(id) {
+      // FIXME: this is a separate query from fetchContributions because of a bug in noco db
+      // remove when fixed: https://github.com/nocodb/nocodb/pull/2454
+      const response = await getEventsFromContribution(
+        id,
+        'id,Naslov dogodka,Dogodek <=> Uporabnik,created_at,Kaj se je zgodilo in kako vpliva na vladavino prava,nc_0zwf__dogodek_id'
+      );
+      this.contribution['Prispevek => Dogodek'] = response.data.list;
     },
     formatDate,
   },

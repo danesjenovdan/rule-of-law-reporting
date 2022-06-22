@@ -2,6 +2,7 @@ import { createApp } from 'vue';
 import { createRouter, createWebHistory } from 'vue-router';
 import { plugin as formkit, defaultConfig, createInput } from '@formkit/vue';
 import * as sl from './helpers/formkit-locale-sl.js';
+import { addOptionalLabelText } from './helpers/formkit-plugins.js';
 import { routes } from './routes.js';
 import App from './App.vue';
 import MultiFile from './components/MultiFile.vue';
@@ -30,6 +31,7 @@ app.use(
       multifile: createInput(MultiFile),
       contributiontyperadio: createInput(ContributionTypeRadio),
     },
+    plugins: [addOptionalLabelText],
   })
 );
 
