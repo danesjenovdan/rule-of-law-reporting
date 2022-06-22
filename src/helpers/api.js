@@ -81,7 +81,7 @@ export async function getContributions(fields = 'id', search = '') {
     });
   }
   return authedApi.get(
-    `data/noco/${projectName}/Prispevek?fields=${fields}&where=${where}&sort=-updated_at`
+    `data/noco/${projectName}/Prispevek?limit=10000&fields=${fields}&where=${where}&sort=-updated_at`
   );
 }
 
@@ -123,13 +123,15 @@ export async function filterContributions(filter = {}) {
     .join('~and'); // TODO: this is wrong - there should be 'or' between areas field, 'and' between date range field, ...
 
   // console.log(where)
-  return authedApi.get(`data/noco/${projectName}/Prispevek?where=${where}`);
+  return authedApi.get(
+    `data/noco/${projectName}/Prispevek?limit=10000&where=${where}`
+  );
 }
 
 export async function getEvents(fields = 'id', filter = {}) {
   const where = objectToWhereString(filter);
   return authedApi.get(
-    `data/noco/${projectName}/Dogodek?fields=${fields}&where=${where}`
+    `data/noco/${projectName}/Dogodek?limit=10000&fields=${fields}&where=${where}`
   );
 }
 
@@ -189,7 +191,9 @@ export async function getReports(filter = {}) {
   const where = Object.entries(filter)
     .map(([key, value]) => `(${key},eq,${value})`)
     .join('~and');
-  return authedApi.get(`data/noco/${projectName}/Poročilo?where=${where}`);
+  return authedApi.get(
+    `data/noco/${projectName}/Poročilo?limit=10000&where=${where}`
+  );
 }
 
 export async function postReport(data) {
