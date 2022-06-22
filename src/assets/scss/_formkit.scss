@@ -11,6 +11,11 @@
   .formkit-outer {
     font-family: $base-font;
     margin-bottom: 4rem;
+
+    .formkit-help {
+      font-size: 12px;
+      line-height: 1.3;
+    }
   }
 }
 
