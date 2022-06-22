@@ -60,13 +60,13 @@
             <FormKit
               type="date"
               name="Datum začetka obdobja"
-              label="Datum začetka obdobja"
+              label="Obdobje, na katerega se nanaša vir (datum začetka obdobja)"
               validation="required"
             />
             <FormKit
               type="date"
               name="Datum konca obdobja"
-              label="Datum konca obdobja"
+              label="Obdobje, na katerega se nanaša vir (datum konca obdobja)"
               validation="required"
             />
             <FormKit

@@ -29,7 +29,7 @@
             <FormKit
               type="select"
               name="nc_0zwf__prispevek_id"
-              label="Prispevek"
+              label="Povezan prispevek"
               :options="contributions"
               validation="required|not:0"
             />
@@ -48,9 +48,9 @@
             <FormKit
               type="select"
               name="nc_0zwf__dogodek_id"
-              label="Dogodek"
+              label="Povezan dogodek"
               :options="events"
-              help="Izberite če ta dogodek posodobi drug dogodek."
+              help="Izberite samo, če ta dogodek posodobi drug dogodek."
             />
           </FormKit>
         </template>
