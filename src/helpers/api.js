@@ -183,7 +183,13 @@ export async function postSource(data) {
 
 export async function getSourcesFromEvent(dogodekId) {
   return authedApi.get(
-    `data/noco/${projectName}/Dogodek/${dogodekId}/mm/Dogodek <=> Vir`
+    `data/noco/${projectName}/Dogodek/${dogodekId}/mm/Dogodek <=> Vir?limit=10000`
+  );
+}
+
+export async function getEventsFromContribution(prispevekId, fields = 'id') {
+  return authedApi.get(
+    `data/noco/${projectName}/Dogodek?limit=10000&fields=${fields}&where=(nc_0zwf__prispevek_id,eq,${prispevekId})`
   );
 }
 
