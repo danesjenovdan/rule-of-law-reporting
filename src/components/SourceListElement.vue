@@ -12,7 +12,6 @@
       </div>
     </div>
     <div v-if="!collapsed" class="collapsed">
-      <br />
       <div>
         <p>
           <i>{{ source['Avtor vira (oseba, organizacija, medij)'] }}</i>
