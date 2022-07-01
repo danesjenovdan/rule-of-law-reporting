@@ -57,9 +57,7 @@
             <div>
               <div class="title">{{ report['Ime poročila ali odziva'] }}</div>
               <div class="subtitle">
-                <span class="author"
-                  >{{ report['Avtor poročila'] }} /
-                  {{ report['Tip poročila glede na avtorja'] }}</span
+                <span class="author">{{ report['Avtor poročila'] }}</span
                 ><span class="separator">|</span
                 ><span class="date">{{
                   formatDate(
@@ -138,13 +136,16 @@ export default {
       if (this.filterInstitution) {
         filters[
           'Na kateri poročevalski mehanizem se nanaša poročilo ali odziv'
-        ] = this.filterInstitution === 'ec' ? 'evropska komisija' : 'drugo';
+        ] =
+          this.filterInstitution === 'ec'
+            ? 'Poročilo Evropska komisija o stanju vladavine prava'
+            : 'drugo';
       }
       if (
         this.filterAuthor &&
         this.filterAuthor !== 'Vsi avtorji poročil / odzivov'
       ) {
-        filters['Avtor poročila'] = this.filterAuthor;
+        filters['Poročilo je pripravila'] = this.filterAuthor;
       }
       return filters;
     },
@@ -181,7 +182,9 @@ export default {
       const response = await getReportAuthors();
       this.authors = [
         ...this.authors,
-        ...response.data.list.map((o) => o['Avtor poročila'] || 'N/A'),
+        ...response.data.list
+          .filter((o) => o['Poročilo je pripravila'])
+          .map((o) => o['Poročilo je pripravila'] || 'N/A'),
       ];
     },
   },

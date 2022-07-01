@@ -32,24 +32,33 @@
                   label: '---',
                   attrs: { disabled: true },
                 },
-                'evropska komisija',
+                'Poročilo Evropska komisija o stanju vladavine prava',
                 'drugo',
               ]"
               validation="required|not:0"
             />
             <FormKit
               type="select"
-              name="Tip poročila glede na avtorja"
-              label="Tip poročila glede na avtorja"
+              name="Poročilo je pripravila"
+              label="Poročilo je pripravila"
               :options="[
                 {
                   value: '0',
                   label: '---',
                   attrs: { disabled: true },
                 },
-                'poročilo / odziv je pripravila civilna družba',
-                'poročilo / odziv je pripravila institucija, kateri se poroča',
-                'poročilo / odziv je pripravila vlada',
+                {
+                  value: 'civilna družba',
+                  label: 'civilna družba',
+                },
+                {
+                  value: 'institucija，kateri se poroča',
+                  label: 'institucija, kateri se poroča',
+                },
+                {
+                  value: 'vlada',
+                  label: 'vlada',
+                },
               ]"
               validation="required|not:0"
             />
@@ -127,7 +136,7 @@ export default {
     return {
       formData: {
         'Na kateri poročevalski mehanizem se nanaša poročilo ali odziv': '0',
-        'Tip poročila glede na avtorja': '0',
+        'Poročilo je pripravila': '0',
         'Ime poročila ali odziva': '',
         'Avtor poročila': '',
         'Datum oddaje ali objave poročila ali odziva': '',

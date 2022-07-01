@@ -207,6 +207,8 @@ export async function getEventsFromContribution(prispevekId, fields = 'id') {
 }
 
 export async function getReports(filter = {}) {
+  // eslint-disable-next-line no-param-reassign
+  filter.Objavljeno = true;
   const where = objectToWhereString(filter);
   return authedApi.get(
     `data/noco/${projectName}/Poročilo?limit=10000&where=${where}`
@@ -226,6 +228,6 @@ export async function postReport(data) {
 
 export async function getReportAuthors() {
   return authedApi.get(
-    `data/noco/${projectName}/Poročilo/groupby?limit=10000&column_name=Avtor poročila`
+    `data/noco/${projectName}/Poročilo/groupby?limit=10000&column_name=Poročilo je pripravila`
   );
 }
