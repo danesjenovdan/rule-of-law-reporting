@@ -226,6 +226,6 @@ export async function postReport(data) {
 
 export async function getReportAuthors() {
   return authedApi.get(
-    `data/noco/${projectName}/Poročilo/groupby?limit=10000&column_name=Avtor poročila`
+    `data/noco/${projectName}/Poročilo/groupby?limit=10000&column_name=Poročilo je pripravila`
   );
 }
