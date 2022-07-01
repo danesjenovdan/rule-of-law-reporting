@@ -207,6 +207,8 @@ export async function getEventsFromContribution(prispevekId, fields = 'id') {
 }
 
 export async function getReports(filter = {}) {
+  // eslint-disable-next-line no-param-reassign
+  filter.Objavljeno = true;
   const where = objectToWhereString(filter);
   return authedApi.get(
     `data/noco/${projectName}/Poročilo?limit=10000&where=${where}`
