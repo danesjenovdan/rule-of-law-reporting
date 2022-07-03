@@ -76,19 +76,46 @@ export async function postConnectDogodekVir(dogodekId, virId) {
 export async function getContributions(
   fields = 'id',
   search = '',
-  onlyPublished = true
+  onlyPublished = true,
+  filters = {},
+  showUserCreatedOnly = false
 ) {
-  const filter = {};
+  const filter = filters || {};
   if (onlyPublished) {
-    filter.Objavljeno = true;
+    // filter.Objavljeno = true;
   }
   if (search) {
     filter['Ime prispevka'] = { op: 'like', value: search };
   }
+  const filterUsers = {};
+  const userId = localStorage.getItem('user_id');
+  if (showUserCreatedOnly) {
+    filterUsers.id = userId;
+
+    // FIXME: remove when nested where works properly
+    // eslint-disable-next-line no-param-reassign
+    fields += ',nc_0zwf___nc_m2m_m49q_5gg05List';
+  }
   const where = objectToWhereString(filter);
-  return authedApi.get(
-    `data/noco/${projectName}/Prispevek?limit=10000&fields=${fields}&where=${where}&sort=-updated_at`
+  const whereUsers = objectToWhereString(filterUsers);
+
+  const response = await authedApi.get(
+    `data/noco/${projectName}/Prispevek?limit=10000&fields=${fields}&where=${where}&sort=-updated_at&nested[Prispevek <=> Uporabnik][where]=${whereUsers}`
   );
+
+  // FIXME: remove when nested where works properly
+  if (showUserCreatedOnly && response?.data?.list) {
+    response.data.list = response.data.list.filter((o) => {
+      if (o.nc_0zwf___nc_m2m_m49q_5gg05List) {
+        return o.nc_0zwf___nc_m2m_m49q_5gg05List.some(
+          (u) => u.table2_id === Number(userId)
+        );
+      }
+      return false;
+    });
+  }
+
+  return response;
 }
 
 export async function getContribution(id, fields = 'id') {

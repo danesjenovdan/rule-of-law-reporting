@@ -8,6 +8,7 @@ import App from './App.vue';
 import MultiFile from './components/MultiFile.vue';
 import ContributionTypeRadio from './components/ContributionTypeRadio.vue';
 import ContributionTypeCheckbox from './components/ContributionTypeCheckbox.vue';
+import DateRangeInput from './components/DateRangeInput.vue';
 
 import './assets/css/bootstrap-reboot.min.css';
 // eslint-disable-next-line import/no-unresolved
@@ -32,6 +33,7 @@ app.use(
       multifile: createInput(MultiFile),
       contributiontyperadio: createInput(ContributionTypeRadio),
       contributiontypecheckbox: createInput(ContributionTypeCheckbox),
+      daterangeinput: createInput(DateRangeInput),
     },
     plugins: [addOptionalLabelText],
   })

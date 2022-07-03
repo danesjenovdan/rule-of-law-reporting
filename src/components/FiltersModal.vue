@@ -19,23 +19,19 @@
             name="areaAndSubarea"
             label="Področje"
           />
-          <h6>Datum oddaje prispevka</h6>
           <FormKit
-            type="text"
-            name="created_at,gt"
-            label="Začetek • opcijsko"
+            type="daterangeinput"
+            name="dateCreatedRange"
+            label="Datum oddaje prispevka"
           />
-          <FormKit type="text" name="created_at,le" label="Konec • opcijsko" />
-          <hr />
-          <h6>Datum objave vira</h6>
-          <!-- TODO: set correct names to use in filtering query -->
-          <FormKit type="text" name="" label="Začetek • opcijsko" />
-          <FormKit type="text" name="" label="Konec • opcijsko" />
-          <hr />
-          <!-- TODO: set correct name to use in filtering query -->
+          <FormKit
+            type="daterangeinput"
+            name="datePublishedRange"
+            label="Datum objave vira"
+          />
           <FormKit
             type="checkbox"
-            name="user"
+            name="showUserCreatedOnly"
             label="Prikaži zgolj moje prispevke"
           />
         </FormKit>
@@ -45,10 +41,8 @@
 </template>
 
 <script>
-import { filterContributions } from '../helpers/api.js';
-
 export default {
-  emits: ['close'],
+  emits: ['filter', 'close'],
   data() {
     return {
       formData: {},
@@ -84,19 +78,9 @@ export default {
     }
   },
   methods: {
-    async submit(data, node) {
-      if (data) {
-        console.log(data);
-        return;
-      }
-      try {
-        // const response = await filterContributions(data);
-        await filterContributions(data);
-        this.$emit('close');
-      } catch (error) {
-        const errorMessage = error.response?.data?.msg || error.message;
-        node.setErrors([errorMessage]);
-      }
+    submit(data) {
+      this.$emit('filter', data);
+      this.$emit('close');
     },
   },
 };

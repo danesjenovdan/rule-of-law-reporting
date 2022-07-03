@@ -126,7 +126,6 @@ export default {
 
       const areas = this.areaCheckboxValue.filter((o) => Number(o));
       const subAreas = this.areaCheckboxValue.filter((o) => !Number(o));
-      console.log(areas, subAreas);
       this.context.node.input({
         area: areas,
         subarea: subAreas,

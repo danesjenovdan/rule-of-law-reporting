@@ -46,8 +46,9 @@
 
 [data-type='multifile'],
 [data-type='contributiontyperadio'],
-[data-type='contributiontypecheckbox'] {
-  .formkit-inner {
+[data-type='contributiontypecheckbox'],
+[data-type='daterangeinput'] {
+  > .formkit-wrapper > .formkit-inner {
     border: none !important;
     box-shadow: none !important;
     flex-direction: column;
