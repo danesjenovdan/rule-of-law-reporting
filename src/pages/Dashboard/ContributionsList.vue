@@ -46,7 +46,11 @@
     </div>
   </footer>
   <DesktopFooter v-if="isDesktop" />
-  <FiltersModal v-if="showFiltersModal" @close="showFiltersModal = false" />
+  <FiltersModal
+    v-if="showFiltersModal"
+    @filter="onFiltersSelected"
+    @close="showFiltersModal = false"
+  />
 </template>
 
 <script>
@@ -83,6 +87,7 @@ export default {
       contributions: [],
       pageInfo: {},
       showFiltersModal: false,
+      selectedFilters: {},
     };
   },
   computed: {
@@ -108,9 +113,68 @@ export default {
       this.pageInfo = response.data.pageInfo;
       this.loading = false;
     }, 500),
+    async fetchFilteredContributions() {
+      const filters = {};
+      if (this.selectedFilters?.areaAndSubarea) {
+        const { area, subarea } = this.selectedFilters.areaAndSubarea;
+        filters.or = {};
+        if (area?.length) {
+          filters.or['nc_0zwf__področja_id'] = {
+            op: 'in',
+            value: area.join(','),
+          };
+        }
+        if (subarea?.length) {
+          filters.or['Če ste izbrali druga, na katerem področju'] = {
+            op: 'in',
+            value: subarea.join(','),
+          };
+        }
+      }
+
+      if (this.selectedFilters?.dateCreatedRange) {
+        const { start, end } = this.selectedFilters.dateCreatedRange;
+        if (start && end) {
+          filters.created_at = {
+            op: 'btw',
+            value: `${start},${end}`,
+          };
+        } else if (start) {
+          filters.created_at = {
+            op: 'ge',
+            value: start,
+          };
+        } else if (end) {
+          filters.created_at = {
+            op: 'le',
+            value: end,
+          };
+        }
+      }
+
+      // if (this.selectedFilters?.datePublishedRange) {
+      //   // TODO
+      // }
+
+      const response = await getContributions(
+        'id,Ime prispevka',
+        null, // query
+        true,
+        filters,
+        this.selectedFilters?.showUserCreatedOnly
+      );
+      this.contributions = response.data.list;
+      this.pageInfo = response.data.pageInfo;
+      this.loading = false;
+    },
     onSearch(query) {
       this.loading = true;
       this.debouncedSearchContributions(query);
+    },
+    onFiltersSelected(filters) {
+      this.selectedFilters = filters;
+      this.loading = true;
+      this.fetchFilteredContributions();
     },
   },
 };

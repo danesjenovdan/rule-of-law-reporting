@@ -45,8 +45,10 @@
 }
 
 [data-type='multifile'],
-[data-type='contributiontyperadio'] {
-  .formkit-inner {
+[data-type='contributiontyperadio'],
+[data-type='contributiontypecheckbox'],
+[data-type='daterangeinput'] {
+  > .formkit-wrapper > .formkit-inner {
     border: none !important;
     box-shadow: none !important;
     flex-direction: column;
@@ -256,8 +258,9 @@ select.formkit-input {
   }
 }
 
-// disable counter on login form
-.login-form .formkit-form {
+// disable counter on login/filters form
+.login-form .formkit-form,
+.filters-modal .formkit-form {
   .formkit-label,
   .formkit-legend {
     &::before {

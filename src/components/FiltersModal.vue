@@ -1,9 +1,11 @@
 <template>
   <div class="filters-modal-bg">
     <div class="filters-modal">
-      <!-- <div>Filtri</div> -->
       <button class="close-button" @click="$emit('close')">×</button>
       <div class="container">
+        <div class="filters-modal-header">
+          <h2>Filtri</h2>
+        </div>
         <FormKit
           v-model="formData"
           type="form"
@@ -11,35 +13,25 @@
           submit-label="Prikaži rezultate"
           @submit="submit"
         >
-          <h6>Področje</h6>
           <FormKit
-            type="checkbox"
-            name="nc_0zwf__področja_id"
-            :options="areas"
+            ref="areaAndSubarea"
+            type="contributiontypecheckbox"
+            name="areaAndSubarea"
+            label="Področje"
+          />
+          <FormKit
+            type="daterangeinput"
+            name="dateCreatedRange"
+            label="Datum oddaje prispevka"
+          />
+          <FormKit
+            type="daterangeinput"
+            name="datePublishedRange"
+            label="Datum objave vira"
           />
           <FormKit
             type="checkbox"
-            name="'Če ste izbrali druga, na katerem področju'"
-            :options="otherAreas"
-          />
-          <hr />
-          <h6>Datum oddaje prispevka</h6>
-          <FormKit
-            type="text"
-            name="created_at,gt"
-            label="Začetek • opcijsko"
-          />
-          <FormKit type="text" name="created_at,le" label="Konec • opcijsko" />
-          <hr />
-          <h6>Datum objave vira</h6>
-          <!-- TODO: set correct names to use in filtering query -->
-          <FormKit type="text" name="" label="Začetek • opcijsko" />
-          <FormKit type="text" name="" label="Konec • opcijsko" />
-          <hr />
-          <!-- TODO: set correct name to use in filtering query -->
-          <FormKit
-            type="checkbox"
-            name="user"
+            name="showUserCreatedOnly"
             label="Prikaži zgolj moje prispevke"
           />
         </FormKit>
@@ -49,10 +41,8 @@
 </template>
 
 <script>
-import { filterContributions } from '../helpers/api.js';
-
 export default {
-  emits: ['close'],
+  emits: ['filter', 'close'],
   data() {
     return {
       formData: {},
@@ -88,15 +78,9 @@ export default {
     }
   },
   methods: {
-    async submit(data, node) {
-      try {
-        // const response = await filterContributions(data);
-        await filterContributions(data);
-        this.$emit('close');
-      } catch (error) {
-        const errorMessage = error.response?.data?.msg || error.message;
-        node.setErrors([errorMessage]);
-      }
+    submit(data) {
+      this.$emit('filter', data);
+      this.$emit('close');
     },
   },
 };
@@ -123,6 +107,7 @@ export default {
 
     @media (min-width: 992px) {
       margin: 0 auto;
+      width: 600px;
       max-height: 90vh;
     }
 
@@ -143,15 +128,32 @@ export default {
       display: flex;
       align-items: center;
       justify-content: center;
+      z-index: 1;
 
       &:focus {
         box-shadow: 0 0 0 2px $color-accent;
       }
     }
 
+    .filters-modal-header {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      text-align: center;
+
+      h2 {
+        line-height: 2.1875rem;
+        margin: 0.75rem 0;
+        background: $bg-color;
+      }
+    }
+
     .container {
+      margin-top: 3.6875rem;
       padding: 1rem 3rem;
       overflow-y: auto;
+      background: $color-white;
 
       h4 {
         font-size: 18px;
