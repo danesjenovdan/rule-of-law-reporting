@@ -82,7 +82,7 @@ export async function getContributions(
 ) {
   const filter = filters || {};
   if (onlyPublished) {
-    // filter.Objavljeno = true;
+    filter.Objavljeno = true;
   }
   if (search) {
     filter['Ime prispevka'] = { op: 'like', value: search };
