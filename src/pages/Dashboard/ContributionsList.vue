@@ -1,7 +1,7 @@
 <template>
   <header>
     <DesktopHeader v-if="isDesktop" />
-    <DesktopToolsList
+    <DesktopTools
       v-if="isDesktop"
       @open-filters="showFiltersModal = true"
       @search="onSearch"
@@ -21,7 +21,7 @@
         <div class="spinner"></div>
       </div>
       <div v-else>
-        <router-link
+        <RouterLink
           v-for="contribution in sortedContributions"
           :key="contribution.id"
           class="contribution"
@@ -29,7 +29,7 @@
         >
           <span>{{ contribution['Ime prispevka'] }}</span>
           <span class="arrow-right-icon"></span>
-        </router-link>
+        </RouterLink>
       </div>
     </main>
   </div>
@@ -58,7 +58,7 @@ import { debounce } from 'lodash-es';
 import SmallHeader from '../../components/Header/SmallHeader.vue';
 import DesktopHeader from '../../components/Header/DesktopHeader.vue';
 import DesktopFooter from '../../components/Header/DesktopFooter.vue';
-import DesktopToolsList from '../../components/Header/DesktopToolsList.vue';
+import DesktopTools from '../../components/Header/DesktopTools.vue';
 import HeaderLine from '../../components/Header/HeaderLine.vue';
 import PillButtonNav from '../../components/PillButtonNav.vue';
 import FiltersModal from '../../components/FiltersModal.vue';
@@ -70,7 +70,7 @@ export default {
     SmallHeader,
     DesktopHeader,
     DesktopFooter,
-    DesktopToolsList,
+    DesktopTools,
     PillButtonNav,
     FiltersModal,
     ToolsBar,

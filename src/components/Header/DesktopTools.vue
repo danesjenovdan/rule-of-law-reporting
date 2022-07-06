@@ -5,13 +5,20 @@
       @search="$emit('search', $event)"
     />
     <div class="tools-right">
-      <ExportContributionsLink />
-      <FormKit
-        type="button"
-        @click="$router.push({ name: 'new-contribution' })"
-      >
-        Želim dodati nov prispevek
-      </FormKit>
+      <template v-if="!isExportPage">
+        <ExportContributionsLink />
+        <FormKit
+          type="button"
+          @click="$router.push({ name: 'new-contribution' })"
+        >
+          Želim dodati nov prispevek
+        </FormKit>
+      </template>
+      <template v-else>
+        <FormKit type="button" @click="$emit('export')">
+          Izvozi prispevke
+        </FormKit>
+      </template>
     </div>
   </div>
 </template>
@@ -25,7 +32,13 @@ export default {
     ToolsBar,
     ExportContributionsLink,
   },
-  emits: ['open-filters', 'search'],
+  props: {
+    isExportPage: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  emits: ['open-filters', 'search', 'export'],
 };
 </script>
 
