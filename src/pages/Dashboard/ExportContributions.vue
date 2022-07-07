@@ -32,7 +32,7 @@
             <label class="formkit-wrapper">
               <div class="formkit-inner">
                 <input
-                  v-model="selectedValues"
+                  v-model="selectedContributionIds"
                   type="checkbox"
                   :value="contribution.id"
                   class="formkit-input"
@@ -64,6 +64,8 @@
 
 <script>
 import { debounce } from 'lodash-es';
+import { saveAs } from 'file-saver';
+import { Packer } from 'docx';
 import SmallHeader from '../../components/Header/SmallHeader.vue';
 import DesktopHeader from '../../components/Header/DesktopHeader.vue';
 import DesktopFooter from '../../components/Header/DesktopFooter.vue';
@@ -73,6 +75,7 @@ import PillButtonNav from '../../components/PillButtonNav.vue';
 import FiltersModal from '../../components/FiltersModal.vue';
 import ToolsBar from '../../components/Header/ToolsBar.vue';
 import { getContributions } from '../../helpers/api.js';
+import { createExportDocument } from '../../helpers/document-generator.js';
 
 export default {
   components: {
@@ -97,7 +100,7 @@ export default {
       pageInfo: {},
       showFiltersModal: false,
       selectedFilters: {},
-      selectedValues: [],
+      selectedContributionIds: [],
     };
   },
   computed: {
@@ -186,8 +189,10 @@ export default {
       this.loading = true;
       this.fetchFilteredContributions();
     },
-    onExport() {
-      console.log('export clicked');
+    async onExport() {
+      const doc = await createExportDocument(this.selectedContributionIds);
+      const blob = await Packer.toBlob(doc);
+      saveAs(blob, 'rolr-izvoz.docx');
     },
   },
 };
