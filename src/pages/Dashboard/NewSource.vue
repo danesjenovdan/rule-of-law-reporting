@@ -143,8 +143,6 @@ export default {
         'Datum objave vira': '',
         'Povezava do vira': '',
         'Dokumenti povezani z virom': [],
-        'Datum začetka obdobja': '',
-        'Datum konca obdobja': '',
       },
       submitted: false,
       lastSubmittedId: 0,

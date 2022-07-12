@@ -26,12 +26,7 @@
         <div class="filters-left">
           <FormKit v-model="filterAuthor" type="select" :options="authors">
           </FormKit>
-          <FormKit
-            v-model="filterYear"
-            type="select"
-            placeholder="Vsa leta"
-            :options="years"
-          >
+          <FormKit v-model="filterYear" type="select" :options="years">
           </FormKit>
         </div>
         <div class="tools-right">
@@ -95,7 +90,11 @@ import SmallHeader from '../../components/Header/SmallHeader.vue';
 import PillButtonNav from '../../components/PillButtonNav.vue';
 import DesktopHeader from '../../components/Header/DesktopHeader.vue';
 import DesktopFooter from '../../components/Header/DesktopFooter.vue';
-import { getReportAuthors, getReports } from '../../helpers/api.js';
+import {
+  getReportAuthors,
+  getReportYears,
+  getReports,
+} from '../../helpers/api.js';
 import { formatDate } from '../../helpers/format-time.js';
 
 export default {
@@ -114,20 +113,17 @@ export default {
     return {
       loading: true,
       authors: ['Vsi avtorji poročil / odzivov'],
+      years: ['Vsa leta'],
       reports: [],
       filterInstitution: 'ec',
       filterAuthor: 'Vsi avtorji poročil / odzivov',
-      filterYear: null,
+      filterYear: 'Vsa leta',
     };
   },
   computed: {
-    years() {
-      const currentYear = new Date().getFullYear();
-      return Array.from(new Array(10), (x, i) => currentYear - i);
-    },
     filters() {
       const filters = {};
-      if (this.filterYear) {
+      if (this.filterYear && this.filterYear !== 'Vsa leta') {
         filters['Datum oddaje ali objave poročila ali odziva'] = {
           op: 'btw',
           value: `${this.filterYear}-01-01,${this.filterYear}-12-31`,
@@ -164,6 +160,7 @@ export default {
   async mounted() {
     await this.fetchReports();
     await this.fetchAuthors();
+    await this.fetchYears();
     this.loading = false;
   },
   methods: {
@@ -186,6 +183,21 @@ export default {
           .filter((o) => o['Poročilo je pripravila'])
           .map((o) => o['Poročilo je pripravila'] || 'N/A'),
       ];
+    },
+    async fetchYears() {
+      const response = await getReportYears();
+
+      const years = response.data.list
+        .map((o) => {
+          const date = o['Datum oddaje ali objave poročila ali odziva'];
+          const year = (date || '').split('-')[0];
+          return year;
+        })
+        .filter(Boolean)
+        .sort((a, b) => b - a);
+      const uniqueYears = new Set(years);
+
+      this.years = [...this.years, ...uniqueYears];
     },
   },
 };

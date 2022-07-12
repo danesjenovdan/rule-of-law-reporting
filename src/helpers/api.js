@@ -124,6 +124,24 @@ export async function getContribution(id, fields = 'id') {
   );
 }
 
+export async function getContributionsAllNestedFields(filters = {}) {
+  const where = objectToWhereString(filters);
+  const urlQuery = [
+    `where=${where}`,
+    'limit=10000',
+    'fields=*',
+    'nested[Področja <= Prispevek][limit]=10000',
+    'nested[Področja <= Prispevek][fields]=*',
+    'nested[Prispevek => Dogodek][limit]=10000',
+    'nested[Prispevek => Dogodek][fields]=*',
+    'nested[Prispevek => Dogodek][nested][Dogodek <=> Vir][limit]=10000',
+    'nested[Prispevek => Dogodek][nested][Dogodek <=> Vir][fields]=*',
+  ];
+  return authedApi.get(
+    `data/noco/${projectName}/Prispevek?${urlQuery.join('&')}`
+  );
+}
+
 function postAddUserToRecord(recordName, contributionId) {
   const userId = localStorage.getItem('user_id');
   return authedApi.post(
@@ -256,5 +274,11 @@ export async function postReport(data) {
 export async function getReportAuthors() {
   return authedApi.get(
     `data/noco/${projectName}/Poročilo/groupby?limit=10000&column_name=Poročilo je pripravila`
+  );
+}
+
+export async function getReportYears() {
+  return authedApi.get(
+    `data/noco/${projectName}/Poročilo/groupby?limit=10000&column_name=Datum oddaje ali objave poročila ali odziva`
   );
 }

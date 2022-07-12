@@ -1,59 +1,90 @@
 <template>
   <header>
     <DesktopHeader v-if="isDesktop" />
-    <DesktopToolsExport
+    <DesktopTools
       v-if="isDesktop"
+      is-export-page
       @open-filters="showFiltersModal = true"
       @search="onSearch"
+      @export="onExport"
     />
     <SmallHeader v-if="!isDesktop" />
+    <PillButtonNav v-if="!isDesktop" />
     <ToolsBar
       v-if="!isDesktop"
       @open-filters="showFiltersModal = true"
       @search="onSearch"
     />
-    <HeaderLine
-      :contributions-no="pageInfo.totalRows"
-      :chosen-no="selectedContributionsCount"
-    />
+    <HeaderLine v-if="!loading" :contributions-no="pageInfo.totalRows" />
   </header>
   <div class="container">
-    <main v-if="contributions.length > 0" class="contributions-list">
-      <FormKit v-model="formData" type="form" :actions="false">
-        <FormKit
-          type="checkbox"
-          name="contributions"
-          :options="sortedContributions"
-          :wrapper-class="'contribution'"
-        />
-      </FormKit>
+    <main>
+      <div v-if="loading" class="spinner-container">
+        <div class="spinner"></div>
+      </div>
+      <div v-else>
+        <div
+          v-for="contribution in sortedContributions"
+          :key="contribution.id"
+          class="contribution"
+        >
+          <div class="formkit-outer" data-type="checkbox">
+            <label class="formkit-wrapper">
+              <div class="formkit-inner">
+                <input
+                  v-model="selectedContributionIds"
+                  type="checkbox"
+                  :value="contribution.id"
+                  class="formkit-input"
+                /><span class="formkit-decorator" aria-hidden="true"></span>
+              </div>
+              <span class="formkit-label">
+                {{ contribution['Ime prispevka'] }}
+              </span>
+            </label>
+          </div>
+        </div>
+      </div>
     </main>
   </div>
-  <div class="container">
-    <footer>
+  <footer>
+    <div class="container">
       <div class="buttons">
-        <FormKit type="button"> Izvozi prispevke </FormKit>
+        <FormKit type="button" @click="onExport">Izvozi prispevke</FormKit>
       </div>
-    </footer>
-  </div>
-  <FiltersModal v-if="showFiltersModal" @close="showFiltersModal = false" />
+    </div>
+  </footer>
+  <DesktopFooter v-if="isDesktop" />
+  <FiltersModal
+    v-if="showFiltersModal"
+    @filter="onFiltersSelected"
+    @close="showFiltersModal = false"
+  />
 </template>
 
 <script>
+import { debounce } from 'lodash-es';
+import { saveAs } from 'file-saver';
+import { Packer } from 'docx';
 import SmallHeader from '../../components/Header/SmallHeader.vue';
 import DesktopHeader from '../../components/Header/DesktopHeader.vue';
-import DesktopToolsExport from '../../components/Header/DesktopToolsExport.vue';
+import DesktopFooter from '../../components/Header/DesktopFooter.vue';
+import DesktopTools from '../../components/Header/DesktopTools.vue';
 import HeaderLine from '../../components/Header/HeaderLine.vue';
+import PillButtonNav from '../../components/PillButtonNav.vue';
 import FiltersModal from '../../components/FiltersModal.vue';
 import ToolsBar from '../../components/Header/ToolsBar.vue';
 import { getContributions } from '../../helpers/api.js';
+import { createExportDocument } from '../../helpers/document-generator.js';
 
 export default {
   components: {
     SmallHeader,
     DesktopHeader,
-    DesktopToolsExport,
+    DesktopFooter,
+    DesktopTools,
     HeaderLine,
+    PillButtonNav,
     FiltersModal,
     ToolsBar,
   },
@@ -64,34 +95,104 @@ export default {
   },
   data() {
     return {
+      loading: true,
       contributions: [],
-      formData: {},
       pageInfo: {},
       showFiltersModal: false,
+      selectedFilters: {},
+      selectedContributionIds: [],
     };
   },
   computed: {
-    selectedContributionsCount() {
-      return this.formData?.contributions?.length || 0;
-    },
     sortedContributions() {
       return [...this.contributions]?.sort(
         (a, b) => new Date(b.created_at) - new Date(a.created_at)
       );
     },
   },
-  mounted() {
-    this.fetchContributions();
+  async mounted() {
+    await this.fetchContributions();
+    this.loading = false;
   },
   methods: {
     async fetchContributions() {
-      const response = await getContributions();
-      this.contributions = response.data.list.map((item) => ({
-        value: item.id,
-        label: item['Ime prispevka'],
-        created_at: item.created_at,
-      }));
+      const response = await getContributions('id,Ime prispevka');
+      this.contributions = response.data.list;
       this.pageInfo = response.data.pageInfo;
+    },
+    debouncedSearchContributions: debounce(async function d(query) {
+      const response = await getContributions('id,Ime prispevka', query);
+      this.contributions = response.data.list;
+      this.pageInfo = response.data.pageInfo;
+      this.loading = false;
+    }, 500),
+    async fetchFilteredContributions() {
+      const filters = {};
+      if (this.selectedFilters?.areaAndSubarea) {
+        const { area, subarea } = this.selectedFilters.areaAndSubarea;
+        filters.or = {};
+        if (area?.length) {
+          filters.or['nc_0zwf__področja_id'] = {
+            op: 'in',
+            value: area.join(','),
+          };
+        }
+        if (subarea?.length) {
+          filters.or['Če ste izbrali druga, na katerem področju'] = {
+            op: 'in',
+            value: subarea.join(','),
+          };
+        }
+      }
+
+      if (this.selectedFilters?.dateCreatedRange) {
+        const { start, end } = this.selectedFilters.dateCreatedRange;
+        if (start && end) {
+          filters.created_at = {
+            op: 'btw',
+            value: `${start},${end}`,
+          };
+        } else if (start) {
+          filters.created_at = {
+            op: 'ge',
+            value: start,
+          };
+        } else if (end) {
+          filters.created_at = {
+            op: 'le',
+            value: end,
+          };
+        }
+      }
+
+      // if (this.selectedFilters?.datePublishedRange) {
+      //   // TODO
+      // }
+
+      const response = await getContributions(
+        'id,Ime prispevka',
+        null, // query
+        true,
+        filters,
+        this.selectedFilters?.showUserCreatedOnly
+      );
+      this.contributions = response.data.list;
+      this.pageInfo = response.data.pageInfo;
+      this.loading = false;
+    },
+    onSearch(query) {
+      this.loading = true;
+      this.debouncedSearchContributions(query);
+    },
+    onFiltersSelected(filters) {
+      this.selectedFilters = filters;
+      this.loading = true;
+      this.fetchFilteredContributions();
+    },
+    async onExport() {
+      const doc = await createExportDocument(this.selectedContributionIds);
+      const blob = await Packer.toBlob(doc);
+      saveAs(blob, 'rolr-izvoz.docx');
     },
   },
 };
@@ -100,14 +201,28 @@ export default {
 <style lang="scss" scoped>
 @import '../../assets/scss/variables';
 
-.contributions-list {
-  :deep(.formkit-option) {
-    margin-bottom: 0;
-  }
-}
+.contribution {
+  font-size: 14px;
+  font-weight: 600;
+  padding: 20px 0;
+  border-bottom: 1px solid $color-accent-light;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: $color-black;
+  text-decoration: none;
 
-.arrow-right-icon {
-  width: 8px;
-  height: 13px;
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  .formkit-outer[data-type='checkbox'] {
+    margin-bottom: 0;
+    line-height: inherit;
+
+    .formkit-label {
+      font-weight: 600;
+    }
+  }
 }
 </style>
