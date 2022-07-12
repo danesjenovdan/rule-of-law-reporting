@@ -276,3 +276,9 @@ export async function getReportAuthors() {
     `data/noco/${projectName}/Poročilo/groupby?limit=10000&column_name=Poročilo je pripravila`
   );
 }
+
+export async function getReportYears() {
+  return authedApi.get(
+    `data/noco/${projectName}/Poročilo/groupby?limit=10000&column_name=Datum oddaje ali objave poročila ali odziva`
+  );
+}
