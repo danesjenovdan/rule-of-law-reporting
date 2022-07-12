@@ -2,6 +2,8 @@ import { groupBy } from 'lodash-es';
 import {
   AlignmentType,
   Document,
+  ExternalHyperlink,
+  Footer,
   Header,
   HeadingLevel,
   HorizontalPositionAlign,
@@ -9,6 +11,7 @@ import {
   ImageRun,
   LevelFormat,
   PageBreak,
+  PageNumber,
   Paragraph,
   TabStopPosition,
   TabStopType,
@@ -222,6 +225,26 @@ function createHeader(logoBlob) {
   });
 }
 
+function createFooter() {
+  return new Footer({
+    children: [
+      new Paragraph({
+        children: [
+          new TextRun({
+            children: ['\t', PageNumber.CURRENT],
+          }),
+        ],
+        tabStops: [
+          {
+            type: TabStopType.RIGHT,
+            position: TabStopPosition.MAX,
+          },
+        ],
+      }),
+    ],
+  });
+}
+
 function createIndex(contributionsByArea) {
   return [
     new Paragraph({
@@ -278,6 +301,64 @@ function createIndex(contributionsByArea) {
       text: '',
       children: [new PageBreak()],
     }),
+  ];
+}
+
+function createDocumentListForSource(source) {
+  if (!source['Dokumenti povezani z virom']) {
+    return [];
+  }
+  let docs = [];
+  try {
+    docs = JSON.parse(source['Dokumenti povezani z virom']);
+  } catch (e) {
+    return [];
+  }
+  if (!docs || !docs.length) {
+    return [];
+  }
+
+  return [
+    new Paragraph({
+      children: [
+        new TextRun({
+          text: 'Dokumenti:',
+          size: 20,
+        }),
+      ],
+      indent: {
+        left: quarterInchToDXA(2),
+      },
+      spacing: { before: 200 },
+    }),
+    ...docs.flatMap(
+      (doc) =>
+        new Paragraph({
+          children: [
+            new TextRun({
+              text: `- ${doc.title} (`,
+              size: 20,
+            }),
+            new ExternalHyperlink({
+              children: [
+                new TextRun({
+                  text: doc.url,
+                  style: 'Hyperlink',
+                  size: 20,
+                }),
+              ],
+              link: doc.url,
+            }),
+            new TextRun({
+              text: ')',
+              size: 20,
+            }),
+          ],
+          indent: {
+            left: quarterInchToDXA(2),
+          },
+        })
+    ),
   ];
 }
 
@@ -384,23 +465,48 @@ function createAreaParagraphs(key, contribs, i) {
                   },
                   spacing: { after: 200 },
                 }),
-                new Paragraph({
-                  children: [
-                    new TextRun({
-                      text: `Obdobje, na katerega se navezuje vir: ${formatDate(
-                        source['Datum začetka obdobja']
-                      )} - ${formatDate(source['Datum konca obdobja'])}`,
-                      size: 20,
-                    }),
-                  ],
-                  indent: {
-                    left: quarterInchToDXA(2),
-                  },
-                  spacing: { before: 200, after: 200 },
-                }),
-                // TODO: links
-                // TODO: documents
-              ];
+                source['Datum začetka obdobja'] || source['Datum konca obdobja']
+                  ? new Paragraph({
+                      children: [
+                        new TextRun({
+                          text: `Obdobje, na katerega se navezuje vir: ${formatDate(
+                            source['Datum začetka obdobja']
+                          )} - ${formatDate(source['Datum konca obdobja'])}`,
+                          size: 20,
+                        }),
+                      ],
+                      indent: {
+                        left: quarterInchToDXA(2),
+                      },
+                      spacing: { before: 200, after: 200 },
+                    })
+                  : undefined,
+                source['Povezava do vira']
+                  ? new Paragraph({
+                      children: [
+                        new TextRun({
+                          text: 'Povezava: ',
+                          size: 20,
+                        }),
+                        new ExternalHyperlink({
+                          children: [
+                            new TextRun({
+                              text: source['Povezava do vira'],
+                              style: 'Hyperlink',
+                              size: 20,
+                            }),
+                          ],
+                          link: source['Povezava do vira'],
+                        }),
+                      ],
+                      indent: {
+                        left: quarterInchToDXA(2),
+                      },
+                      spacing: { before: 200, after: 200 },
+                    })
+                  : undefined,
+                ...createDocumentListForSource(source),
+              ].filter(Boolean);
             }),
           ];
         }),
@@ -423,6 +529,7 @@ export async function createExportDocument(contributionIds) {
 
   const documentConfig = createDocumentConfig();
   const header = createHeader(logoBlob);
+  const footer = createFooter();
   const index = createIndex(contributionsByArea);
   const areas = Object.keys(contributionsByArea).flatMap((key, i) =>
     createAreaParagraphs(key, contributionsByArea[key], i)
@@ -434,6 +541,9 @@ export async function createExportDocument(contributionIds) {
       {
         headers: {
           default: header,
+        },
+        footers: {
+          default: footer,
         },
         children: [...index, ...areas],
       },
