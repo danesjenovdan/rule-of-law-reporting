@@ -85,7 +85,9 @@ export async function getContributions(
     filter.Objavljeno = true;
   }
   if (search) {
-    filter['Ime prispevka'] = { op: 'like', value: search };
+    filter.or = filter.or || {};
+    filter.or['Ime prispevka'] = { op: 'like', value: search };
+    filter.or['O področju prispevka'] = { op: 'like', value: search };
   }
   const filterUsers = {};
   const userId = localStorage.getItem('user_id');
