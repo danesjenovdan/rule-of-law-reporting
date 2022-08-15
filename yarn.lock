@@ -487,10 +487,10 @@ doctrine@^3.0.0:
   dependencies:
     esutils "^2.0.2"
 
-docx@^7.4.0:
-  version "7.4.0"
-  resolved "https://registry.yarnpkg.com/docx/-/docx-7.4.0.tgz#ae9d917389a2a264b23aa39d4921a478fc9cc458"
-  integrity sha512-pD16q1YUxghBVf6gMviiiV2hT8Uw4ZTedsDXjZjB0qubNxGGbQ5Ofgt+DUnAp+sqy3u/PidZPcLHwkQrIJol5g==
+docx@^7.4.1:
+  version "7.4.1"
+  resolved "https://registry.yarnpkg.com/docx/-/docx-7.4.1.tgz#9922a4c344e9bbbbbdb8deef381e1c9587b282de"
+  integrity sha512-zZtSQELXgUtMs5w4E4R/Rj5HwhkK6WeqkVOIeh3bLtBC/a8GqrROEP7cFvBTEJStod7W9y0jRLkHEJ+avGf+xg==
   dependencies:
     "@types/node" "^18.0.0"
     jszip "^3.1.5"
