@@ -113,6 +113,7 @@ export async function getContributions(
       }
       return false;
     });
+    response.data.pageInfo.totalRows = response.data.list.length;
   }
 
   return response;
