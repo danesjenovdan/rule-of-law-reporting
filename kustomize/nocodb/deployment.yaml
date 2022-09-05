@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nocodb
+  labels:
+    app: nocodb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nocodb
+  template:
+    metadata:
+      labels:
+        app: nocodb
+    spec:
+      volumes:
+        - name: nocodb-persistent-storage
+          persistentVolumeClaim:
+            claimName: nocodb-pvc
+      containers:
+        - name: nocodb
+          image: nocodb/nocodb:0.92.4
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: nocodb-persistent-storage
+              mountPath: /usr/app/data
+          envFrom:
+            - secretRef:
+                name: nocodb-secrets
+          resources:
+            requests:
+              memory: 400Mi
+              cpu: 500m
+            limits:
+              memory: 400Mi
+              cpu: 500m

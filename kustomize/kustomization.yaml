@@ -5,6 +5,10 @@ resources:
   - frontend/deployment.yaml
   - frontend/ingress.yaml
   - frontend/service.yaml
+  - nocodb/deployment.yaml
+  - nocodb/ingress.yaml
+  - nocodb/pvc.yaml
+  - nocodb/service.yaml
 images:
   - name: rule-of-law-reporting
     newName: rg.fr-par.scw.cloud/djnd/rule-of-law-reporting
