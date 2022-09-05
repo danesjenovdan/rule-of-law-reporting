@@ -38,7 +38,10 @@ function createDocumentConfig() {
             font: 'Calibri',
             color: '000000',
             size: 22,
+            bold: false,
+            underline: false,
           },
+          next: 'Normal',
         },
         heading1: {
           run: {
@@ -46,7 +49,9 @@ function createDocumentConfig() {
             color: '000000',
             size: 32,
             bold: true,
+            underline: false,
           },
+          next: 'Normal',
         },
         heading2: {
           run: {
@@ -56,6 +61,7 @@ function createDocumentConfig() {
             bold: true,
             underline: {},
           },
+          next: 'Normal',
         },
         heading3: {
           run: {
@@ -65,6 +71,7 @@ function createDocumentConfig() {
             bold: true,
             underline: {},
           },
+          next: 'Normal',
         },
         heading4: {
           run: {
@@ -72,9 +79,28 @@ function createDocumentConfig() {
             color: '000000',
             size: 22,
             bold: true,
+            underline: false,
           },
+          next: 'Normal',
         },
       },
+      paragraphStyles: [
+        {
+          id: 'Normal',
+          name: 'Normal',
+          basedOn: 'Normal',
+          next: 'Normal',
+          quickFormat: true,
+          run: {
+            font: 'Calibri',
+            color: '000000',
+            size: 22,
+            bold: false,
+            italics: false,
+            underline: false,
+          },
+        },
+      ],
     },
     numbering: {
       config: [
@@ -89,6 +115,7 @@ function createDocumentConfig() {
               style: {
                 run: {
                   bold: true,
+                  underline: false,
                 },
                 paragraph: {
                   indent: {
@@ -104,6 +131,10 @@ function createDocumentConfig() {
               text: '%1.%2.',
               alignment: AlignmentType.START,
               style: {
+                run: {
+                  bold: false,
+                  underline: false,
+                },
                 paragraph: {
                   indent: {
                     left: quarterInchToDXA(2.5),
@@ -118,6 +149,10 @@ function createDocumentConfig() {
               text: '%1.%2.%3.',
               alignment: AlignmentType.START,
               style: {
+                run: {
+                  bold: false,
+                  underline: false,
+                },
                 paragraph: {
                   indent: {
                     left: quarterInchToDXA(4.5),
@@ -173,6 +208,10 @@ function createDocumentConfig() {
               text: '%1.%2.%3.',
               alignment: AlignmentType.START,
               style: {
+                run: {
+                  bold: true,
+                  underline: false,
+                },
                 paragraph: {
                   indent: {
                     left: quarterInchToDXA(2),
@@ -261,6 +300,7 @@ function createIndex(contributionsByArea) {
               bold: true,
             }),
           ],
+          style: 'Normal',
           spacing: { before: 200, after: 200, line: 300 },
         }),
         ...contributionsByArea[key].flatMap((contrib) => {
@@ -269,23 +309,39 @@ function createIndex(contributionsByArea) {
               children: [
                 new TextRun({
                   text: contrib['Ime prispevka'],
+                  size: 22,
                   bold: true,
                 }),
               ],
+              style: 'Normal',
               numbering: { level: 0, reference: 'dec-list', instance: i },
               spacing: { before: 100, after: 100, line: 300 },
             }),
             ...contrib['Prispevek => Dogodek'].flatMap((event) => {
               return [
                 new Paragraph({
-                  text: event['Naslov dogodka'],
+                  children: [
+                    new TextRun({
+                      text: event['Naslov dogodka'],
+                      size: 22,
+                      bold: false,
+                    }),
+                  ],
+                  style: 'Normal',
                   numbering: { level: 1, reference: 'dec-list' },
                   spacing: { before: 100, after: 100, line: 300 },
                 }),
                 ...event['Dogodek <=> Vir'].flatMap((source) => {
                   return [
                     new Paragraph({
-                      text: source['Naslov vira'],
+                      children: [
+                        new TextRun({
+                          text: source['Naslov vira'],
+                          size: 22,
+                          bold: false,
+                        }),
+                      ],
+                      style: 'Normal',
                       numbering: { level: 2, reference: 'dec-list' },
                       spacing: { line: 300 },
                     }),
@@ -300,6 +356,7 @@ function createIndex(contributionsByArea) {
     new Paragraph({
       text: '',
       children: [new PageBreak()],
+      style: 'Normal',
     }),
   ];
 }
@@ -324,8 +381,11 @@ function createDocumentListForSource(source) {
         new TextRun({
           text: 'Dokumenti:',
           size: 20,
+          bold: false,
+          underline: false,
         }),
       ],
+      style: 'Normal',
       indent: {
         left: quarterInchToDXA(2),
       },
@@ -338,6 +398,8 @@ function createDocumentListForSource(source) {
             new TextRun({
               text: `- ${doc.title} (`,
               size: 20,
+              bold: false,
+              underline: false,
             }),
             new ExternalHyperlink({
               children: [
@@ -352,8 +414,11 @@ function createDocumentListForSource(source) {
             new TextRun({
               text: ')',
               size: 20,
+              bold: false,
+              underline: false,
             }),
           ],
+          style: 'Normal',
           indent: {
             left: quarterInchToDXA(2),
           },
@@ -376,6 +441,7 @@ function createAreaParagraphs(key, contribs, i) {
             new TextRun({
               text: contrib['Ime prispevka'],
               bold: true,
+              underline: {},
             }),
           ],
           numbering: { level: 0, reference: 'dec-list-main', instance: i },
@@ -387,17 +453,24 @@ function createAreaParagraphs(key, contribs, i) {
             new TextRun({
               text: contrib['O področju prispevka'],
               size: 24,
+              bold: false,
+              underline: false,
             }),
           ],
+          style: 'Normal',
         }),
         contrib['Prispevek => Dogodek'].length
           ? new Paragraph({
               children: [
                 new TextRun({
                   text: 'Povezani dogodki:',
+                  size: 22,
                   italics: true,
+                  bold: false,
+                  underline: false,
                 }),
               ],
+              style: 'Normal',
               spacing: { before: 300, after: 300 },
             })
           : undefined,
@@ -407,15 +480,32 @@ function createAreaParagraphs(key, contribs, i) {
               text: event['Naslov dogodka'],
               numbering: { level: 1, reference: 'dec-list-main' },
               heading: HeadingLevel.HEADING_3,
-            }),
-            new Paragraph({
-              text: formatDate(event.created_at),
               spacing: { before: 200, after: 200 },
             }),
             new Paragraph({
-              text: event[
-                'Kaj se je zgodilo in kako vpliva na vladavino prava'
+              children: [
+                new TextRun({
+                  text: formatDate(event.created_at),
+                  size: 22,
+                  bold: false,
+                  underline: false,
+                }),
               ],
+              style: 'Normal',
+              spacing: { before: 200, after: 200 },
+            }),
+            new Paragraph({
+              children: [
+                new TextRun({
+                  text: event[
+                    'Kaj se je zgodilo in kako vpliva na vladavino prava'
+                  ],
+                  size: 22,
+                  bold: false,
+                  underline: false,
+                }),
+              ],
+              style: 'Normal',
             }),
             ...event['Dogodek <=> Vir'].flatMap((source) => {
               return [
@@ -433,10 +523,13 @@ function createAreaParagraphs(key, contribs, i) {
                   children: [
                     new TextRun({
                       text: source['Tip vira'],
-                      italics: true,
                       size: 18,
+                      italics: true,
+                      bold: false,
+                      underline: false,
                     }),
                   ],
+                  style: 'Normal',
                   indent: {
                     left: quarterInchToDXA(2),
                   },
@@ -446,8 +539,11 @@ function createAreaParagraphs(key, contribs, i) {
                     new TextRun({
                       text: formatDate(source['Datum objave vira']),
                       size: 20,
+                      bold: false,
+                      underline: false,
                     }),
                   ],
+                  style: 'Normal',
                   indent: {
                     left: quarterInchToDXA(2),
                   },
@@ -458,8 +554,11 @@ function createAreaParagraphs(key, contribs, i) {
                     new TextRun({
                       text: source['Avtor vira (oseba, organizacija, medij)'],
                       size: 20,
+                      bold: false,
+                      underline: false,
                     }),
                   ],
+                  style: 'Normal',
                   indent: {
                     left: quarterInchToDXA(2),
                   },
@@ -473,8 +572,11 @@ function createAreaParagraphs(key, contribs, i) {
                             source['Datum začetka obdobja']
                           )} - ${formatDate(source['Datum konca obdobja'])}`,
                           size: 20,
+                          bold: false,
+                          underline: false,
                         }),
                       ],
+                      style: 'Normal',
                       indent: {
                         left: quarterInchToDXA(2),
                       },
@@ -487,6 +589,8 @@ function createAreaParagraphs(key, contribs, i) {
                         new TextRun({
                           text: 'Povezava: ',
                           size: 20,
+                          bold: false,
+                          underline: false,
                         }),
                         new ExternalHyperlink({
                           children: [
@@ -499,6 +603,7 @@ function createAreaParagraphs(key, contribs, i) {
                           link: source['Povezava do vira'],
                         }),
                       ],
+                      style: 'Normal',
                       indent: {
                         left: quarterInchToDXA(2),
                       },

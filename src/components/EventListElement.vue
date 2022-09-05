@@ -4,14 +4,9 @@
       <h4>{{ event['Naslov dogodka'] }}</h4>
       <div class="author-line">
         <span class="author">
-          <template
-            v-if="
-              event['Dogodek <=> Uporabnik'] &&
-              event['Dogodek <=> Uporabnik'][0]
-            "
-          >
-            {{ event['Dogodek <=> Uporabnik'][0]['Ime'] }},
-            {{ event['Dogodek <=> Uporabnik'][0]['Organizacija'] }}
+          <template v-if="event['Uporabnik']">
+            {{ event['Uporabnik']['Ime'] }},
+            {{ event['Uporabnik']['Organizacija'] }}
           </template>
           <template v-else>N/A</template>
         </span>

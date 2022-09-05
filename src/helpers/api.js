@@ -10,7 +10,7 @@ const authedApi = axios.create({
 
 window.api = authedApi;
 
-const projectName = 'ROL App Try 2';
+const projectName = 'ROLR';
 
 // automatically add auth header to all api requests
 authedApi.interceptors.request.use((config) => {
@@ -89,41 +89,19 @@ export async function getContributions(
     filter.or['Ime prispevka'] = { op: 'like', value: search };
     filter.or['O področju prispevka'] = { op: 'like', value: search };
   }
-  const filterUsers = {};
-  const userId = localStorage.getItem('user_id');
   if (showUserCreatedOnly) {
-    filterUsers.id = userId;
-
-    // FIXME: remove when nested where works properly
-    // eslint-disable-next-line no-param-reassign
-    fields += ',nc_0zwf___nc_m2m_m49q_5gg05List';
+    const userId = localStorage.getItem('user_id');
+    filter.nc_0zwf__uporabnik_id = userId;
   }
   const where = objectToWhereString(filter);
-  const whereUsers = objectToWhereString(filterUsers);
-
-  const response = await authedApi.get(
-    `data/noco/${projectName}/Prispevek?limit=10000&fields=${fields}&where=${where}&sort=-updated_at&nested[Prispevek <=> Uporabnik][where]=${whereUsers}`
+  return authedApi.get(
+    `data/noco/${projectName}/Prispevek?limit=10000&fields=${fields}&where=${where}&sort=-updated_at`
   );
-
-  // FIXME: remove when nested where works properly
-  if (showUserCreatedOnly && response?.data?.list) {
-    response.data.list = response.data.list.filter((o) => {
-      if (o.nc_0zwf___nc_m2m_m49q_5gg05List) {
-        return o.nc_0zwf___nc_m2m_m49q_5gg05List.some(
-          (u) => u.table2_id === Number(userId)
-        );
-      }
-      return false;
-    });
-    response.data.pageInfo.totalRows = response.data.list.length;
-  }
-
-  return response;
 }
 
 export async function getContribution(id, fields = 'id') {
   return authedApi.get(
-    `data/noco/${projectName}/Prispevek/${id}?fields=${fields}&nested[Področja <= Prispevek][fields]=Ime področja&nested[Prispevek <=> Uporabnik][fields]=Ime,Organizacija`
+    `data/noco/${projectName}/Prispevek/${id}?fields=${fields}&nested[Področja <= Prispevek][fields]=Ime področja&nested[Uporabnik][fields]=Ime,Organizacija`
   );
 }
 
@@ -148,7 +126,7 @@ export async function getContributionsAllNestedFields(filters = {}) {
 function postAddUserToRecord(recordName, contributionId) {
   const userId = localStorage.getItem('user_id');
   return authedApi.post(
-    `data/noco/${projectName}/${recordName}/${contributionId}/mm/${recordName} <=> Uporabnik/${userId}`
+    `data/noco/${projectName}/${recordName}/${contributionId}/mm/Uporabnik/${userId}`
   );
 }
 
@@ -250,7 +228,7 @@ export async function getEventsFromContribution(prispevekId, fields = 'id') {
     nc_0zwf__prispevek_id: prispevekId,
   });
   return authedApi.get(
-    `data/noco/${projectName}/Dogodek?limit=10000&fields=${fields}&where=${where}`
+    `data/noco/${projectName}/Dogodek?limit=10000&fields=${fields}&where=${where}&nested[Uporabnik][fields]=Ime,Organizacija`
   );
 }
 

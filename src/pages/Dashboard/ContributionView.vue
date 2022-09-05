@@ -27,14 +27,9 @@
             {{ contribution['Področja <= Prispevek']['Ime področja'] }}
           </div>
           <div class="author">
-            <template
-              v-if="
-                contribution['Prispevek <=> Uporabnik'] &&
-                contribution['Prispevek <=> Uporabnik'][0]
-              "
-            >
-              {{ contribution['Prispevek <=> Uporabnik'][0]['Ime'] }},
-              {{ contribution['Prispevek <=> Uporabnik'][0]['Organizacija'] }}
+            <template v-if="contribution['Uporabnik']">
+              {{ contribution['Uporabnik']['Ime'] }},
+              {{ contribution['Uporabnik']['Organizacija'] }}
             </template>
             <template v-else>N/A</template>
           </div>
@@ -187,7 +182,7 @@ export default {
     async fetchContribution(id) {
       const response = await getContribution(
         id,
-        'Ime prispevka,created_at,Področja <= Prispevek,Prispevek <=> Uporabnik,O področju prispevka'
+        'Ime prispevka,created_at,Področja <= Prispevek,Uporabnik,O področju prispevka'
       );
       this.contribution = response.data;
       // nc_0zwf__dogodek_id je polje, ki ti pove, na kater dogodek je povezan ta dogodek
@@ -197,7 +192,7 @@ export default {
       // remove when fixed: https://github.com/nocodb/nocodb/pull/2454
       const response = await getEventsFromContribution(
         id,
-        'id,Naslov dogodka,Dogodek <=> Uporabnik,created_at,Kaj se je zgodilo in kako vpliva na vladavino prava,nc_0zwf__dogodek_id'
+        'id,Naslov dogodka,Uporabnik,created_at,Kaj se je zgodilo in kako vpliva na vladavino prava,nc_0zwf__dogodek_id'
       );
       this.contribution['Prispevek => Dogodek'] = response.data.list;
     },
