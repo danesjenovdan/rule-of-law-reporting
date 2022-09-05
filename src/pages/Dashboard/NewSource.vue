@@ -154,7 +154,10 @@ export default {
   },
   methods: {
     async fetchEvents(selectedEventId) {
-      const response = await getEvents('id,Naslov dogodka');
+      const response = await getEvents('id,Naslov dogodka', {
+        nc_0zwf__prispevek_id: this.formData.nc_0zwf__prispevek_id,
+        Objavljeno: true,
+      });
       const entries = response.data.list.map((item) => ({
         value: item.id,
         label: item['Naslov dogodka'],
