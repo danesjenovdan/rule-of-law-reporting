@@ -3,7 +3,7 @@ kind: Ingress
 metadata:
   name: rule-of-law-reporting
   annotations:
-    cert-manager.io/cluster-issuer: "letsencrypt-production"
+    cert-manager.io/cluster-issuer: 'letsencrypt-production'
 spec:
   ingressClassName: nginx
   tls:
