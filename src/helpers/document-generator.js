@@ -41,6 +41,7 @@ function createDocumentConfig() {
             bold: false,
             underline: false,
           },
+          next: 'Normal',
         },
         heading1: {
           run: {
@@ -50,6 +51,7 @@ function createDocumentConfig() {
             bold: true,
             underline: false,
           },
+          next: 'Normal',
         },
         heading2: {
           run: {
@@ -59,6 +61,7 @@ function createDocumentConfig() {
             bold: true,
             underline: {},
           },
+          next: 'Normal',
         },
         heading3: {
           run: {
@@ -68,6 +71,7 @@ function createDocumentConfig() {
             bold: true,
             underline: {},
           },
+          next: 'Normal',
         },
         heading4: {
           run: {
@@ -77,8 +81,26 @@ function createDocumentConfig() {
             bold: true,
             underline: false,
           },
+          next: 'Normal',
         },
       },
+      paragraphStyles: [
+        {
+          id: 'Normal',
+          name: 'Normal',
+          basedOn: 'Normal',
+          next: 'Normal',
+          quickFormat: true,
+          run: {
+            font: 'Calibri',
+            color: '000000',
+            size: 22,
+            bold: false,
+            italics: false,
+            underline: false,
+          },
+        },
+      ],
     },
     numbering: {
       config: [
@@ -278,6 +300,7 @@ function createIndex(contributionsByArea) {
               bold: true,
             }),
           ],
+          style: 'Normal',
           spacing: { before: 200, after: 200, line: 300 },
         }),
         ...contributionsByArea[key].flatMap((contrib) => {
@@ -290,6 +313,7 @@ function createIndex(contributionsByArea) {
                   bold: true,
                 }),
               ],
+              style: 'Normal',
               numbering: { level: 0, reference: 'dec-list', instance: i },
               spacing: { before: 100, after: 100, line: 300 },
             }),
@@ -303,6 +327,7 @@ function createIndex(contributionsByArea) {
                       bold: false,
                     }),
                   ],
+                  style: 'Normal',
                   numbering: { level: 1, reference: 'dec-list' },
                   spacing: { before: 100, after: 100, line: 300 },
                 }),
@@ -316,6 +341,7 @@ function createIndex(contributionsByArea) {
                           bold: false,
                         }),
                       ],
+                      style: 'Normal',
                       numbering: { level: 2, reference: 'dec-list' },
                       spacing: { line: 300 },
                     }),
@@ -330,6 +356,7 @@ function createIndex(contributionsByArea) {
     new Paragraph({
       text: '',
       children: [new PageBreak()],
+      style: 'Normal',
     }),
   ];
 }
@@ -358,6 +385,7 @@ function createDocumentListForSource(source) {
           underline: false,
         }),
       ],
+      style: 'Normal',
       indent: {
         left: quarterInchToDXA(2),
       },
@@ -390,6 +418,7 @@ function createDocumentListForSource(source) {
               underline: false,
             }),
           ],
+          style: 'Normal',
           indent: {
             left: quarterInchToDXA(2),
           },
@@ -428,6 +457,7 @@ function createAreaParagraphs(key, contribs, i) {
               underline: false,
             }),
           ],
+          style: 'Normal',
         }),
         contrib['Prispevek => Dogodek'].length
           ? new Paragraph({
@@ -440,6 +470,7 @@ function createAreaParagraphs(key, contribs, i) {
                   underline: false,
                 }),
               ],
+              style: 'Normal',
               spacing: { before: 300, after: 300 },
             })
           : undefined,
@@ -460,6 +491,7 @@ function createAreaParagraphs(key, contribs, i) {
                   underline: false,
                 }),
               ],
+              style: 'Normal',
               spacing: { before: 200, after: 200 },
             }),
             new Paragraph({
@@ -473,6 +505,7 @@ function createAreaParagraphs(key, contribs, i) {
                   underline: false,
                 }),
               ],
+              style: 'Normal',
             }),
             ...event['Dogodek <=> Vir'].flatMap((source) => {
               return [
@@ -496,6 +529,7 @@ function createAreaParagraphs(key, contribs, i) {
                       underline: false,
                     }),
                   ],
+                  style: 'Normal',
                   indent: {
                     left: quarterInchToDXA(2),
                   },
@@ -509,6 +543,7 @@ function createAreaParagraphs(key, contribs, i) {
                       underline: false,
                     }),
                   ],
+                  style: 'Normal',
                   indent: {
                     left: quarterInchToDXA(2),
                   },
@@ -523,6 +558,7 @@ function createAreaParagraphs(key, contribs, i) {
                       underline: false,
                     }),
                   ],
+                  style: 'Normal',
                   indent: {
                     left: quarterInchToDXA(2),
                   },
@@ -540,6 +576,7 @@ function createAreaParagraphs(key, contribs, i) {
                           underline: false,
                         }),
                       ],
+                      style: 'Normal',
                       indent: {
                         left: quarterInchToDXA(2),
                       },
@@ -566,6 +603,7 @@ function createAreaParagraphs(key, contribs, i) {
                           link: source['Povezava do vira'],
                         }),
                       ],
+                      style: 'Normal',
                       indent: {
                         left: quarterInchToDXA(2),
                       },
