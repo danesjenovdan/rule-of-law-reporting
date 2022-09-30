@@ -41,7 +41,6 @@
             {{ contribution['O področju prispevka'] }}
           </p>
           <FormKit
-            v-if="events?.length > 0"
             type="button"
             :classes="{
               outer: 'small',
