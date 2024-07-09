@@ -82,7 +82,7 @@ export async function getContributions(
 ) {
   const filter = filters || {};
   if (onlyPublished) {
-    filter.Objavljeno = true;
+    /*filter.Objavljeno = true;*/
   }
   if (search) {
     filter.or = filter.or || {};
@@ -215,7 +215,7 @@ export async function postSource(data) {
 
 export async function getSourcesFromEvent(dogodekId) {
   const where = objectToWhereString({
-    Objavljeno: true,
+    /*Objavljeno: true,*/
   });
   return authedApi.get(
     `data/noco/${projectName}/Dogodek/${dogodekId}/mm/Dogodek <=> Vir?limit=10000&where=${where}`
@@ -224,7 +224,7 @@ export async function getSourcesFromEvent(dogodekId) {
 
 export async function getEventsFromContribution(prispevekId, fields = 'id') {
   const where = objectToWhereString({
-    Objavljeno: true,
+    /*Objavljeno: true,*/
     nc_0zwf__prispevek_id: prispevekId,
   });
   return authedApi.get(
@@ -234,7 +234,7 @@ export async function getEventsFromContribution(prispevekId, fields = 'id') {
 
 export async function getReports(filter = {}) {
   // eslint-disable-next-line no-param-reassign
-  filter.Objavljeno = true;
+  /*filter.Objavljeno = true;*/
   const where = objectToWhereString(filter);
   return authedApi.get(
     `data/noco/${projectName}/Poročilo?limit=10000&where=${where}`

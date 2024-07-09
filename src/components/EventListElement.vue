@@ -75,9 +75,9 @@ export default {
   async mounted() {
     const response = await getSourcesFromEvent(this.event.id);
     // FIXME: remove this filter when query supports filtering in api
-    this.sources = response.data.list.filter((o) => {
+    /*this.sources = response.data.list.filter((o) => {
       return o.Objavljeno;
-    });
+    });*/
     this.loading = false;
   },
   methods: {
