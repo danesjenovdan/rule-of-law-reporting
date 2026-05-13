@@ -2,10 +2,10 @@ import axios from 'axios';
 import { objectToWhereString } from './query-builder.js';
 
 const plainApi = axios.create({
-  baseURL: 'https://nocodb.lb.djnd.si/api/v1/db/',
+  baseURL: 'https://nocodb.pravna-mreza.si/api/v1/db/',
 });
 const authedApi = axios.create({
-  baseURL: 'https://nocodb.lb.djnd.si/api/v1/db/',
+  baseURL: 'https://nocodb.pravna-mreza.si/api/v1/db/',
 });
 
 window.api = authedApi;
