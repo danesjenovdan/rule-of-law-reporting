@@ -4,15 +4,14 @@ metadata:
   name: nocodb
   annotations:
     cert-manager.io/cluster-issuer: 'letsencrypt-production'
-    nginx.ingress.kubernetes.io/proxy-body-size: 10m
 spec:
-  ingressClassName: nginx
+  ingressClassName: traefik
   tls:
     - hosts:
-        - nocodb.lb.djnd.si
+        - nocodb.pravna-mreza.si
       secretName: nocodb-tls
   rules:
-    - host: nocodb.lb.djnd.si
+    - host: nocodb.pravna-mreza.si
       http:
         paths:
           - path: /
